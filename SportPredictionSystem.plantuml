@@ -113,5 +113,6 @@ PredictionGame "1" -- "1" EmailService : uses
 MatchType "1" -- "1" FootballMatch : uses
 Schedule "1" -- "1" ScheduleType : uses
 Score "1" -- "1" ScheduleType : uses
-Score "1" -- "1" FootballPrediction : needs
+Score "1" <-- "1" FootballPrediction : needs
+FootballPrediction "1" <-- "1" Score : gets awarded
 @enduml
