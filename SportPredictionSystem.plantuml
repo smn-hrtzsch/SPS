@@ -1,0 +1,117 @@
+@startuml PredictionGame
+abstract class Match {
+    - int MatchID {get; set;}
+    - static int MatchIDCounter {get; set;}
+    - DateTime MatchDate {get; set;}
+    - string? Result {get; set;}
+    + Match(…)
+    + GetMatchFromCsvFile(string PathToCsvFile, MatchID)
+}
+
+enum MatchType{
+    Normal
+    KO
+    KO_first_leg
+    KO_second_leg
+    Semifinal
+    Final
+}
+
+class FootballMatch extends Match {
+    - string HomeTeam {get; set;}
+    - string AwayTeam {get; set;}
+    - MatchType match_type {get; set;}
+    + FootballMatch(…) : base (MatchID, MatchDate, Result)
+}
+
+class Member {
+    - int MemberID {get; set;}
+    - static int MemberIDCounter {get; set;}
+    - string forename {get; set;}
+    - string surname {get; set;}
+    - string Email {get; set;}
+    - List<T> ParticipatingSchedules where T: Schedule {get; set}
+    - List<T> PredictionsToDo where T: Prediction {get; set;}
+    - List<T> Scores where T: Score {get; set;}
+    + Member(…)
+    + void AddSchedule()
+    + void RemoveSchedule()
+    + void AddPrediction()
+    + void RemovePrediction()
+    + Prediction SearchPrediction(int PredictionID)
+    + void AddScore()
+    + void RemoveScore()
+}
+
+abstract class Prediction {
+    - int PredictionID {get; set;}
+    - static int PreditcionIDCounter {get; set;}
+    - int MemberID {get; set;}
+    - int MatchID {get; set;}
+    - DateTime PredictionDate {get; set}
+    - Prediction(…)
+    + bool ValidatePrediction()
+}
+
+class FootballPrediction extends Prediction {
+    - int PredictionHome {get; set;}
+    - int PredictionAway {get; set;}
+    + FootballPrediction(…) : base (PredictionID, MemberID, MatchID, PredictionDate)
+}
+
+enum ScheduleType {
+    EM_2024
+}
+
+class Schedule {
+    - int ScheduleID {get; set;}
+    - static int ScheduleIDCounter {get; set;}
+    - ScheduleType schedule_type {get; set;}
+    - List<T> Matches where T: Match {get; set;}
+    - List<T> MatchesOnDay where T: Match {get; set;}
+    + Schedule(ScheduleType schedule_type, string PathToCsvFile)
+    + List<Match> GetMatchesFromCsvFile(string PathToCsvFile, ScheduleType schedule_type)
+    + List<Match> GetMatchesOnDay(string date)
+}
+
+class Score {
+    - int ScoreID {get; set;}
+    - static int ScoreIDCounter {get; set;}
+    - ScheduleType PredictedSchedule {get; set;}
+    - int AmountOfPoints {get; set;}
+    + Score(ScheduleType PredictedSchedule)
+    + int CalculateScore(ScheduleType PredictedSchedule, int PredictionID)
+}
+
+class EmailService {
+    - string SmtpServer {get; set;}
+    - int SmtpPort {get; set;}
+    - string Username {get; set;}
+    - string Password {get; set;}
+    + EmailService(…)
+    + void SendEmail(string recipient, string subject, string content, string link_to_prediction_system)
+}
+
+class PredictionGame {
+    - List<Member> Members {get; set;}
+    - List<T> Schedules where T: Schedule {get; set;}
+    - EmailService email_service {get; set;}
+    + PredictionGame(…)
+    + void Register(Member member)
+    + void Unsubscribe(int MemberID)
+    + void SendDailyEmail()
+}
+
+Member "1" -- "0..*" FootballPrediction : creates
+Member "1" -- "0..*" Score : includes
+Member "1" -- "0..*" Schedule : chooses
+FootballMatch "1" -- "1" FootballPrediction : has
+Schedule "1" -- "0..*" FootballMatch : includes
+PredictionGame "1" -- "0..*" Member : manages
+PredictionGame "1" -- "1" Schedule : uses
+PredictionGame "1" -- "1" EmailService : uses
+MatchType "1" -- "1" FootballMatch : uses
+Schedule "1" -- "1" ScheduleType : uses
+Score "1" -- "1" ScheduleType : uses
+Score "1" -- "1" FootballPrediction : needs
+@enduml
