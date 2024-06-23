@@ -48,7 +48,7 @@ abstract class Prediction {
     - static int PreditcionIDCounter {get; set;}
     - int MemberID {get; set;}
     - int MatchID {get; set;}
-    - DateTime PredictionDate {get; set}
+    - DateTime PredictionDate {get; set;}
     - Prediction(…)
     + bool ValidatePrediction()
 }
