@@ -5,7 +5,7 @@ abstract class Match {
     - DateTime MatchDate {get; set;}
     - string? Result {get; set;}
     + Match(…)
-    + GetMatchFromCsvFile(string PathToCsvFile, MatchID)
+    + string[] GetMatchDataFromCsvFile(string PathToCsvFile, MatchID)
 }
 
 enum MatchType{
