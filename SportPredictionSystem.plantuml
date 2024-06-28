@@ -9,7 +9,7 @@ abstract class Match {
     - string[] GetMatchDataFromCsvFile(string PathToMatchDataCsvFile, uint MatchID)
 }
 
-enum ScheduleTypes{
+enum MatchTypes{
     Normal
     KO
     KO_first_leg
@@ -80,7 +80,7 @@ class Score {
     - ScheduleTypes PredictedSchedule {get;}
     - uint AmountOfPoints {get;}
     + Score(ScheduleTypes PredictedSchedule)
-    + int CalculateScore(ScheduleTypes PredictedSchedule, int PredictionID)
+    + uint CalculateScore(ScheduleTypes PredictedSchedule, int PredictionID)
 }
 
 class EmailService {
@@ -106,14 +106,14 @@ class PredictionGame {
 
 Member "1" -- "0..*" FootballPrediction : creates
 Member "1" -- "0..*" Score : includes
-Member "1" -- "0..*" Schedule : chooses
+Member "1" --> "0..*" Schedule : chooses
 FootballMatch "1" -- "1" FootballPrediction : has
 Schedule "1" -- "0..*" FootballMatch : includes
-PredictionGame "1" -- "0..*" Member : manages
-PredictionGame "1" -- "1" Schedule : uses
+PredictionGame "0..*" -- "0..*" Member : manages
+PredictionGame "1" --> "0..*" Schedule : includes
 PredictionGame "1" --> "1" EmailService : uses and needs
 PredictionGame "1" --> "1" ScheduleTypes : uses
-ScheduleTypes "1" -- "1" FootballMatch : uses
+MatchTypes "1" -- "1" FootballMatch : uses
 Schedule "1" -- "1" ScheduleTypes : uses
 Score "1" -- "1" ScheduleTypes : uses
 Score "1" <-- "1" FootballPrediction : needs
