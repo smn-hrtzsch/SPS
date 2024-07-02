@@ -1,9 +1,9 @@
 ---
 name: "Implementation Request"
 about: "Ask for a specific implementation that is missing."
-Title: ""
-Labels: enhancement
-Assignees: ''
+title: ""
+labels: enhancement
+assignees: ''
 
 ---
 
