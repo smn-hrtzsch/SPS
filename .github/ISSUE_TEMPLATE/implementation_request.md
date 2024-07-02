@@ -1,5 +1,5 @@
 ---
-Nname: "Implementation Request"
+name: "Implementation Request"
 about: "Ask for a specific implementation that is missing."
 Title: ""
 Labels: enhancement
