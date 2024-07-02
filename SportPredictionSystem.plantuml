@@ -21,7 +21,7 @@ enum MatchTypes{
 class FootballMatch extends Match {
     + string HomeTeam {get;}
     + string AwayTeam {get;}
-    - ScheduleTypes match_type {get;}
+    - MatchTypes match_type {get;}
     + FootballMatch(string PathToMatchDataCsvFile) : base (PathToMatchDataCsvFile)
 }
 
@@ -40,8 +40,9 @@ class Member {
     + void AddPrediction(uint PredictionID)
     + void RemovePrediction(uint PredictionID)
     + Prediction SearchPrediction(uint PredictionID)
-    + void AddScore(uint ScoreID)
+    + void AddScore(ScheduleTypes PredictedSchedule)
     + void RemoveScore(uint ScoreID)
+    + void UpdateScore(ScheduleTypes PredictedSchedule, Prediciton prediction)
 }
 
 abstract class Prediction {
@@ -78,9 +79,9 @@ class Score {
     + uint ScoreID {get;}
     - static uint ScoreIDCounter = 0
     - ScheduleTypes PredictedSchedule {get;}
-    - uint AmountOfPoints {get;}
+    - uint AmountOfPoints {get; set;}
     + Score(ScheduleTypes PredictedSchedule)
-    + uint CalculateScore(ScheduleTypes PredictedSchedule, int PredictionID)
+    + uint CalculateScore(ScheduleTypes PredictedSchedule, Prediction prediction)
 }
 
 class EmailService {
@@ -104,18 +105,18 @@ class PredictionGame {
     + void SendDailyEmail()
 }
 
-Member "1" -- "0..*" FootballPrediction : creates
-Member "1" -- "0..*" Score : includes
+Member "1" --> "0..*" FootballPrediction : creates
+Member "1" --> "0..*" Score : includes
 Member "1" --> "0..*" Schedule : chooses
 FootballMatch "1" -- "1" FootballPrediction : has
-Schedule "1" -- "0..*" FootballMatch : includes
-PredictionGame "0..*" -- "0..*" Member : manages
+Schedule "1" <-- "0..*" FootballMatch : includes
+PredictionGame "0..*" --> "0..*" Member : manages
 PredictionGame "1" --> "0..*" Schedule : includes
 PredictionGame "1" --> "1" EmailService : uses and needs
 PredictionGame "1" --> "1" ScheduleTypes : uses
-MatchTypes "1" -- "1" FootballMatch : uses
-Schedule "1" -- "1" ScheduleTypes : uses
-Score "1" -- "1" ScheduleTypes : uses
+MatchTypes "1" <-- "1" FootballMatch : uses
+Schedule "1" --> "1" ScheduleTypes : uses
+Score "1" --> "1" ScheduleTypes : uses
 Score "1" <-- "1" FootballPrediction : needs
 FootballPrediction "1" <-- "1" Score : gets awarded
 @enduml
