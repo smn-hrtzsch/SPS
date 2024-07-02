@@ -1,6 +1,6 @@
 ---
-Name: "Implementation Request"
-About: "Ask for a specific implementation that is missing."
+Nname: "Implementation Request"
+about: "Ask for a specific implementation that is missing."
 Title: ""
 Labels: enhancement
 Assignees: ''
