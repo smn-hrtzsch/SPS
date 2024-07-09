@@ -25,7 +25,7 @@ jobs:
       run: echo "/home/runner/.dotnet/tools" >> $GITHUB_PATH
 
     - name: Run Csharpier
-      run: csharpier .
+      run: dotnet csharpier .
 
     - name: Check for formatting changes
       run: git diff --exit-code || (git config --global user.email "action@github.com" && git config --global user.name "github-actions" && git add . && git commit -m "Format code with Csharpier" && git push)
