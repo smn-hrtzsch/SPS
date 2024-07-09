@@ -1,5 +1,4 @@
 using ClassLib;
-using ClassLib;
 
 public class KleinerTaschenrechner : Taschenrechner
 {
