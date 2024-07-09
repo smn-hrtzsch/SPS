@@ -13,4 +13,11 @@ public class GroßerTaschenrechner : Taschenrechner
     {
         this.zahl4 = zahl4;
     }
+
+    public GroßerTaschenrechner(int zahl1, int zahl2, int zahl4)
+    {
+        this.zahl1 = zahl1;
+        this.zahl2 = zahl2;
+        this.zahl4 = zahl4;
+    }
 }
