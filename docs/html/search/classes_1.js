@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['taschenrechner_3',['Taschenrechner',['../classTaschenrechner.html',1,'']]]
+  ['kleinertaschenrechner_4',['KleinerTaschenrechner',['../classKleinerTaschenrechner.html',1,'']]]
 ];
