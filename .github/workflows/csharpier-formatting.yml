@@ -1,0 +1,31 @@
+name: Format C# Code with Csharpier
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.x'  # Wählen Sie die für Ihr Projekt passende .NET-Version
+
+    - name: Install Csharpier
+      run: dotnet tool install -g csharpier
+
+    - name: Add .NET tools to PATH
+      run: echo "/home/runner/.dotnet/tools" >> $GITHUB_PATH
+
+    - name: Run Csharpier
+      run: csharpier .
+
+    - name: Check for formatting changes
+      run: git diff --exit-code || (git config --global user.email "action@github.com" && git config --global user.name "github-actions" && git add . && git commit -m "Format code with Csharpier" && git push)
