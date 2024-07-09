@@ -27,8 +27,7 @@ jobs:
       run: doxygen Doxyfile
 
     - name: Create necessary directories
-      run: |
-        mkdir -p docs/pdf
+      run: mkdir -p docs/pdf
 
     - name: Convert LaTeX to PDF
       run: |
@@ -52,4 +51,4 @@ jobs:
         cd Documentation
         git add .
         git commit -m "Update documentation" || echo "No changes to commit"
-        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} Documentation
+        git push origin Documentation
