@@ -23,10 +23,10 @@ public class PredictionGame
     /// </summary>
     public PredictionGame(EmailService emailService)
     {
-      // ChatGPT Vorschlag -->  PredictionGameID = ++PredictionGameIDCounter;
-      //   Members = new List<Member>();
-      //   ScheduleTypes = new List<ScheduleTypes>();
-      //   email_service = emailService;
+        // ChatGPT Vorschlag -->  PredictionGameID = ++PredictionGameIDCounter;
+        //   Members = new List<Member>();
+        //   ScheduleTypes = new List<ScheduleTypes>();
+        //   email_service = emailService;
     }
 
     /// <summary>
