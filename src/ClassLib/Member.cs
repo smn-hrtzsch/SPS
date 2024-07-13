@@ -1,7 +1,18 @@
+using System;
+using System.Collections.Generic;
+
+/// <summary>
+/// Represents a member participating in the Sport Prediction System (SPS).
+/// </summary>
 public class Member
 {
+    /// <summary>
+    /// Gets the unique ID of the member.
+    /// </summary>
     public uint MemberID { get; }
+
     private static uint MemberIDCounter = 0;
+
     private string? forename { get; set; }
     private string? surname { get; set; }
     private string EmailAdress { get; set; }
@@ -9,21 +20,75 @@ public class Member
     private List<Prediction> PredictionsToDo;
     private List<Score> Scores;
 
-    public Member(string forname, string surname, string EmailAdress) { }
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Member"/> class.
+    /// </summary>
+    public Member(string forname, string surname, string emailAdress)
+    {
+        this.forename = forname;
+        this.surname = surname;
+        this.EmailAdress = emailAdress;
+        MemberID = ++MemberIDCounter;
+        ParticipatingSchedules = new List<Schedules>();
+        PredictionsToDo = new List<Prediction>();
+        Scores = new List<Score>();
+    }
 
-    public void AddSchedule(uint ScheduleID) { }
+    /// <summary>
+    /// Adds a schedule to the member's list of participating schedules.
+    /// </summary>
+    public void AddSchedule(uint ScheduleID)
+    {
+        // Implementation for adding a schedule
+    }
 
-    public void RemoveSchedule(uint ScheduleID) { }
+    /// <summary>
+    /// Removes a schedule from the member's list of participating schedules.
+    /// </summary>
+    public void RemoveSchedule(uint ScheduleID)
+    {
+        // Implementation for removing a schedule
+    }
 
-    public void AddPrediction(uint PredictionID) { }
+    /// <summary>
+    /// Adds a prediction to the member's list of predictions to do.
+    /// </summary>
+    public void AddPrediction(uint PredictionID)
+    {
+        // Implementation for adding a prediction
+    }
 
-    public void RemovePrediction(uint PredictionID) { }
+    /// <summary>
+    /// Removes a prediction from the member's list of predictions to do.
+    /// </summary>
+    public void RemovePrediction(uint PredictionID)
+    {
+        // Implementation for removing a prediction
+    }
 
-    public Prediction SearchPrediction(uint PredictionID) { }
+    /// <summary>
+    /// Searches for a specific prediction in the member's list.
+    /// </summary>
+    /// <returns>The prediction if found, otherwise null.</returns>
+    public Prediction SearchPrediction(uint PredictionID)
+    {
+        // Implementation for searching a prediction
+        return null;
+    }
 
-    public void AddScore(ScheduleTypes PredictedSchedule) { }
+    /// <summary>
+    /// Adds a score to the member's list of scores.
+    /// </summary>
+    public void AddScore(ScheduleTypes PredictedSchedule)
+    {
+        // Implementation for adding a score
+    }
 
-    public void RemoveSchedule(uint ScoreID) { }
-
-    public void UpdateScore(ScheduleTypes PredictedSchedule, Prediction prediction) { }
+    /// <summary>
+    /// Updates a score in the member's list of scores.
+    /// </summary>
+    public void UpdateScore(ScheduleTypes PredictedSchedule, Prediction prediction)
+    {
+        // Implementation for updating a score
+    }
 }
