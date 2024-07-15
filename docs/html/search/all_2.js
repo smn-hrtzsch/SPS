@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['prediction_3',['Prediction',['../classPrediction.html',1,'']]],
-  ['predictiongame_4',['PredictionGame',['../classPredictionGame.html',1,'PredictionGame'],['../classPredictionGame.html#a6da4f3d6775426e490e89c1ef2bc2b40',1,'PredictionGame.PredictionGame(EmailService emailService)']]],
-  ['predictiongameid_5',['PredictionGameID',['../classPredictionGame.html#a860adf1a464cd5d3e7444509c3ea527d',1,'PredictionGame']]]
+  ['match_3',['Match',['../classMatch.html',1,'Match'],['../classMatch.html#a9ceaa0f8e0565763e4b097656a7e87fa',1,'Match.Match(string PathToMatchDataCsvFile)']]],
+  ['matchdate_4',['MatchDate',['../classMatch.html#a18ed97ff00981610e8a39cd3833d5297',1,'Match']]],
+  ['matchid_5',['MatchID',['../classMatch.html#a521024726846dbb8a1f5349378f63eb6',1,'Match']]]
 ];

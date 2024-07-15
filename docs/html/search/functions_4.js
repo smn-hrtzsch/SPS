@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['unsubscribe_24',['Unsubscribe',['../classPredictionGame.html#a318e639b12a8cff0abbafedb8a832813',1,'PredictionGame']]]
+  ['senddailyemail_29',['SendDailyEmail',['../classPredictionGame.html#aa1b7db3edb458cd7a6f31360e8295f25',1,'PredictionGame']]],
+  ['sendemail_30',['SendEmail',['../classEmailService.html#ab84677f93400777d9694aa9309a996fe',1,'EmailService']]]
 ];

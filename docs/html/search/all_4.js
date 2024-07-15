@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['schedule_7',['Schedule',['../classSchedule.html',1,'']]],
-  ['score_8',['Score',['../classScore.html',1,'']]],
-  ['senddailyemail_9',['SendDailyEmail',['../classPredictionGame.html#aa1b7db3edb458cd7a6f31360e8295f25',1,'PredictionGame']]],
-  ['sendemail_10',['SendEmail',['../classEmailService.html#ab84677f93400777d9694aa9309a996fe',1,'EmailService']]]
+  ['register_9',['Register',['../classPredictionGame.html#a9c3eca6ff407cbd6b85faac8f1dddc70',1,'PredictionGame']]],
+  ['resultteam1_10',['ResultTeam1',['../classMatch.html#ad989c469ddbbda3d89de507d53fce7b8',1,'Match']]],
+  ['resultteam2_11',['ResultTeam2',['../classMatch.html#aa906e8710d17afe84d8a4169df20d0f5',1,'Match']]]
 ];

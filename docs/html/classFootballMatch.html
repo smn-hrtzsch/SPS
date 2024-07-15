@@ -73,14 +73,21 @@ $(function() {
 Inheritance diagram for FootballMatch:</div>
 <div class="dyncontent">
  <div class="center">
-  <img src="classFootballMatch.png" alt=""/>
- </div></div>
+  <img src="classFootballMatch.png" usemap="#FootballMatch_map" alt=""/>
+  <map id="FootballMatch_map" name="FootballMatch_map">
+<area href="classMatch.html" title="Abstract match class to set a frame for sport-specific kinds of matches." alt="Match" shape="rect" coords="0,0,92,24"/>
+  </map>
+</div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:afc76c7a016f186ba632930761283e0fe"><td class="memItemLeft" align="right" valign="top"><a id="afc76c7a016f186ba632930761283e0fe"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>FootballMatch</b> (string PathToMatchDataCsvFile)</td></tr>
 <tr class="separator:afc76c7a016f186ba632930761283e0fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classMatch"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classMatch')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classMatch.html">Match</a></td></tr>
+<tr class="memitem:a9ceaa0f8e0565763e4b097656a7e87fa inherit pub_methods_classMatch"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatch.html#a9ceaa0f8e0565763e4b097656a7e87fa">Match</a> (string PathToMatchDataCsvFile)</td></tr>
+<tr class="memdesc:a9ceaa0f8e0565763e4b097656a7e87fa inherit pub_methods_classMatch"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor to initialize a match object.  <a href="classMatch.html#a9ceaa0f8e0565763e4b097656a7e87fa">More...</a><br /></td></tr>
+<tr class="separator:a9ceaa0f8e0565763e4b097656a7e87fa inherit pub_methods_classMatch"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
@@ -90,6 +97,23 @@ string?&#160;</td><td class="memItemRight" valign="bottom"><b>HomeTeam</b><code>
 <tr class="memitem:a4182b063daa0f556370e85eb8ac165a7"><td class="memItemLeft" align="right" valign="top"><a id="a4182b063daa0f556370e85eb8ac165a7"></a>
 string?&#160;</td><td class="memItemRight" valign="bottom"><b>AwayTeam</b><code> [get]</code></td></tr>
 <tr class="separator:a4182b063daa0f556370e85eb8ac165a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header properties_classMatch"><td colspan="2" onclick="javascript:toggleInherit('properties_classMatch')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="classMatch.html">Match</a></td></tr>
+<tr class="memitem:a521024726846dbb8a1f5349378f63eb6 inherit properties_classMatch"><td class="memItemLeft" align="right" valign="top"><a id="a521024726846dbb8a1f5349378f63eb6"></a>
+uint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatch.html#a521024726846dbb8a1f5349378f63eb6">MatchID</a><code> [get]</code></td></tr>
+<tr class="memdesc:a521024726846dbb8a1f5349378f63eb6 inherit properties_classMatch"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unique identifier for the match. <br /></td></tr>
+<tr class="separator:a521024726846dbb8a1f5349378f63eb6 inherit properties_classMatch"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18ed97ff00981610e8a39cd3833d5297 inherit properties_classMatch"><td class="memItemLeft" align="right" valign="top"><a id="a18ed97ff00981610e8a39cd3833d5297"></a>
+DateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatch.html#a18ed97ff00981610e8a39cd3833d5297">MatchDate</a><code> [get]</code></td></tr>
+<tr class="memdesc:a18ed97ff00981610e8a39cd3833d5297 inherit properties_classMatch"><td class="mdescLeft">&#160;</td><td class="mdescRight">Date and time when the match takes place. <br /></td></tr>
+<tr class="separator:a18ed97ff00981610e8a39cd3833d5297 inherit properties_classMatch"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad989c469ddbbda3d89de507d53fce7b8 inherit properties_classMatch"><td class="memItemLeft" align="right" valign="top"><a id="ad989c469ddbbda3d89de507d53fce7b8"></a>
+string?&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatch.html#ad989c469ddbbda3d89de507d53fce7b8">ResultTeam1</a><code> [get]</code></td></tr>
+<tr class="memdesc:ad989c469ddbbda3d89de507d53fce7b8 inherit properties_classMatch"><td class="mdescLeft">&#160;</td><td class="mdescRight">Result of team 1 in the match. <br /></td></tr>
+<tr class="separator:ad989c469ddbbda3d89de507d53fce7b8 inherit properties_classMatch"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa906e8710d17afe84d8a4169df20d0f5 inherit properties_classMatch"><td class="memItemLeft" align="right" valign="top"><a id="aa906e8710d17afe84d8a4169df20d0f5"></a>
+string?&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatch.html#aa906e8710d17afe84d8a4169df20d0f5">ResultTeam2</a><code> [get]</code></td></tr>
+<tr class="memdesc:aa906e8710d17afe84d8a4169df20d0f5 inherit properties_classMatch"><td class="mdescLeft">&#160;</td><td class="mdescRight">Result of team 2 in the match. <br /></td></tr>
+<tr class="separator:aa906e8710d17afe84d8a4169df20d0f5 inherit properties_classMatch"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/ClassLib/FootballMatch.cs</li>
