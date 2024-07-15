@@ -11,14 +11,15 @@
 \contentsline {subsection}{\numberline {3.1.3}Member Function Documentation}{6}{subsection.3.1.3}%
 \contentsline {subsubsection}{\numberline {3.1.3.1}SendEmail()}{6}{subsubsection.3.1.3.1}%
 \contentsline {section}{\numberline {3.2}Football\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Prediction Class Reference}{6}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Prediction\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Game Class Reference}{7}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Detailed Description}{7}{subsection.3.3.1}%
-\contentsline {subsection}{\numberline {3.3.2}Constructor \& Destructor Documentation}{7}{subsection.3.3.2}%
-\contentsline {subsubsection}{\numberline {3.3.2.1}PredictionGame()}{7}{subsubsection.3.3.2.1}%
-\contentsline {subsection}{\numberline {3.3.3}Member Function Documentation}{7}{subsection.3.3.3}%
-\contentsline {subsubsection}{\numberline {3.3.3.1}Register()}{8}{subsubsection.3.3.3.1}%
-\contentsline {subsubsection}{\numberline {3.3.3.2}SendDailyEmail()}{8}{subsubsection.3.3.3.2}%
-\contentsline {subsubsection}{\numberline {3.3.3.3}Unsubscribe()}{8}{subsubsection.3.3.3.3}%
-\contentsline {subsection}{\numberline {3.3.4}Property Documentation}{8}{subsection.3.3.4}%
-\contentsline {subsubsection}{\numberline {3.3.4.1}PredictionGameID}{8}{subsubsection.3.3.4.1}%
-\contentsline {section}{\numberline {3.4}Score Class Reference}{8}{section.3.4}%
+\contentsline {section}{\numberline {3.3}Prediction Class Reference}{7}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Prediction\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Game Class Reference}{7}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Detailed Description}{8}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}Constructor \& Destructor Documentation}{8}{subsection.3.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.2.1}PredictionGame()}{8}{subsubsection.3.4.2.1}%
+\contentsline {subsection}{\numberline {3.4.3}Member Function Documentation}{8}{subsection.3.4.3}%
+\contentsline {subsubsection}{\numberline {3.4.3.1}Register()}{8}{subsubsection.3.4.3.1}%
+\contentsline {subsubsection}{\numberline {3.4.3.2}SendDailyEmail()}{8}{subsubsection.3.4.3.2}%
+\contentsline {subsubsection}{\numberline {3.4.3.3}Unsubscribe()}{9}{subsubsection.3.4.3.3}%
+\contentsline {subsection}{\numberline {3.4.4}Property Documentation}{9}{subsection.3.4.4}%
+\contentsline {subsubsection}{\numberline {3.4.4.1}PredictionGameID}{9}{subsubsection.3.4.4.1}%
+\contentsline {section}{\numberline {3.5}Score Class Reference}{9}{section.3.5}%
