@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['kleinertaschenrechner_4',['KleinerTaschenrechner',['../classKleinerTaschenrechner.html',1,'']]]
+  ['predictiongame_8',['PredictionGame',['../classPredictionGame.html',1,'']]]
 ];
