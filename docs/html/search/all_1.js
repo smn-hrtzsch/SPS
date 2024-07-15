@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['footballprediction_1',['FootballPrediction',['../classFootballPrediction.html',1,'']]]
+  ['footballmatch_1',['FootballMatch',['../classFootballMatch.html',1,'']]],
+  ['footballprediction_2',['FootballPrediction',['../classFootballPrediction.html',1,'']]]
 ];

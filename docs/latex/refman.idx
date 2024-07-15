@@ -3,17 +3,18 @@
 \indexentry{EmailService@{EmailService}!EmailService@{EmailService}|hyperpage}{5}
 \indexentry{EmailService@{EmailService}!SendEmail@{SendEmail}|hyperpage}{6}
 \indexentry{SendEmail@{SendEmail}!EmailService@{EmailService}|hyperpage}{6}
-\indexentry{FootballPrediction@{FootballPrediction}|hyperpage}{6}
+\indexentry{FootballMatch@{FootballMatch}|hyperpage}{6}
+\indexentry{FootballPrediction@{FootballPrediction}|hyperpage}{7}
 \indexentry{Prediction@{Prediction}|hyperpage}{7}
-\indexentry{PredictionGame@{PredictionGame}|hyperpage}{7}
+\indexentry{PredictionGame@{PredictionGame}|hyperpage}{8}
 \indexentry{PredictionGame@{PredictionGame}!PredictionGame@{PredictionGame}|hyperpage}{8}
 \indexentry{PredictionGame@{PredictionGame}!PredictionGame@{PredictionGame}|hyperpage}{8}
-\indexentry{PredictionGame@{PredictionGame}!Register@{Register}|hyperpage}{8}
-\indexentry{Register@{Register}!PredictionGame@{PredictionGame}|hyperpage}{8}
-\indexentry{PredictionGame@{PredictionGame}!SendDailyEmail@{SendDailyEmail}|hyperpage}{8}
-\indexentry{SendDailyEmail@{SendDailyEmail}!PredictionGame@{PredictionGame}|hyperpage}{8}
-\indexentry{PredictionGame@{PredictionGame}!Unsubscribe@{Unsubscribe}|hyperpage}{8}
-\indexentry{Unsubscribe@{Unsubscribe}!PredictionGame@{PredictionGame}|hyperpage}{8}
+\indexentry{PredictionGame@{PredictionGame}!Register@{Register}|hyperpage}{9}
+\indexentry{Register@{Register}!PredictionGame@{PredictionGame}|hyperpage}{9}
+\indexentry{PredictionGame@{PredictionGame}!SendDailyEmail@{SendDailyEmail}|hyperpage}{9}
+\indexentry{SendDailyEmail@{SendDailyEmail}!PredictionGame@{PredictionGame}|hyperpage}{9}
+\indexentry{PredictionGame@{PredictionGame}!Unsubscribe@{Unsubscribe}|hyperpage}{9}
+\indexentry{Unsubscribe@{Unsubscribe}!PredictionGame@{PredictionGame}|hyperpage}{9}
 \indexentry{PredictionGame@{PredictionGame}!PredictionGameID@{PredictionGameID}|hyperpage}{9}
 \indexentry{PredictionGameID@{PredictionGameID}!PredictionGame@{PredictionGame}|hyperpage}{9}
 \indexentry{Schedule$<$ T $>$@{Schedule$<$ T $>$}|hyperpage}{9}
