@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['match_26',['Match',['../classMatch.html#a9ceaa0f8e0565763e4b097656a7e87fa',1,'Match']]]
+  ['emailservice_38',['EmailService',['../classEmailService.html#af0369894881e3f73d387ff6adb50076c',1,'EmailService']]]
 ];

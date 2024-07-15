@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['register_9',['Register',['../classPredictionGame.html#a9c3eca6ff407cbd6b85faac8f1dddc70',1,'PredictionGame']]],
-  ['resultteam1_10',['ResultTeam1',['../classMatch.html#ad989c469ddbbda3d89de507d53fce7b8',1,'Match']]],
-  ['resultteam2_11',['ResultTeam2',['../classMatch.html#aa906e8710d17afe84d8a4169df20d0f5',1,'Match']]]
+  ['prediction_11',['Prediction',['../classPrediction.html',1,'']]],
+  ['predictiongame_12',['PredictionGame',['../classPredictionGame.html',1,'PredictionGame&lt; T, M &gt;'],['../classPredictionGame.html#a609004bb74636be953890f8e300ac9a0',1,'PredictionGame.PredictionGame(EmailService emailService)']]],
+  ['predictiongameid_13',['PredictionGameID',['../classPredictionGame.html#a7758c15d911e42cc1307f72b03ba96fa',1,'PredictionGame']]]
 ];

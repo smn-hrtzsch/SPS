@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['match_20',['Match',['../classMatch.html',1,'']]]
+  ['match_29',['Match',['../classMatch.html',1,'']]],
+  ['member_30',['Member',['../classMember.html',1,'']]]
 ];

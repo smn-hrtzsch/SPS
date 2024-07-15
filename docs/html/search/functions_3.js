@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['register_28',['Register',['../classPredictionGame.html#a9c3eca6ff407cbd6b85faac8f1dddc70',1,'PredictionGame']]]
+  ['predictiongame_41',['PredictionGame',['../classPredictionGame.html#a609004bb74636be953890f8e300ac9a0',1,'PredictionGame']]]
 ];

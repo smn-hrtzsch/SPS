@@ -1,0 +1,55 @@
+\hypertarget{classMember}{}\doxysection{Member$<$ T, M $>$ Class Template Reference}
+\label{classMember}\index{Member$<$ T, M $>$@{Member$<$ T, M $>$}}
+
+
+Represents a member participating in the Sport \mbox{\hyperlink{classPrediction}{Prediction}} System (SPS).  
+
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classMember_a22219e77f5f9f76eefd5f6c95c629cf1}\label{classMember_a22219e77f5f9f76eefd5f6c95c629cf1}} 
+\mbox{\hyperlink{classMember_a22219e77f5f9f76eefd5f6c95c629cf1}{Member}} (string forname, string surname, string Email\+Address)
+\begin{DoxyCompactList}\small\item\em Initializes a new instance of the \mbox{\hyperlink{classMember}{Member}} class. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classMember_aee2cdc22f653c1a33eb86a5d98c07faf}\label{classMember_aee2cdc22f653c1a33eb86a5d98c07faf}} 
+void \mbox{\hyperlink{classMember_aee2cdc22f653c1a33eb86a5d98c07faf}{Add\+Schedule}} (uint Schedule\+ID)
+\begin{DoxyCompactList}\small\item\em Adds a schedule to the member\textquotesingle{}s list of participating schedules. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classMember_ac4f4c496fff24fa44253da849bd7806f}\label{classMember_ac4f4c496fff24fa44253da849bd7806f}} 
+void \mbox{\hyperlink{classMember_ac4f4c496fff24fa44253da849bd7806f}{Remove\+Schedule}} (uint Schedule\+ID)
+\begin{DoxyCompactList}\small\item\em Removes a schedule from the member\textquotesingle{}s list of participating schedules. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classMember_a92fc05e770587109eead47af71067ab2}\label{classMember_a92fc05e770587109eead47af71067ab2}} 
+void \mbox{\hyperlink{classMember_a92fc05e770587109eead47af71067ab2}{Add\+Prediction}} (uint Prediction\+ID)
+\begin{DoxyCompactList}\small\item\em Adds a prediction to the member\textquotesingle{}s list of predictions to do. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classMember_aaa66a10c3bfebd23b4ade7d32cbf1e21}\label{classMember_aaa66a10c3bfebd23b4ade7d32cbf1e21}} 
+void \mbox{\hyperlink{classMember_aaa66a10c3bfebd23b4ade7d32cbf1e21}{Remove\+Prediction}} (uint Prediction\+ID)
+\begin{DoxyCompactList}\small\item\em Removes a prediction from the member\textquotesingle{}s list of predictions to do. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classMember_a7fe5354795750daf1344bcb76ad5a5d3}\label{classMember_a7fe5354795750daf1344bcb76ad5a5d3}} 
+\mbox{\hyperlink{classPrediction}{Prediction}} \mbox{\hyperlink{classMember_a7fe5354795750daf1344bcb76ad5a5d3}{Search\+Prediction}} (uint Prediction\+ID)
+\begin{DoxyCompactList}\small\item\em Searches for a specific prediction in the member\textquotesingle{}s list. \begin{DoxyReturn}{Returns}
+The prediction if found, otherwise null.
+\end{DoxyReturn}
+\end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classMember_acddda773031c6a8576a477641b3c8e48}\label{classMember_acddda773031c6a8576a477641b3c8e48}} 
+void \mbox{\hyperlink{classMember_acddda773031c6a8576a477641b3c8e48}{Add\+Score}} (Schedule\+Types Predicted\+Schedule)
+\begin{DoxyCompactList}\small\item\em Adds a score to the member\textquotesingle{}s list of scores. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classMember_afc3bb39340ce15eb397f24886d80f89d}\label{classMember_afc3bb39340ce15eb397f24886d80f89d}} 
+void \mbox{\hyperlink{classMember_afc3bb39340ce15eb397f24886d80f89d}{Update\+Score}} (Schedule\+Types Predicted\+Schedule, \mbox{\hyperlink{classPrediction}{Prediction}} prediction)
+\begin{DoxyCompactList}\small\item\em Updates a score in the member\textquotesingle{}s list of scores. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classMember_a872769629920b7177192cda6124ee2ab}\label{classMember_a872769629920b7177192cda6124ee2ab}} 
+uint \mbox{\hyperlink{classMember_a872769629920b7177192cda6124ee2ab}{Member\+ID}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets the unique ID of the member. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Represents a member participating in the Sport \mbox{\hyperlink{classPrediction}{Prediction}} System (SPS). \begin{Desc}
+\item[Type Constraints]\begin{description}
+\item[{\em T} : {\em \mbox{\hyperlink{classPrediction}{Prediction}}}]\item[{\em M} : {\em \mbox{\hyperlink{classMatch}{Match}}}]\end{description}
+\end{Desc}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\+Class\+Lib/Member.\+cs\end{DoxyCompactItemize}
