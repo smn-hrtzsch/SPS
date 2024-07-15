@@ -52,7 +52,7 @@ public class Member<T, M>
     }
 
     /// \brief Searches for a specific prediction in the member's list.
-    /// <returns>The prediction if found, otherwise null.</returns>
+    /// \return The prediction if found, otherwise null.
     public Prediction SearchPrediction(uint PredictionID)
     {
         // Implementation for searching a prediction
