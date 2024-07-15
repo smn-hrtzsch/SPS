@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 
 ///\brief Represents a member participating in the Sport Prediction System (SPS).
-public class Member<T, M> where T : Prediction where M : Match
+public class Member<T, M>
+    where T : Prediction
+    where M : Match
 {
     ///\brief Gets the unique ID of the member.
     public uint MemberID { get; }
