@@ -1,0 +1,54 @@
+name: Generate Doxygen Documentation
+
+on:
+  push:
+    branches:
+      - development
+  pull_request:
+    branches:
+      - development
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+
+    - name: Set up Doxygen and LaTeX
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y doxygen graphviz texlive-full
+
+    - name: Generate Doxygen documentation
+      run: doxygen Doxyfile
+
+    - name: Create necessary directories
+      run: mkdir -p docs/pdf
+
+    - name: Convert LaTeX to PDF
+      run: |
+        cd docs/latex
+        pdflatex refman.tex
+        pdflatex refman.tex # rerun to ensure references are updated
+        mv refman.pdf ../pdf/documentation.pdf
+
+    - name: Deploy to Documentation branch
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git clone --single-branch --branch Documentation https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} Documentation
+        rm -rf Documentation/*
+        mkdir -p Documentation/docs/html Documentation/docs/latex Documentation/docs/pdf
+        cp -r docs/html/* Documentation/docs/html
+        cp -r docs/latex/* Documentation/docs/latex
+        cp docs/pdf/documentation.pdf Documentation/docs/pdf
+        cd Documentation
+        git add .
+        git commit -m "Update documentation" || echo "No changes to commit"
+        git push origin Documentation
