@@ -18,16 +18,18 @@
 \contentsline {subsubsection}{\numberline {3.4.2.1}Match()}{8}{subsubsection.3.4.2.1}%
 \contentsline {section}{\numberline {3.5}Member$<$ T, M $>$ Class Template Reference}{8}{section.3.5}%
 \contentsline {subsection}{\numberline {3.5.1}Detailed Description}{9}{subsection.3.5.1}%
-\contentsline {section}{\numberline {3.6}Prediction Class Reference}{9}{section.3.6}%
+\contentsline {subsection}{\numberline {3.5.2}Member Function Documentation}{9}{subsection.3.5.2}%
+\contentsline {subsubsection}{\numberline {3.5.2.1}SearchPrediction()}{9}{subsubsection.3.5.2.1}%
+\contentsline {section}{\numberline {3.6}Prediction Class Reference}{10}{section.3.6}%
 \contentsline {section}{\numberline {3.7}Prediction\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Game$<$ T, M $>$ Class Template Reference}{10}{section.3.7}%
-\contentsline {subsection}{\numberline {3.7.1}Detailed Description}{10}{subsection.3.7.1}%
+\contentsline {subsection}{\numberline {3.7.1}Detailed Description}{11}{subsection.3.7.1}%
 \contentsline {subsection}{\numberline {3.7.2}Constructor \& Destructor Documentation}{11}{subsection.3.7.2}%
 \contentsline {subsubsection}{\numberline {3.7.2.1}PredictionGame()}{11}{subsubsection.3.7.2.1}%
 \contentsline {subsection}{\numberline {3.7.3}Member Function Documentation}{11}{subsection.3.7.3}%
 \contentsline {subsubsection}{\numberline {3.7.3.1}Register()}{11}{subsubsection.3.7.3.1}%
 \contentsline {subsubsection}{\numberline {3.7.3.2}SendDailyEmail()}{11}{subsubsection.3.7.3.2}%
 \contentsline {subsubsection}{\numberline {3.7.3.3}Unsubscribe()}{11}{subsubsection.3.7.3.3}%
-\contentsline {subsection}{\numberline {3.7.4}Property Documentation}{11}{subsection.3.7.4}%
+\contentsline {subsection}{\numberline {3.7.4}Property Documentation}{12}{subsection.3.7.4}%
 \contentsline {subsubsection}{\numberline {3.7.4.1}PredictionGameID}{12}{subsubsection.3.7.4.1}%
 \contentsline {section}{\numberline {3.8}Schedule$<$ M $>$ Class Template Reference}{12}{section.3.8}%
 \contentsline {subsection}{\numberline {3.8.1}Detailed Description}{12}{subsection.3.8.1}%
