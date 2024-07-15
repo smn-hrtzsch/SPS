@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['predictiongame_9',['PredictionGame',['../classPredictionGame.html',1,'']]]
+  ['footballprediction_10',['FootballPrediction',['../classFootballPrediction.html',1,'']]]
 ];

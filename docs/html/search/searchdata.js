@@ -1,7 +1,7 @@
 var indexSectionsWithContent =
 {
-  0: "eprsu",
-  1: "eps",
+  0: "efprsu",
+  1: "efps",
   2: "eprsu",
   3: "p"
 };
