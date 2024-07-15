@@ -22,4 +22,6 @@
 \contentsline {subsubsection}{\numberline {3.4.3.3}Unsubscribe()}{9}{subsubsection.3.4.3.3}%
 \contentsline {subsection}{\numberline {3.4.4}Property Documentation}{9}{subsection.3.4.4}%
 \contentsline {subsubsection}{\numberline {3.4.4.1}PredictionGameID}{9}{subsubsection.3.4.4.1}%
-\contentsline {section}{\numberline {3.5}Score Class Reference}{9}{section.3.5}%
+\contentsline {section}{\numberline {3.5}Schedule$<$ T $>$ Class Template Reference}{9}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Detailed Description}{9}{subsection.3.5.1}%
+\contentsline {section}{\numberline {3.6}Score Class Reference}{10}{section.3.6}%
