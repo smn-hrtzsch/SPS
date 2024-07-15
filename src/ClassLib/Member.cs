@@ -1,74 +1,55 @@
 using System;
 using System.Collections.Generic;
 
-/// <summary>
-/// Represents a member participating in the Sport Prediction System (SPS).
-/// </summary>
-public class Member
+///\brief Represents a member participating in the Sport Prediction System (SPS).
+public class Member<T, M> where T : Prediction where M : Match
 {
-    /// <summary>
-    /// Gets the unique ID of the member.
-    /// </summary>
+    ///\brief Gets the unique ID of the member.
     public uint MemberID { get; }
 
     private static uint MemberIDCounter = 0;
 
     private string? forename { get; set; }
     private string? surname { get; set; }
-    private string EmailAdress { get; set; }
-    private List<Schedules> ParticipatingSchedules;
-    private List<Prediction> PredictionsToDo;
+    private string EmailAddress { get; set; }
+    private List<Schedule<M>> ParticipatingSchedules;
+    private List<T> PredictionsToDo;
     private List<Score> Scores;
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="Member"/> class.
-    /// </summary>
-    public Member(string forname, string surname, string emailAdress)
+    /// \brief Initializes a new instance of the <see cref="Member"/> class.
+    public Member(string forname, string surname, string EmailAddress)
     {
-        this.forename = forname;
+        this.forename = forename;
         this.surname = surname;
-        this.EmailAdress = emailAdress;
+        this.EmailAddress = EmailAddress;
         MemberID = ++MemberIDCounter;
-        ParticipatingSchedules = new List<Schedules>();
-        PredictionsToDo = new List<Prediction>();
-        Scores = new List<Score>();
     }
 
-    /// <summary>
-    /// Adds a schedule to the member's list of participating schedules.
-    /// </summary>
+    /// \brief Adds a schedule to the member's list of participating schedules.
     public void AddSchedule(uint ScheduleID)
     {
         // Implementation for adding a schedule
     }
 
-    /// <summary>
-    /// Removes a schedule from the member's list of participating schedules.
-    /// </summary>
+    /// \brief Removes a schedule from the member's list of participating schedules.
     public void RemoveSchedule(uint ScheduleID)
     {
         // Implementation for removing a schedule
     }
 
-    /// <summary>
-    /// Adds a prediction to the member's list of predictions to do.
-    /// </summary>
+    /// \brief Adds a prediction to the member's list of predictions to do.
     public void AddPrediction(uint PredictionID)
     {
         // Implementation for adding a prediction
     }
 
-    /// <summary>
-    /// Removes a prediction from the member's list of predictions to do.
-    /// </summary>
+    /// \brief Removes a prediction from the member's list of predictions to do.
     public void RemovePrediction(uint PredictionID)
     {
         // Implementation for removing a prediction
     }
 
-    /// <summary>
-    /// Searches for a specific prediction in the member's list.
-    /// </summary>
+    /// \brief Searches for a specific prediction in the member's list.
     /// <returns>The prediction if found, otherwise null.</returns>
     public Prediction SearchPrediction(uint PredictionID)
     {
@@ -76,17 +57,13 @@ public class Member
         return null;
     }
 
-    /// <summary>
-    /// Adds a score to the member's list of scores.
-    /// </summary>
+    /// \brief Adds a score to the member's list of scores.
     public void AddScore(ScheduleTypes PredictedSchedule)
     {
         // Implementation for adding a score
     }
 
-    /// <summary>
-    /// Updates a score in the member's list of scores.
-    /// </summary>
+    /// \brief Updates a score in the member's list of scores.
     public void UpdateScore(ScheduleTypes PredictedSchedule, Prediction prediction)
     {
         // Implementation for updating a score

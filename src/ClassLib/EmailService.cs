@@ -3,7 +3,7 @@ using System;
 /// <summary>
 /// Provides functionality to send emails using SMTP.
 /// </summary>
-class EmailService
+public class EmailService
 {
     /// <summary>
     /// Gets or sets the SMTP server address.
