@@ -1,11 +1,11 @@
 using System;
 
-enum ScheduleTypes
+public enum ScheduleTypes
 {
     EM_2024
 }
 
-enum MatchTypes
+public enum MatchTypes
 {
     Normal,
     KO,
