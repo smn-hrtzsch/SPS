@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['resultteam1_54',['ResultTeam1',['../classMatch.html#ad989c469ddbbda3d89de507d53fce7b8',1,'Match']]],
-  ['resultteam2_55',['ResultTeam2',['../classMatch.html#aa906e8710d17afe84d8a4169df20d0f5',1,'Match']]]
+  ['resultteam1_41',['ResultTeam1',['../classMatch.html#ad8acf6bcb6478595930f1dfcb26ba047',1,'Match']]],
+  ['resultteam2_42',['ResultTeam2',['../classMatch.html#ac9578633d6013c209ae659014d38653a',1,'Match']]]
 ];
