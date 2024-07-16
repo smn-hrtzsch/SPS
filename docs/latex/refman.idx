@@ -1,28 +1,27 @@
-\indexentry{CSVReader$<$ M $>$@{CSVReader$<$ M $>$}|hyperpage}{5}
-\indexentry{CSVReader$<$ M $>$@{CSVReader$<$ M $>$}!GetMatchDataFromCsvFile@{GetMatchDataFromCsvFile}|hyperpage}{5}
-\indexentry{GetMatchDataFromCsvFile@{GetMatchDataFromCsvFile}!CSVReader$<$ M $>$@{CSVReader$<$ M $>$}|hyperpage}{5}
-\indexentry{CSVWriter$<$ M $>$@{CSVWriter$<$ M $>$}|hyperpage}{6}
-\indexentry{EmailService@{EmailService}|hyperpage}{6}
-\indexentry{EmailService@{EmailService}!EmailService@{EmailService}|hyperpage}{6}
-\indexentry{EmailService@{EmailService}!EmailService@{EmailService}|hyperpage}{6}
-\indexentry{EmailService@{EmailService}!SendEmail@{SendEmail}|hyperpage}{7}
-\indexentry{SendEmail@{SendEmail}!EmailService@{EmailService}|hyperpage}{7}
-\indexentry{FootballMatch@{FootballMatch}|hyperpage}{7}
-\indexentry{FootballPrediction@{FootballPrediction}|hyperpage}{8}
-\indexentry{Match@{Match}|hyperpage}{8}
-\indexentry{Match@{Match}!Match@{Match}|hyperpage}{9}
-\indexentry{Match@{Match}!Match@{Match}|hyperpage}{9}
-\indexentry{Prediction@{Prediction}|hyperpage}{9}
-\indexentry{PredictionGame@{PredictionGame}|hyperpage}{10}
-\indexentry{PredictionGame@{PredictionGame}!PredictionGame@{PredictionGame}|hyperpage}{10}
-\indexentry{PredictionGame@{PredictionGame}!PredictionGame@{PredictionGame}|hyperpage}{10}
-\indexentry{PredictionGame@{PredictionGame}!Register@{Register}|hyperpage}{11}
-\indexentry{Register@{Register}!PredictionGame@{PredictionGame}|hyperpage}{11}
-\indexentry{PredictionGame@{PredictionGame}!SendDailyEmail@{SendDailyEmail}|hyperpage}{11}
-\indexentry{SendDailyEmail@{SendDailyEmail}!PredictionGame@{PredictionGame}|hyperpage}{11}
-\indexentry{PredictionGame@{PredictionGame}!Unsubscribe@{Unsubscribe}|hyperpage}{11}
-\indexentry{Unsubscribe@{Unsubscribe}!PredictionGame@{PredictionGame}|hyperpage}{11}
-\indexentry{PredictionGame@{PredictionGame}!PredictionGameID@{PredictionGameID}|hyperpage}{11}
-\indexentry{PredictionGameID@{PredictionGameID}!PredictionGame@{PredictionGame}|hyperpage}{11}
-\indexentry{Schedule$<$ T $>$@{Schedule$<$ T $>$}|hyperpage}{11}
+\indexentry{EmailService@{EmailService}|hyperpage}{5}
+\indexentry{EmailService@{EmailService}!EmailService@{EmailService}|hyperpage}{5}
+\indexentry{EmailService@{EmailService}!EmailService@{EmailService}|hyperpage}{5}
+\indexentry{EmailService@{EmailService}!SendEmail@{SendEmail}|hyperpage}{6}
+\indexentry{SendEmail@{SendEmail}!EmailService@{EmailService}|hyperpage}{6}
+\indexentry{FootballMatch@{FootballMatch}|hyperpage}{6}
+\indexentry{FootballPrediction@{FootballPrediction}|hyperpage}{7}
+\indexentry{Match@{Match}|hyperpage}{7}
+\indexentry{Match@{Match}!Match@{Match}|hyperpage}{8}
+\indexentry{Match@{Match}!Match@{Match}|hyperpage}{8}
+\indexentry{Member$<$ T, M $>$@{Member$<$ T, M $>$}|hyperpage}{8}
+\indexentry{Member$<$ T, M $>$@{Member$<$ T, M $>$}!SearchPrediction@{SearchPrediction}|hyperpage}{9}
+\indexentry{SearchPrediction@{SearchPrediction}!Member$<$ T, M $>$@{Member$<$ T, M $>$}|hyperpage}{9}
+\indexentry{Prediction@{Prediction}|hyperpage}{10}
+\indexentry{PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}|hyperpage}{10}
+\indexentry{PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}!PredictionGame@{PredictionGame}|hyperpage}{11}
+\indexentry{PredictionGame@{PredictionGame}!PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}|hyperpage}{11}
+\indexentry{PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}!Register@{Register}|hyperpage}{11}
+\indexentry{Register@{Register}!PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}|hyperpage}{11}
+\indexentry{PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}!SendDailyEmail@{SendDailyEmail}|hyperpage}{11}
+\indexentry{SendDailyEmail@{SendDailyEmail}!PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}|hyperpage}{11}
+\indexentry{PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}!Unsubscribe@{Unsubscribe}|hyperpage}{11}
+\indexentry{Unsubscribe@{Unsubscribe}!PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}|hyperpage}{11}
+\indexentry{PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}!PredictionGameID@{PredictionGameID}|hyperpage}{12}
+\indexentry{PredictionGameID@{PredictionGameID}!PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}|hyperpage}{12}
+\indexentry{Schedule$<$ M $>$@{Schedule$<$ M $>$}|hyperpage}{12}
 \indexentry{Score@{Score}|hyperpage}{12}
