@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Net.Mail;
 
 /// \brief Provides functionality to send emails using SMTP
@@ -10,6 +11,7 @@ public class EmailService
     /// \brief Gets or sets the SMTP server port.
     private int SmtpPort { get; set; }
 
+    // Implementation for sending email goes here
     /// \brief Gets or sets the username for SMTP authentication.
     private string Username { get; set; }
 
@@ -21,20 +23,42 @@ public class EmailService
     /// \param smtpPort The SMTP server port.
     /// \param username The username for SMTP authentication.
     /// \param password The password for SMTP authentication.
-    public EmailService(string SmtpServer, int SmtpPort, string Username, string Password)
+    public EmailService()
     {
-        SmtpServer = SmtpServer;
-        SmtpPort = SmtpPort;
-        Username = Username;
-        Password = Password;
+        SmtpServer = "smtp.gmail.com";
+        SmtpPort = 587;
+        Username = "sportspredictionsystem@gmail.com";
+        Password = "ijktczbomupswmrs";
     }
 
     /// \brief Sends an email.
     /// \param recipient The recipient's email address.
     /// \param subject The subject of the email.
     /// \param content The content of the email.
-    public void SendEmail(string recipient, string subject, string content)
+
+    public void SendEmail(string Recipient, string Sender, string Subject, string Content)
     {
-        // Implementation for sending email goes here
+        MailMessage Email = new MailMessage();
+        Email.From = new MailAddress(Sender);
+        Email.To.Add(Recipient);
+        Email.Subject = Subject;
+        Email.Body = Content;
+
+        SmtpClient MailClient = new SmtpClient(SmtpServer, SmtpPort);
+        MailClient.EnableSsl = true;
+        MailClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+        MailClient.UseDefaultCredentials = false;
+        MailClient.Credentials = new System.Net.NetworkCredential(Username, Password);
+
+        MailClient.Send(Email);
+        Console.WriteLine("Email sent successfully.");
     }
 }
+
+
+// Beispielaufruf
+//EmailService HeutigeMail = new EmailService(smtp.gmail.com, 587, artimmeyer@gmail.com, SPSistCoolPW#987)
+//SendEmail("DreamCustomer@online.de", "SportsPredictionSystem@gmail.com", "test email", "Hallo Jose. Diese Mail wird per C# gesendet!")
+
+//Account Passwort: SPSistCoolPW#987ijkt
+//App Passwort: czbo mups wmrs

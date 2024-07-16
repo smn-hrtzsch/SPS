@@ -16,6 +16,7 @@ public class PredictionGame<T, M>
     private static uint PredictionGameIDCounter = 0;
 
     private List<Member<T, M>> Members { get; set; }
+
     public List<ScheduleTypes> ScheduleTypes { get; }
 
     private EmailService email_service { get; set; }
