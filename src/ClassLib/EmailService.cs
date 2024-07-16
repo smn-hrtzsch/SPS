@@ -10,7 +10,8 @@ public class EmailService
 
     /// \brief Gets or sets the SMTP server port.
     private int SmtpPort { get; set; }
-// Implementation for sending email goes here
+
+    // Implementation for sending email goes here
     /// \brief Gets or sets the username for SMTP authentication.
     private string Username { get; set; }
 
@@ -58,5 +59,5 @@ public class EmailService
 //EmailService HeutigeMail = new EmailService(smtp.gmail.com, 587, artimmeyer@gmail.com, SPSistCoolPW#987)
 //SendEmail("DreamCustomer@online.de", "SportsPredictionSystem@gmail.com", "test email", "Hallo Jose. Diese Mail wird per C# gesendet!")
 
-//Account Passwort: SPSistCoolPW#987ijkt 
+//Account Passwort: SPSistCoolPW#987ijkt
 //App Passwort: czbo mups wmrs
