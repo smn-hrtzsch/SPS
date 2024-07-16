@@ -4,7 +4,9 @@ using System.Collections.Generic;
 /// <summary>
 /// Represents a prediction game in the Sport Prediction System (SPS).
 /// </summary>
-public class PredictionGame
+public class PredictionGame<T, M>
+    where T : Prediction
+    where M : Match
 {
     /// <summary>
     /// Gets the unique ID of the prediction game.
@@ -13,7 +15,8 @@ public class PredictionGame
 
     private static uint PredictionGameIDCounter = 0;
 
-    private List<Member> Members { get; set; }
+    private List<Member<T, M>> Members { get; set; }
+
     public List<ScheduleTypes> ScheduleTypes { get; }
 
     private EmailService email_service { get; set; }
@@ -32,7 +35,7 @@ public class PredictionGame
     /// <summary>
     /// Registers a new member to the prediction game.
     /// </summary>
-    public void Register(Member member)
+    public void Register(Member<T, M> member)
     {
         // ChatGPT Vorschlag --> Members.Add(member);
     }

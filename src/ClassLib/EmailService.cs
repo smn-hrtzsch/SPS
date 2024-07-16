@@ -35,6 +35,7 @@ public class EmailService
     /// \param recipient The recipient's email address.
     /// \param subject The subject of the email.
     /// \param content The content of the email.
+
     public void SendEmail(string Recipient, string Sender, string Subject, string Content)
     {
         MailMessage Email = new MailMessage();
