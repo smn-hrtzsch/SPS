@@ -5,7 +5,7 @@ public class FootballPrediction : Prediction
     private byte PreditcionHome { get; set; }
     private byte PredictionAway { get; set; }
 
-    public FootballPrediction(uint MemberID, int MatchID, byte PredictionHome, byte PredictionAway)
+    public FootballPrediction(uint MemberID, uint MatchID, byte PredictionHome, byte PredictionAway)
         : base(MemberID, MatchID)
     {
         // code

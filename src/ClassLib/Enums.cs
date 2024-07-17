@@ -5,7 +5,7 @@ public enum SportsTypes
     Football
 }
 
-public enum FootballScheduleTypes
+public enum ScheduleTypes
 {
     EM_2024
 }
