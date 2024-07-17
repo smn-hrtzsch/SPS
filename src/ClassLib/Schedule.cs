@@ -16,13 +16,13 @@ public class Schedule<M>
         // code
     }
 
-    List<M> GetMatchesFromCsvFile(string PathToCsvFile, ScheduleTypes schedule_type)
+    List<M> GetMatchesFromCsvFile(string PathToCsvFile, SportsTypes sport_type)
     {
-        // code
+        return null;
     }
 
     List<M> GetMatchesOnDay(DateTime date)
     {
-        // code
+       return null;
     }
 }
