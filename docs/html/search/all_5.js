@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['register_14',['Register',['../classPredictionGame.html#a40e4a259eab73d0dace1f4708f7511e4',1,'PredictionGame']]],
-  ['removeprediction_15',['RemovePrediction',['../classMember.html#aaa66a10c3bfebd23b4ade7d32cbf1e21',1,'Member']]],
-  ['removeschedule_16',['RemoveSchedule',['../classMember.html#ac4f4c496fff24fa44253da849bd7806f',1,'Member']]],
-  ['resultteam1_17',['ResultTeam1',['../classMatch.html#ad989c469ddbbda3d89de507d53fce7b8',1,'Match']]],
-  ['resultteam2_18',['ResultTeam2',['../classMatch.html#aa906e8710d17afe84d8a4169df20d0f5',1,'Match']]]
+  ['match_9',['Match',['../classMatch.html',1,'Match'],['../classMatch.html#ab999e43735c5ebbf9284b5a1f98fd57b',1,'Match.Match(string PathToMatchDataCsvFile, int line_number)']]],
+  ['matchdate_10',['MatchDate',['../classMatch.html#a18ed97ff00981610e8a39cd3833d5297',1,'Match']]],
+  ['matchid_11',['MatchID',['../classMatch.html#a521024726846dbb8a1f5349378f63eb6',1,'Match']]],
+  ['member_12',['Member',['../classMember.html',1,'Member&lt; T, M &gt;'],['../classMember.html#a22219e77f5f9f76eefd5f6c95c629cf1',1,'Member.Member(string forname, string surname, string EmailAddress)']]],
+  ['memberid_13',['MemberID',['../classMember.html#a872769629920b7177192cda6124ee2ab',1,'Member']]]
 ];
