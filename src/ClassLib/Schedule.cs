@@ -4,25 +4,32 @@ using System.Collections.Generic;
 /// \brief Generic class Schedule which represents a tournament.
 /// \details It contains a list of all the matches which take place during the tournament.
 /// \details Added to that it also contains a list of all the matches on the specific day of the tournament.
-public class Schedule<M>
-    where M : Match
+public class Schedule 
 {
     public ScheduleTypes ScheduleID { get; }
-    public List<M> Matches { get; }
-    public List<M> MatchesOnDay { get; }
+    public List<Match> Matches { get; }
 
-    public Schedule(ScheduleTypes schedule_type, string PathToCsvFile)
+    public Schedule(string PathToCsvFile, SportsTypes sport_type, ScheduleTypes schedule_type)
     {
-        // code
+        this.ScheduleID = schedule_type;
+        this.Matches = GetMatchesFromCsvFile(PathToCsvFile, sport_type);
     }
 
-    List<M> GetMatchesFromCsvFile(string PathToCsvFile, SportsTypes sport_type)
+    public List<Match> GetMatchesFromCsvFile(string PathToCsvFile, SportsTypes sport_type)
     {
-        return null;
+        return CSVReader<Match>.GetScheduleFromCsvFile(PathToCsvFile, sport_type);
     }
 
-    List<M> GetMatchesOnDay(DateTime date)
+    public List<Match> GetMatchesOnDay()
     {
-        return null;
+        List<Match> MatchesOnDay = new List<Match>();
+        foreach(var match in Matches)
+        {
+            if(DateTime.Today == match.MatchDate.Date)
+            {
+                MatchesOnDay.Add(match);
+            }
+        }
+        return MatchesOnDay;
     }
 }
