@@ -27,6 +27,14 @@ public class FootballMatch : Match
 
     public override string ToString()
     {
-        return $"{this.MatchID};{this.MatchDate};{this.HomeTeam};{this.AwayTeam};{this.ResultTeam1};{this.ResultTeam2};{this.ResultHomeTeamPenalties};{this.ResultAwayTeamPenalties}";
+        string mi = $"{this.MatchID}";
+        string md = $"{this.MatchDate}";
+        string ht = $"{this.HomeTeam}";
+        string at = $"{this.AwayTeam}";
+        string rt1 = $"{this.ResultTeam1}";
+        string rt2 = $"{this.ResultTeam2}";
+        string rhtp = $"{this.ResultHomeTeamPenalties}";
+        string ratp = $"{this.ResultAwayTeamPenalties}";
+        return $"{mi};{md};{ht};{at};{rt1};{rt2};{rhtp};{ratp}";
     }
 }
