@@ -1,5 +1,10 @@
 using System;
 
+public enum SportsTypes
+{
+    Football
+}
+
 public enum ScheduleTypes
 {
     EM_2024

@@ -12,8 +12,8 @@ public class Score
         // code
     }
 
-    public CalculateScore(ScheduleTypes PredictedSchedule, Prediction prediction)
+    public int CalculateScore(ScheduleTypes PredictedSchedule, Prediction prediction)
     {
-        // code
+        return 0;
     }
 }

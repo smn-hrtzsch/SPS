@@ -15,6 +15,6 @@ public abstract class Prediction
 
     public bool ValidatePrediction()
     {
-        // code
+        return true;
     }
 }
