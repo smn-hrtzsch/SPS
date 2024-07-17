@@ -85,4 +85,16 @@ public class UnitTest1
 
         Assert.False(File.Exists(testFilePath), "CSV file was not deleted.");
     }
+      
+    [Fact]
+    public static void TestMail()
+    {
+        EmailService HeutigeMail = new EmailService();
+        HeutigeMail.SendEmail(
+            "artimmeyer@gmail.com",
+            "sportspredictionsystem@gmail.com",
+            "test email",
+            "Hallo Artim. Diese Mail wird per C# gesendet!"
+        );
+    }
 }
