@@ -23,6 +23,6 @@ public class Schedule<M>
 
     List<M> GetMatchesOnDay(DateTime date)
     {
-       return null;
+        return null;
     }
 }
