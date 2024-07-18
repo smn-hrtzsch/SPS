@@ -24,17 +24,17 @@
 \contentsline {subsection}{\numberline {3.7.1}Detailed Description}{10}{subsection.3.7.1}%
 \contentsline {subsection}{\numberline {3.7.2}Member Function Documentation}{10}{subsection.3.7.2}%
 \contentsline {subsubsection}{\numberline {3.7.2.1}SearchPrediction()}{10}{subsubsection.3.7.2.1}%
-\contentsline {section}{\numberline {3.8}Prediction Class Reference}{10}{section.3.8}%
+\contentsline {section}{\numberline {3.8}Prediction Class Reference}{11}{section.3.8}%
 \contentsline {section}{\numberline {3.9}Prediction\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Game$<$ T, M $>$ Class Template Reference}{11}{section.3.9}%
-\contentsline {subsection}{\numberline {3.9.1}Detailed Description}{11}{subsection.3.9.1}%
-\contentsline {subsection}{\numberline {3.9.2}Constructor \& Destructor Documentation}{11}{subsection.3.9.2}%
+\contentsline {subsection}{\numberline {3.9.1}Detailed Description}{12}{subsection.3.9.1}%
+\contentsline {subsection}{\numberline {3.9.2}Constructor \& Destructor Documentation}{12}{subsection.3.9.2}%
 \contentsline {subsubsection}{\numberline {3.9.2.1}PredictionGame()}{12}{subsubsection.3.9.2.1}%
 \contentsline {subsection}{\numberline {3.9.3}Member Function Documentation}{12}{subsection.3.9.3}%
 \contentsline {subsubsection}{\numberline {3.9.3.1}Register()}{12}{subsubsection.3.9.3.1}%
 \contentsline {subsubsection}{\numberline {3.9.3.2}SendDailyEmail()}{12}{subsubsection.3.9.3.2}%
-\contentsline {subsubsection}{\numberline {3.9.3.3}Unsubscribe()}{12}{subsubsection.3.9.3.3}%
-\contentsline {subsection}{\numberline {3.9.4}Property Documentation}{12}{subsection.3.9.4}%
-\contentsline {subsubsection}{\numberline {3.9.4.1}PredictionGameID}{12}{subsubsection.3.9.4.1}%
+\contentsline {subsubsection}{\numberline {3.9.3.3}Unsubscribe()}{13}{subsubsection.3.9.3.3}%
+\contentsline {subsection}{\numberline {3.9.4}Property Documentation}{13}{subsection.3.9.4}%
+\contentsline {subsubsection}{\numberline {3.9.4.1}PredictionGameID}{13}{subsubsection.3.9.4.1}%
 \contentsline {section}{\numberline {3.10}Schedule$<$ M $>$ Class Template Reference}{13}{section.3.10}%
 \contentsline {subsection}{\numberline {3.10.1}Detailed Description}{13}{subsection.3.10.1}%
-\contentsline {section}{\numberline {3.11}Score Class Reference}{13}{section.3.11}%
+\contentsline {section}{\numberline {3.11}Score Class Reference}{14}{section.3.11}%
