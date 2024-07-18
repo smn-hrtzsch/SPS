@@ -1,20 +1,33 @@
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 public abstract class Prediction
 {
     public uint PredictionID { get; }
-    private static uint PredictionIDCounter = 0;
     public uint MemberID { get; }
-    public uint MatchID { get; }
-    public DateTime PredictionDate { get; }
+    public Match PredictedMatch { get; }
+    protected DateTime PredictionDate { get; set; }
 
-    public Prediction(uint MemberID, uint MatchID)
+    public Prediction(uint member_id, Match predicted_match, DateTime predictionDate)
     {
-        // code
+        MemberID = member_id;
+        PredictedMatch = predicted_match;
+        PredictionDate = predictionDate;
+        PredictionID = (uint)GetHashCode();
     }
 
     public bool ValidatePrediction()
     {
-        return true;
+        return PredictionDate < PredictedMatch.MatchDate;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(PredictedMatch.GetHashCode(), PredictionDate);
+    }
+
+    public override string ToString()
+    {
+        return $"{PredictionID}, {MemberID}, {PredictedMatch.ToString()}, {PredictionDate}";
     }
 }
