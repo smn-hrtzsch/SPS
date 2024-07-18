@@ -15,17 +15,17 @@
 \indexentry{Member$<$ T, M $>$@{Member$<$ T, M $>$}|hyperpage}{9}
 \indexentry{Member$<$ T, M $>$@{Member$<$ T, M $>$}!SearchPrediction@{SearchPrediction}|hyperpage}{10}
 \indexentry{SearchPrediction@{SearchPrediction}!Member$<$ T, M $>$@{Member$<$ T, M $>$}|hyperpage}{10}
-\indexentry{Prediction@{Prediction}|hyperpage}{10}
+\indexentry{Prediction@{Prediction}|hyperpage}{11}
 \indexentry{PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}|hyperpage}{11}
-\indexentry{PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}!PredictionGame@{PredictionGame}|hyperpage}{11}
-\indexentry{PredictionGame@{PredictionGame}!PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}|hyperpage}{11}
+\indexentry{PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}!PredictionGame@{PredictionGame}|hyperpage}{12}
+\indexentry{PredictionGame@{PredictionGame}!PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}|hyperpage}{12}
 \indexentry{PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}!Register@{Register}|hyperpage}{12}
 \indexentry{Register@{Register}!PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}|hyperpage}{12}
 \indexentry{PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}!SendDailyEmail@{SendDailyEmail}|hyperpage}{12}
 \indexentry{SendDailyEmail@{SendDailyEmail}!PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}|hyperpage}{12}
 \indexentry{PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}!Unsubscribe@{Unsubscribe}|hyperpage}{12}
 \indexentry{Unsubscribe@{Unsubscribe}!PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}|hyperpage}{12}
-\indexentry{PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}!PredictionGameID@{PredictionGameID}|hyperpage}{12}
-\indexentry{PredictionGameID@{PredictionGameID}!PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}|hyperpage}{12}
+\indexentry{PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}!PredictionGameID@{PredictionGameID}|hyperpage}{13}
+\indexentry{PredictionGameID@{PredictionGameID}!PredictionGame$<$ T, M $>$@{PredictionGame$<$ T, M $>$}|hyperpage}{13}
 \indexentry{Schedule$<$ M $>$@{Schedule$<$ M $>$}|hyperpage}{13}
-\indexentry{Score@{Score}|hyperpage}{13}
+\indexentry{Score@{Score}|hyperpage}{14}
