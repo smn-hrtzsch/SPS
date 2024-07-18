@@ -2,21 +2,40 @@ using System;
 
 public class FootballPrediction : Prediction
 {
-    private byte PreditcionHome { get; set; }
+    private byte PredictionHome { get; set; }
     private byte PredictionAway { get; set; }
 
-    public FootballPrediction(uint MemberID, uint MatchID, byte PredictionHome, byte PredictionAway)
-        : base(MemberID, MatchID)
+    public FootballPrediction(
+        uint MemberID,
+        FootballMatch football_match,
+        DateTime predictionDate,
+        byte prediction_home,
+        byte prediction_away
+    )
+        : base(MemberID, football_match, predictionDate)
     {
-        // code
+        PredictionHome = prediction_home;
+        PredictionAway = prediction_away;
     }
 
-    public void ChangePrediction(
-        uint? NewPredictionHome,
-        uint? NewPredictionAway,
-        uint PredictionID
-    )
+    public void ChangePrediction(byte? NewPredictionHome, byte? NewPredictionAway)
     {
-        // code
+        PredictionDate = DateTime.Now;
+        if (ValidatePrediction())
+        {
+            if (NewPredictionHome != null)
+            {
+                PredictionHome = (byte)NewPredictionHome;
+            }
+            if (NewPredictionAway != null)
+            {
+                PredictionAway = (byte)NewPredictionAway;
+            }
+        }
+    }
+
+    public override string ToString()
+    {
+        return base.ToString() + $", {PredictionHome}, {PredictionAway}";
     }
 }
