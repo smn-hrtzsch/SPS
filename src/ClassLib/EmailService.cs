@@ -57,8 +57,8 @@ public class EmailService
 
 
 // Beispielaufruf
-//EmailService HeutigeMail = new EmailService(smtp.gmail.com, 587, artimmeyer@gmail.com, SPSistCoolPW#987)
-//SendEmail("DreamCustomer@online.de", "SportsPredictionSystem@gmail.com", "test email", "Hallo Jose. Diese Mail wird per C# gesendet!")
+//EmailService HeutigeMail = new EmailService(smtp.gmail.com, 587, dream.customer@gmail.com, ijktczbomupswmrs)
+//SendEmail("dream.customer@gmail.com", "sportspredictionsystem@gmail.com", "test email", "Hallo Jose. Diese Mail wird per C# gesendet!")
+// siehe ClassLib.Tests
 
-//Account Passwort: SPSistCoolPW#987ijkt
-//App Passwort: czbo mups wmrs
+//App Passwort: ijktczbomupswmrs
