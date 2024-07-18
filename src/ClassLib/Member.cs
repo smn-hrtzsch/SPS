@@ -10,7 +10,7 @@ public class Member
     private string? surname { get; set; }
     private string EmailAddress { get; set; }
     private string password { get; set; }
-    private List<Schedule> ParticipatingSchedules;
+    public List<Schedule> ParticipatingSchedules {get;}
     private List<Match> PredictionsToDo { get; }
     private List<Prediction> PredictionsDone { get; }
     private List<Score> Scores;
@@ -50,7 +50,7 @@ public class Member
             }
             else
             {
-                throw new InvalidOperationException("Schedule Typ is not included in 'ParticipatingSchedules'-List");
+                throw new InvalidOperationException("Schedule is not included in 'ParticipatingSchedules'-List");
             }
         }
     }
@@ -86,19 +86,54 @@ public class Member
     /// \return The prediction if found, otherwise null.
     public Prediction SearchPrediction(uint PredictionID)
     {
-        // Implementation for searching a prediction
-        return null;
+        Prediction? searchedprediction = null;
+        foreach(var prediction in PredictionsDone)
+        {
+            if(prediction.PredictionID == PredictionID)
+            {
+                searchedprediction = prediction;
+            }
+
+            else
+            {
+                throw new InvalidOperationException("Prediction is not included in 'PredictionsDone'-List");
+            } 
+        }
+
+        return searchedprediction;
     }
 
     /// \brief Adds a score to the member's list of scores.
-    public void AddScore(ScheduleTypes PredictedSchedule)
+    public void AddScore(Score MatchScore, uint PredictionID)
     {
-        // Implementation for adding a score
+        foreach(var prediction in PredictionsDone)
+        {
+            if(prediction.PredictionID == PredictionID)
+            {
+                Scores.Add(MatchScore);
+            }
+
+            else
+            {
+                throw new InvalidOperationException("The corresponding Prediction could not found relating to it's PredictionID");
+            }
+        }
     }
 
     /// \brief Updates a score in the member's list of scores.
-    public void UpdateScore(ScheduleTypes PredictedSchedule, Prediction prediction)
+    public void UpdateScore(uint SocreID, string NewScore)
     {
-        // Implementation for updating a score
+        foreach(var score in Scores)
+        {
+            if(score.ScoreID == SocreID)
+            {
+                score.AmountOfPoints = NewScore; 
+            }
+
+            else
+            {
+                throw new InvalidOperationException("The corresponding Score could not be found in the 'Score' List relating to it's ScoreID");
+            }
+        }
     }
 }
