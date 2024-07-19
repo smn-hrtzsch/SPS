@@ -51,7 +51,6 @@ public class EmailService
         MailClient.Credentials = new System.Net.NetworkCredential(Username, Password);
 
         MailClient.Send(Email);
-        Console.WriteLine("Email sent successfully.");
     }
 }
 
