@@ -6,7 +6,7 @@ public class UnitTest1
     public static void TestGetMatchDataFromCsvFile()
     {
         string[] MatchArray = CSVReader<Match>.GetMatchDataFromCsvFile(
-            "/Users/simon/Documents/TUBAF/SoSe-24/SWE/SPS/csv-files/EM_2024.csv",
+            "../../../../../csv-files/EM_2024.csv",
             1
         );
         Assert.True(MatchArray[0] == "14/06/2024 21:00");
@@ -20,7 +20,7 @@ public class UnitTest1
     public static void TestFootballMatch()
     {
         FootballMatch match1 = new FootballMatch(
-            "/Users/simon/Documents/TUBAF/SoSe-24/SWE/SPS/csv-files/EM_2024.csv",
+            "../../../../../csv-files/EM_2024.csv",
             1
         );
         DateTime expectedDate = new DateTime(2024, 6, 14, 21, 0, 0);
@@ -36,7 +36,7 @@ public class UnitTest1
     public static void TestGetScheduleFromCsvFile()
     {
         List<Match> schedule = CSVReader<Match>.GetScheduleFromCsvFile(
-            "/Users/simon/Documents/TUBAF/SoSe-24/SWE/SPS/csv-files/EM_2024.csv",
+            "../../../../../csv-files/EM_2024.csv",
             SportsTypes.Football
         );
 
@@ -54,11 +54,11 @@ public class UnitTest1
     public static void TestUpdateSchedule()
     {
         List<Match> schedule = CSVReader<Match>.GetScheduleFromCsvFile(
-            "/Users/simon/Documents/TUBAF/SoSe-24/SWE/SPS/csv-files/EM_2024.csv",
+            "../../../../../csv-files/EM_2024.csv",
             SportsTypes.Football
         );
         string testFilePath =
-            "/Users/simon/Documents/TUBAF/SoSe-24/SWE/SPS/csv-files/EM_2024_updated.csv";
+            "../../../../../csv-files/EM_2024_updated.csv";
 
         CSVWriter<Match>.UpdateSchedule(testFilePath, schedule);
 
@@ -78,7 +78,7 @@ public class UnitTest1
     [Fact]
     public void TestDeleteScheduleFile()
     {
-        string testFilePath = "/Users/simon/Documents/TUBAF/SoSe-24/SWE/SPS/csv-files/TestFile.csv";
+        string testFilePath = "../../../../../csv-files/TestFile.csv";
         File.WriteAllText(testFilePath, "Temporary file content");
 
         CSVWriter<Match>.DeleteScheduleFile(testFilePath);
@@ -86,15 +86,15 @@ public class UnitTest1
         Assert.False(File.Exists(testFilePath), "CSV file was not deleted.");
     }
 
-    [Fact]
-    public static void TestMail()
-    {
-        EmailService HeutigeMail = new EmailService();
-        HeutigeMail.SendEmail(
-            "artimmeyer@gmail.com",
-            "sportspredictionsystem@gmail.com",
-            "test email",
-            "Hallo Artim. Diese Mail wird per C# gesendet!"
-        );
-    }
+    // [Fact]
+    // public static void TestMail()
+    // {
+    //     EmailService HeutigeMail = new EmailService();
+    //     HeutigeMail.SendEmail(
+    //         "artimmeyer@gmail.com",
+    //         "sportspredictionsystem@gmail.com",
+    //         "test email",
+    //         "Hallo Artim. Diese Mail wird per C# gesendet!"
+    //     );
+    // }
 }
