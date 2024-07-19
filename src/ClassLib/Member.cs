@@ -42,15 +42,17 @@ public class Member
     /// \brief Removes a schedule from the member's list of participating schedules.
     public void RemoveParticipatingSchedule(ScheduleTypes schedule_type)
     {
-        foreach(var schedule in ParticipatingSchedules)
+        foreach (var schedule in ParticipatingSchedules)
         {
-            if(schedule.ScheduleID == schedule_type)
+            if (schedule.ScheduleID == schedule_type)
             {
                 ParticipatingSchedules.Remove(schedule);
             }
             else
             {
-                throw new InvalidOperationException("Schedule is not included in 'ParticipatingSchedules'-List");
+                throw new InvalidOperationException(
+                    "Schedule Typ is not included in 'ParticipatingSchedules'-List"
+                );
             }
         }
     }
@@ -58,28 +60,27 @@ public class Member
     /// \brief Adds a prediction to the member's list of predictions to do.
     public void AddPredictionToDo()
     {
-        foreach(Schedule schedule in ParticipatingSchedules)
+        foreach (Schedule schedule in ParticipatingSchedules)
         {
             List<Match> MatchesOnDay = schedule.GetMatchesOnDay();
 
-            foreach(Match match in MatchesOnDay)
+            foreach (Match match in MatchesOnDay)
             {
                 PredictionsToDo.Add(match);
             }
-        }   
+        }
     }
 
     /// \brief Removes a prediction from the member's list of predictions to do.
     public void RemovePredictionToDo(uint MatchID) //remove specific match (if needed, for example for debugging and testing)
     {
-        foreach(var match in PredictionsToDo)
+        foreach (var match in PredictionsToDo)
         {
-            if(match.MatchID == MatchID)
+            if (match.MatchID == MatchID)
             {
                 PredictionsToDo.Remove(match);
             }
         }
-        
     }
 
     /// \brief Searches for a specific prediction in the member's list.
