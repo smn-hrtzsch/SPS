@@ -28,7 +28,7 @@ public class EmailService
         SmtpServer = "smtp.gmail.com";
         SmtpPort = 587;
         Username = "sportspredictionsystem@gmail.com";
-        Password = "ijktczbomupswmrs";
+        Password = "gkyyxboragzckjbw";
     }
 
     /// \brief Sends an email.
