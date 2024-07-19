@@ -6,17 +6,17 @@ public class Member
 {
     ///\brief Gets the unique ID of the member.
     public uint MemberID { get; }
-    private string? forename { get; set; }
-    private string? surname { get; set; }
-    private string EmailAddress { get; set; }
-    private string password { get; set; }
-    public List<Schedule> ParticipatingSchedules {get;}
-    private List<Match> PredictionsToDo { get; }
-    private List<Prediction> PredictionsDone { get; }
-    private List<Score> Scores;
+    protected string? forename { get; set; }
+    protected string? surname { get; set; }
+    protected string EmailAddress { get; set; }
+    protected string password { get; set; }
+    protected List<Schedule> ParticipatingSchedules {get;}
+    protected List<Match> PredictionsToDo { get; }
+    protected List<Prediction> PredictionsDone { get; }
+    protected List<Score> Scores;
 
     /// \brief Initializes a new instance of the <see cref="Member"/> class.
-    public Member(string forname, string surname, string emailaddress)
+    public Member(string forename, string surname, string emailaddress)
     {
         this.forename = forename;
         this.surname = surname;
@@ -84,7 +84,7 @@ public class Member
 
     /// \brief Searches for a specific prediction in the member's list.
     /// \return The prediction if found, otherwise null.
-    public Prediction SearchPrediction(uint PredictionID)
+    public Prediction SearchPredictionDone(uint PredictionID)
     {
         Prediction? searchedprediction = null;
         foreach(var prediction in PredictionsDone)
@@ -99,41 +99,44 @@ public class Member
                 throw new InvalidOperationException("Prediction is not included in 'PredictionsDone'-List");
             } 
         }
-
         return searchedprediction;
     }
 
-    /// \brief Adds a score to the member's list of scores.
-    public void AddScore(Score MatchScore, uint PredictionID)
+    public void AddPrediction()
     {
-        foreach(var prediction in PredictionsDone)
-        {
-            if(prediction.PredictionID == PredictionID)
-            {
-                Scores.Add(MatchScore);
-            }
-
-            else
-            {
-                throw new InvalidOperationException("The corresponding Prediction could not found relating to it's PredictionID");
-            }
-        }
+        //
     }
+    /// \brief Adds a score to the member's list of scores.
+    // public void AddScore(Score MatchScore, uint PredictionID)
+    // {
+    //     foreach(var prediction in PredictionsDone)
+    //     {
+    //         if(prediction.PredictionID == PredictionID)
+    //         {
+    //             Scores.Add(MatchScore);
+    //         }
+
+    //         else
+    //         {
+    //             throw new InvalidOperationException("The corresponding Prediction could not found relating to it's PredictionID");
+    //         }
+    //     }
+    // }
 
     /// \brief Updates a score in the member's list of scores.
-    public void UpdateScore(uint SocreID, string NewScore)
-    {
-        foreach(var score in Scores)
-        {
-            if(score.ScoreID == SocreID)
-            {
-                score.AmountOfPoints = NewScore; 
-            }
+    // public void UpdateScore(uint SocreID, string NewScore)
+    // {
+    //     foreach(var score in Scores)
+    //     {
+    //         if(score.ScoreID == SocreID)
+    //         {
+    //             score.AmountOfPoints = NewScore; 
+    //         }
 
-            else
-            {
-                throw new InvalidOperationException("The corresponding Score could not be found in the 'Score' List relating to it's ScoreID");
-            }
-        }
-    }
+    //         else
+    //         {
+    //             throw new InvalidOperationException("The corresponding Score could not be found in the 'Score' List relating to it's ScoreID");
+    //         }
+    //     }
+    // }
 }
