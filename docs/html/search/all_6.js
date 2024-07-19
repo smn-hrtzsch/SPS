@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['prediction_14',['Prediction',['../classPrediction.html',1,'']]],
-  ['predictiongame_15',['PredictionGame',['../classPredictionGame.html',1,'PredictionGame&lt; T, M &gt;'],['../classPredictionGame.html#a609004bb74636be953890f8e300ac9a0',1,'PredictionGame.PredictionGame(EmailService emailService)']]],
-  ['predictiongameid_16',['PredictionGameID',['../classPredictionGame.html#a7758c15d911e42cc1307f72b03ba96fa',1,'PredictionGame']]]
+  ['prediction_13',['Prediction',['../classPrediction.html',1,'']]],
+  ['predictiongame_14',['PredictionGame',['../classPredictionGame.html',1,'PredictionGame'],['../classPredictionGame.html#a6da4f3d6775426e490e89c1ef2bc2b40',1,'PredictionGame.PredictionGame(EmailService emailService)']]],
+  ['predictiongameid_15',['PredictionGameID',['../classPredictionGame.html#a860adf1a464cd5d3e7444509c3ea527d',1,'PredictionGame']]]
 ];

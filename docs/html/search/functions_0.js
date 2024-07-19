@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['addprediction_40',['AddPrediction',['../classMember.html#a92fc05e770587109eead47af71067ab2',1,'Member']]],
-  ['addschedule_41',['AddSchedule',['../classMember.html#aee2cdc22f653c1a33eb86a5d98c07faf',1,'Member']]],
-  ['addscore_42',['AddScore',['../classMember.html#acddda773031c6a8576a477641b3c8e48',1,'Member']]]
+  ['addparticipatingschedule_38',['AddParticipatingSchedule',['../classMember.html#a040acc0b6203dc8b0c03b4d54e01708e',1,'Member']]],
+  ['addpredictiontodo_39',['AddPredictionToDo',['../classMember.html#a1987f5572feba5d12ada4712843844e5',1,'Member']]]
 ];

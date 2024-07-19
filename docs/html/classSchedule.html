@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Sport Prediction System: Schedule&lt; M &gt; Class Template Reference</title>
+<title>Sport Prediction System: Schedule Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -66,7 +66,7 @@ $(function() {
 <a href="#properties">Properties</a> &#124;
 <a href="classSchedule-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Schedule&lt; M &gt; Class Template Reference</div>  </div>
+<div class="title">Schedule Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -75,34 +75,29 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a8e7f1669f57e5297aa7e7e85c9315f06"><td class="memItemLeft" align="right" valign="top"><a id="a8e7f1669f57e5297aa7e7e85c9315f06"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Schedule</b> (ScheduleTypes schedule_type, string PathToCsvFile)</td></tr>
-<tr class="separator:a8e7f1669f57e5297aa7e7e85c9315f06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1eca7f4a88cf55f77cfe3611ee12385"><td class="memItemLeft" align="right" valign="top"><a id="aa1eca7f4a88cf55f77cfe3611ee12385"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Schedule</b> (string PathToCsvFile, SportsTypes sport_type, ScheduleTypes schedule_type)</td></tr>
+<tr class="separator:aa1eca7f4a88cf55f77cfe3611ee12385"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71f12f4012cc4833f0400913a3409462"><td class="memItemLeft" align="right" valign="top"><a id="a71f12f4012cc4833f0400913a3409462"></a>
+List&lt; <a class="el" href="classMatch.html">Match</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GetMatchesFromCsvFile</b> (string PathToCsvFile, SportsTypes sport_type)</td></tr>
+<tr class="separator:a71f12f4012cc4833f0400913a3409462"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab78faa32f7ed46a6b3a48aea330ad820"><td class="memItemLeft" align="right" valign="top"><a id="ab78faa32f7ed46a6b3a48aea330ad820"></a>
+List&lt; <a class="el" href="classMatch.html">Match</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GetMatchesOnDay</b> ()</td></tr>
+<tr class="separator:ab78faa32f7ed46a6b3a48aea330ad820"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
-<tr class="memitem:a09e1e52276adce5cb9e805c30548ebff"><td class="memItemLeft" align="right" valign="top"><a id="a09e1e52276adce5cb9e805c30548ebff"></a>
+<tr class="memitem:aff6eee337f11de5a8c2b49ca87517ca8"><td class="memItemLeft" align="right" valign="top"><a id="aff6eee337f11de5a8c2b49ca87517ca8"></a>
 ScheduleTypes&#160;</td><td class="memItemRight" valign="bottom"><b>ScheduleID</b><code> [get]</code></td></tr>
-<tr class="separator:a09e1e52276adce5cb9e805c30548ebff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3bf300b192b0fa35fa6d7410382a6759"><td class="memItemLeft" align="right" valign="top"><a id="a3bf300b192b0fa35fa6d7410382a6759"></a>
-List&lt; M &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Matches</b><code> [get]</code></td></tr>
-<tr class="separator:a3bf300b192b0fa35fa6d7410382a6759"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae41f618d2a864404d8c4bb3e84091869"><td class="memItemLeft" align="right" valign="top"><a id="ae41f618d2a864404d8c4bb3e84091869"></a>
-List&lt; M &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>MatchesOnDay</b><code> [get]</code></td></tr>
-<tr class="separator:ae41f618d2a864404d8c4bb3e84091869"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:aff6eee337f11de5a8c2b49ca87517ca8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4e32962dffec9b2a0aa7b10326692f5"><td class="memItemLeft" align="right" valign="top"><a id="af4e32962dffec9b2a0aa7b10326692f5"></a>
+List&lt; <a class="el" href="classMatch.html">Match</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Matches</b><code> [get]</code></td></tr>
+<tr class="separator:af4e32962dffec9b2a0aa7b10326692f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Generic class <a class="el" href="classSchedule.html" title="Generic class Schedule which represents a tournament.">Schedule</a> which represents a tournament. </p>
 <p>It contains a list of all the matches which take place during the tournament.</p>
 <p>Added to that it also contains a list of all the matches on the specific day of the tournament. </p>
-<div class="typeconstraint">
-<dl><dt><b>Type Constraints</b></dt><dd>
-<table border="0" cellspacing="2" cellpadding="0">
-<tr><td valign="top"><em>M</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="classMatch.html">Match</a></em></td><td>&#160;</td></tr>
-</table>
-</dd>
-</dl>
-</div>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/ClassLib/Schedule.cs</li>
 </ul>
