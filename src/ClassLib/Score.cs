@@ -1,19 +1,26 @@
 using System;
+using System.Formats.Asn1;
 
 public class Score
 {
     public uint ScoreID { get; }
-    private static uint ScoreIDCounter = 0;
     private ScheduleTypes PredictedSchedule { get; }
     private uint AmountOfPoints { get; set; }
 
-    public Score(ScheduleTypes PredictedSchedule)
+    public Score(ScheduleTypes predicted_schedule)
     {
-        // code
+        PredictedSchedule = predicted_schedule;
+        AmountOfPoints = 0;
+        ScoreID = (uint)GetHashCode();
     }
 
     public int CalculateScore(ScheduleTypes PredictedSchedule, Prediction prediction)
     {
         return 0;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(PredictedSchedule, AmountOfPoints);
     }
 }
