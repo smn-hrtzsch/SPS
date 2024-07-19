@@ -10,7 +10,7 @@ public class Member
     protected string? surname { get; set; }
     protected string EmailAddress { get; set; }
     protected string password { get; set; }
-    protected List<Schedule> ParticipatingSchedules {get;}
+    protected List<Schedule> ParticipatingSchedules { get; }
     protected List<Match> PredictionsToDo { get; }
     protected List<Prediction> PredictionsDone { get; }
     protected List<Score> Scores;
@@ -88,17 +88,18 @@ public class Member
     public Prediction SearchPredictionDone(uint PredictionID)
     {
         Prediction? searchedprediction = null;
-        foreach(var prediction in PredictionsDone)
+        foreach (var prediction in PredictionsDone)
         {
-            if(prediction.PredictionID == PredictionID)
+            if (prediction.PredictionID == PredictionID)
             {
                 searchedprediction = prediction;
             }
-
             else
             {
-                throw new InvalidOperationException("Prediction is not included in 'PredictionsDone'-List");
-            } 
+                throw new InvalidOperationException(
+                    "Prediction is not included in 'PredictionsDone'-List"
+                );
+            }
         }
         return searchedprediction;
     }
@@ -131,7 +132,7 @@ public class Member
     //     {
     //         if(score.ScoreID == SocreID)
     //         {
-    //             score.AmountOfPoints = NewScore; 
+    //             score.AmountOfPoints = NewScore;
     //         }
 
     //         else

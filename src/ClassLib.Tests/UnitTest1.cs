@@ -19,10 +19,7 @@ public class UnitTest1
     [Fact]
     public static void TestFootballMatch()
     {
-        FootballMatch match1 = new FootballMatch(
-            "../../../../../csv-files/EM_2024.csv",
-            1
-        );
+        FootballMatch match1 = new FootballMatch("../../../../../csv-files/EM_2024.csv", 1);
         DateTime expectedDate = new DateTime(2024, 6, 14, 21, 0, 0);
 
         Assert.True(match1.MatchDate == expectedDate);
@@ -57,8 +54,7 @@ public class UnitTest1
             "../../../../../csv-files/EM_2024.csv",
             SportsTypes.Football
         );
-        string testFilePath =
-            "../../../../../csv-files/EM_2024_updated.csv";
+        string testFilePath = "../../../../../csv-files/EM_2024_updated.csv";
 
         CSVWriter<Match>.UpdateSchedule(testFilePath, schedule);
 

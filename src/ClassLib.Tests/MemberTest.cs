@@ -2,29 +2,30 @@ using System.Reflection.Metadata.Ecma335;
 
 public class TestMember : Member
 {
+    public TestMember(string forename, string surname, string emailaddress)
+        : base(forename, surname, emailaddress) { }
 
-    public TestMember(string forename, string surname, string emailaddress) : base(forename, surname, emailaddress)
-    {}
     public List<Schedule> ParticipatingSchedulesTest
     {
         get { return ParticipatingSchedules; }
     }
 
-    public List<Match> PredictionsToDoTest 
+    public List<Match> PredictionsToDoTest
     {
-        get {return PredictionsToDo; }
+        get { return PredictionsToDo; }
     }
 
     public List<Prediction> PredictionsDoneTest
     {
-        get {return PredictionsDone;}
+        get { return PredictionsDone; }
     }
 
     public List<Score> ScoresTest
     {
-        get {return Scores; }
+        get { return Scores; }
     }
 }
+
 public class MemberTest
 {
     [Fact]
@@ -46,7 +47,11 @@ public class MemberTest
         string email = "maria.magdalena@online.de";
 
         TestMember TestMember = new TestMember(vorname, nachname, email);
-        Schedule  schedule = new Schedule("../../../EM_2024Test.csv", SportsTypes.Football, ScheduleTypes.EM_2024);
+        Schedule schedule = new Schedule(
+            "../../../EM_2024Test.csv",
+            SportsTypes.Football,
+            ScheduleTypes.EM_2024
+        );
 
         TestMember.AddParticipatingSchedule(schedule);
         Assert.True(TestMember.ParticipatingSchedulesTest.Count == 1);
@@ -59,7 +64,11 @@ public class MemberTest
         string email = "maria.magdalena@online.de";
 
         TestMember TestMember = new TestMember(vorname, nachname, email);
-        Schedule  schedule = new Schedule("../../../EM_2024Test.csv", SportsTypes.Football, ScheduleTypes.EM_2024);
+        Schedule schedule = new Schedule(
+            "../../../EM_2024Test.csv",
+            SportsTypes.Football,
+            ScheduleTypes.EM_2024
+        );
 
         TestMember.AddParticipatingSchedule(schedule);
         TestMember.RemoveParticipatingSchedule(ScheduleTypes.EM_2024);
@@ -73,11 +82,18 @@ public class MemberTest
         string email = "maria.magdalena@online.de";
 
         TestMember TestMember = new TestMember(vorname, nachname, email);
-        Schedule  schedule = new Schedule("../../../EM_2024Test.csv", SportsTypes.Football, ScheduleTypes.EM_2024);
+        Schedule schedule = new Schedule(
+            "../../../EM_2024Test.csv",
+            SportsTypes.Football,
+            ScheduleTypes.EM_2024
+        );
 
         TestMember.AddParticipatingSchedule(schedule);
         TestMember.AddPredictionToDo();
-        Assert.True(TestMember.PredictionsToDoTest.Count == schedule.GetMatchesOnDay().Count, "GetMatchesOnDay() or the Member Reference does not work");
+        Assert.True(
+            TestMember.PredictionsToDoTest.Count == schedule.GetMatchesOnDay().Count,
+            "GetMatchesOnDay() or the Member Reference does not work"
+        );
     }
 
     public void TestMemberRemovePredictionToDo()
@@ -100,5 +116,5 @@ public class MemberTest
     }
 
     public void TestMemberSearchPrediction() //TODO
-    {}
+    { }
 }
