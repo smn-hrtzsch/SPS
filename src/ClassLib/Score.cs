@@ -6,7 +6,7 @@ using System.Xml.XPath;
 public class Score
 {
     public ScheduleTypes ScoreID { get; }
-    private uint AmountOfPoints { get; set; }
+    public uint AmountOfPoints { get; private set; }
 
     public Score(ScheduleTypes predicted_schedule)
     {
@@ -57,17 +57,14 @@ public class Score
         {
             ScoreForPrediction += 5; // wenn ein Unentschieden richtig getippt wurde, gibt es 5 Punkte für die
         }
-        else if (
+        if (
             prediction.PredictedMatch.ResultTeam1 == prediction.PredictionHome
             && prediction.PredictedMatch.ResultTeam2 == prediction.PredictionAway
         )
         {
             ScoreForPrediction += 10; // wenn Ergebnis exakt richtig getippt wurde, gibt es 10 extra Punkte (nur, wenn es kein )
         }
-        else
-        {
-            ScoreForPrediction = 0; // wenn nichts der oben genannten Ereignisse eintrifft gibt es für die Prediction kein Punkte
-        }
+
         return ScoreForPrediction;
     }
 }
