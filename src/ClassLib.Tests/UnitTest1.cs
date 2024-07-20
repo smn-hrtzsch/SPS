@@ -2,10 +2,12 @@ namespace ClassLib.Tests;
 
 public class UnitTest1
 {
+    private static IMatchFactory<FootballMatch> footballMatchFactory = new FootballMatchFactory();
+
     [Fact]
     public static void TestGetMatchDataFromCsvFile()
     {
-        string[] MatchArray = CSVReader<Match>.GetMatchDataFromCsvFile(
+        string[] MatchArray = CSVReader<FootballMatch>.GetMatchDataFromCsvFile(
             "../../../../../csv-files/EM_2024.csv",
             1
         );
@@ -19,7 +21,11 @@ public class UnitTest1
     [Fact]
     public static void TestFootballMatchCtor()
     {
-        FootballMatch match1 = new FootballMatch("../../../../../csv-files/EM_2024.csv", 1);
+        FootballMatch match1 = new FootballMatch(
+            "../../../../../csv-files/EM_2024.csv",
+            1,
+            SportsTypes.Football
+        );
         DateTime expectedDate = new DateTime(2024, 6, 14, 21, 0, 0);
 
         Assert.True(match1.MatchDate == expectedDate);
@@ -32,7 +38,8 @@ public class UnitTest1
     [Fact]
     public static void TestGetScheduleFromCsvFile()
     {
-        List<Match> schedule = CSVReader<Match>.GetScheduleFromCsvFile(
+        CSVReader<FootballMatch>.SetMatchFactory(footballMatchFactory);
+        List<FootballMatch> schedule = CSVReader<FootballMatch>.GetScheduleFromCsvFile(
             "../../../../../csv-files/EM_2024.csv",
             SportsTypes.Football
         );
@@ -50,13 +57,14 @@ public class UnitTest1
     [Fact]
     public static void TestUpdateSchedule()
     {
-        List<Match> schedule = CSVReader<Match>.GetScheduleFromCsvFile(
+        CSVReader<FootballMatch>.SetMatchFactory(footballMatchFactory);
+        List<FootballMatch> schedule = CSVReader<FootballMatch>.GetScheduleFromCsvFile(
             "../../../../../csv-files/EM_2024.csv",
             SportsTypes.Football
         );
         string testFilePath = "../../../../../csv-files/EM_2024_updated.csv";
 
-        CSVWriter<Match>.UpdateSchedule(testFilePath, schedule);
+        CSVWriter<FootballMatch>.UpdateSchedule(testFilePath, schedule);
 
         Assert.True(File.Exists(testFilePath), "CSV file was not created.");
         var lines = File.ReadAllLines(testFilePath);
