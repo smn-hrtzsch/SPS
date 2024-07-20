@@ -110,21 +110,37 @@ public class TestCsvFileIO
 
         Assert.Equal(3, lines.Length);
         Assert.Equal("MemberID;Forename;Surname;Email Address;Password", lines[0]);
-        Assert.Equal($"{testMembers[0].MemberID};Artim;Meyer;artimmeyer@gmail.com;SPSistCool", lines[1]);
-        Assert.Equal($"{testMembers[1].MemberID};Simon;Hörtzsch;simon.hoertzsch@gmail.com;SPSistCool1234", lines[2]);
+        Assert.Equal(
+            $"{testMembers[0].MemberID};Artim;Meyer;artimmeyer@gmail.com;SPSistCool",
+            lines[1]
+        );
+        Assert.Equal(
+            $"{testMembers[1].MemberID};Simon;Hörtzsch;simon.hoertzsch@gmail.com;SPSistCool1234",
+            lines[2]
+        );
     }
 
     [Fact]
     public static void TestTrackScoreData()
     {
-        PredictionGame.ScheduleTypes = new List<ScheduleTypes> {
-            ScheduleTypes.EM_2024
-        };
+        PredictionGame.ScheduleTypes = new List<ScheduleTypes> { ScheduleTypes.EM_2024 };
 
-        List<Member<Prediction, FootballMatch>> testMembers = new List<Member<Prediction, FootballMatch>>()
+        List<Member<Prediction, FootballMatch>> testMembers = new List<
+            Member<Prediction, FootballMatch>
+        >()
         {
-            new Member<Prediction, FootballMatch>("Artim", "Meyer", "artimmeyer@gmail.com", "SPSistCool"),
-            new Member<Prediction, FootballMatch>("Simon", "Hörtzsch", "simon.hoertzsch@gmail.com", "SPSistCool1234")
+            new Member<Prediction, FootballMatch>(
+                "Artim",
+                "Meyer",
+                "artimmeyer@gmail.com",
+                "SPSistCool"
+            ),
+            new Member<Prediction, FootballMatch>(
+                "Simon",
+                "Hörtzsch",
+                "simon.hoertzsch@gmail.com",
+                "SPSistCool1234"
+            )
         };
 
         CSVReader<FootballMatch>.SetMatchFactory(footballMatchFactory);
@@ -145,7 +161,7 @@ public class TestCsvFileIO
 
         Assert.Equal(3, lines.Length);
         Assert.Equal("MemberID;EM_2024", lines[0]);
-        Assert.Equal($"{testMembers[0].MemberID};0", lines[1]); 
+        Assert.Equal($"{testMembers[0].MemberID};0", lines[1]);
         Assert.Equal($"{testMembers[1].MemberID};0", lines[2]);
     }
 
