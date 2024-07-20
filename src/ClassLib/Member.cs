@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 ///\brief Represents a member participating in the Sport Prediction System (SPS).
-public class Member
+public class Member<P, M>
+    where P : Prediction
+    where M : Match
 {
     ///\brief Gets the unique ID of the member.
     public uint MemberID { get; }
@@ -10,9 +13,21 @@ public class Member
     protected string? surname { get; set; }
     protected string EmailAddress { get; set; }
     protected string password { get; set; }
-    protected List<Schedule> ParticipatingSchedules { get; }
-    protected List<Match> PredictionsToDo { get; }
-    protected List<Prediction> PredictionsDone { get; }
+
+    /// \brief List of Schedules the member chose to participate predicting.
+    protected List<Schedule<M>> ParticipatingSchedules { get; }
+
+    /// \brief List of Matches, which need to be predicted on the specific day.
+    protected List<M> PredictionsToDo { get; }
+
+    /// \brief List, which contains all Predictions where the match is already predicted, but a score was not calculated yet.
+    protected List<P> PredictionsDone { get; }
+
+    /// \brief List, which contains all Predictions where no score must be calculated anymore
+    protected List<P> ArchivedPredictions { get; }
+
+    /// \brief List of Scores <summary>
+    /// \details There is exactly one score for every schedule the member predicts.
     protected List<Score> Scores;
 
     /// \brief Initializes a new instance of the <see cref="Member"/> class.
@@ -22,9 +37,10 @@ public class Member
         this.surname = surname;
         this.EmailAddress = emailaddress;
         this.MemberID = (uint)GetHashCode();
-        this.ParticipatingSchedules = new List<Schedule>();
-        this.PredictionsToDo = new List<Match>();
-        this.PredictionsDone = new List<Prediction>();
+        this.ParticipatingSchedules = new List<Schedule<M>>();
+        this.PredictionsToDo = new List<M>();
+        this.PredictionsDone = new List<P>();
+        this.ArchivedPredictions = new List<P>();
         this.Scores = new List<Score>();
     }
 
@@ -34,37 +50,46 @@ public class Member
     }
 
     /// \brief Adds a schedule to the member's list of participating schedules.
-    public void AddParticipatingSchedule(Schedule schedule)
+    public void AddParticipatingSchedule(Schedule<M> schedule, ScheduleTypes schedule_type)
     {
         ParticipatingSchedules.Add(schedule);
+        Score score = new Score(schedule_type);
+        Scores.Add(score);
     }
 
     /// \brief Removes a schedule from the member's list of participating schedules.
     public void RemoveParticipatingSchedule(ScheduleTypes schedule_type)
     {
+        Schedule<M>? scheduleToRemove = null;
         foreach (var schedule in ParticipatingSchedules)
         {
             if (schedule.ScheduleID == schedule_type)
             {
-                ParticipatingSchedules.Remove(schedule);
+                scheduleToRemove = schedule;
+                break;
             }
-            else
-            {
-                throw new InvalidOperationException(
-                    "Schedule Typ is not included in 'ParticipatingSchedules'-List"
-                );
-            }
+        }
+
+        if (scheduleToRemove != null)
+        {
+            ParticipatingSchedules.Remove(scheduleToRemove);
+        }
+        else
+        {
+            throw new InvalidOperationException(
+                "Schedule Typ is not included in 'ParticipatingSchedules'-List"
+            );
         }
     }
 
     /// \brief Adds a prediction to the member's list of predictions to do.
     public void AddPredictionToDo()
     {
-        foreach (Schedule schedule in ParticipatingSchedules)
+        foreach (Schedule<M> schedule in ParticipatingSchedules)
         {
-            List<Match> MatchesOnDay = schedule.GetMatchesOnDay();
+            List<M> MatchesOnDay = schedule.GetMatchesOnDay();
 
-            foreach (Match match in MatchesOnDay)
+            foreach (M match in MatchesOnDay)
             {
                 PredictionsToDo.Add(match);
             }
@@ -72,14 +97,25 @@ public class Member
     }
 
     /// \brief Removes a prediction from the member's list of predictions to do.
-    public void RemovePredictionToDo(uint MatchID) //remove specific match (if needed, for example for debugging and testing)
+    public void RemovePredictionToDo(uint MatchID) // remove specific match (if needed, for example for debugging and testing)
     {
+        M? matchToRemove = null;
         foreach (var match in PredictionsToDo)
         {
             if (match.MatchID == MatchID)
             {
-                PredictionsToDo.Remove(match);
+                matchToRemove = match;
+                break;
             }
+        }
+
+        if (matchToRemove != null)
+        {
+            PredictionsToDo.Remove(matchToRemove);
+        }
+        else
+        {
+            throw new InvalidOperationException("Match is not included in 'PredictionsToDo'-List");
         }
     }
 
@@ -108,37 +144,30 @@ public class Member
     {
         //
     }
-    /// \brief Adds a score to the member's list of scores.
-    // public void AddScore(Score MatchScore, uint PredictionID)
-    // {
-    //     foreach(var prediction in PredictionsDone)
-    //     {
-    //         if(prediction.PredictionID == PredictionID)
-    //         {
-    //             Scores.Add(MatchScore);
-    //         }
 
-    //         else
-    //         {
-    //             throw new InvalidOperationException("The corresponding Prediction could not found relating to it's PredictionID");
-    //         }
-    //     }
-    // }
-
-    /// \brief Updates a score in the member's list of scores.
-    // public void UpdateScore(uint SocreID, string NewScore)
-    // {
-    //     foreach(var score in Scores)
-    //     {
-    //         if(score.ScoreID == SocreID)
-    //         {
-    //             score.AmountOfPoints = NewScore;
-    //         }
-
-    //         else
-    //         {
-    //             throw new InvalidOperationException("The corresponding Score could not be found in the 'Score' List relating to it's ScoreID");
-    //         }
-    //     }
-    // }
+    public void CalculateScores()
+    {
+        foreach (var score in Scores)
+        {
+            switch (score.ScoreID)
+            {
+                case ScheduleTypes.EM_2024:
+                    foreach (P prediction in PredictionsDone)
+                    {
+                        if (prediction.PredictedMatch.SportsType == SportsTypes.Football)
+                        {
+                            uint ScoreForPrediction = score.CalculateFootballScore(
+                                prediction as FootballPrediction
+                            );
+                            score.IncrementAmountOfPoints(ScoreForPrediction);
+                            PredictionsDone.Remove(prediction);
+                            ArchivedPredictions.Add(prediction);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }

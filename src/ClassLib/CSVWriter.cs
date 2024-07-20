@@ -5,7 +5,7 @@ using System.IO;
 public class CSVWriter<M>
     where M : Match
 {
-    public static void UpdateSchedule(string PathToCsvFile, List<Match> schedule)
+    public static void UpdateSchedule(string PathToCsvFile, List<M> schedule)
     {
         using (StreamWriter sw = new StreamWriter(PathToCsvFile))
         {

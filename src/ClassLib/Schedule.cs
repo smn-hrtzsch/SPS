@@ -4,26 +4,47 @@ using System.Collections.Generic;
 /// \brief Generic class Schedule which represents a tournament.
 /// \details It contains a list of all the matches which take place during the tournament.
 /// \details Added to that it also contains a list of all the matches on the specific day of the tournament.
-public class Schedule
+public class Schedule<M>
+    where M : Match
 {
     public ScheduleTypes ScheduleID { get; }
-    public List<Match> Matches { get; }
+    public List<M>? Matches { get; }
 
     public Schedule(string PathToCsvFile, SportsTypes sport_type, ScheduleTypes schedule_type)
     {
-        this.ScheduleID = schedule_type;
-        this.Matches = GetMatchesFromCsvFile(PathToCsvFile, sport_type);
+        ScheduleID = schedule_type;
+        switch (sport_type)
+        {
+            case SportsTypes.Football:
+                Matches = ConvertToGenericList(
+                    CSVReader<FootballMatch>.GetScheduleFromCsvFile(PathToCsvFile, sport_type)
+                );
+                break;
+        }
     }
 
-    public List<Match> GetMatchesFromCsvFile(string PathToCsvFile, SportsTypes sport_type)
+    private List<M> ConvertToGenericList(List<FootballMatch> footballMatches)
     {
-        return CSVReader<Match>.GetScheduleFromCsvFile(PathToCsvFile, sport_type);
+        List<M> genericMatches = new List<M>();
+        foreach (var match in footballMatches)
+        {
+            genericMatches.Add(match as M);
+        }
+        return genericMatches;
     }
 
-    public List<Match> GetMatchesOnDay()
+    public List<FootballMatch> GetFootballScheduleFromCsvFile(
+        string PathToCsvFile,
+        SportsTypes sport_type
+    )
     {
-        List<Match> MatchesOnDay = new List<Match>();
-        foreach (var match in Matches)
+        return CSVReader<FootballMatch>.GetScheduleFromCsvFile(PathToCsvFile, sport_type);
+    }
+
+    public List<M> GetMatchesOnDay()
+    {
+        List<M> MatchesOnDay = new List<M>();
+        foreach (M match in Matches)
         {
             if (DateTime.Today == match.MatchDate.Date)
             {

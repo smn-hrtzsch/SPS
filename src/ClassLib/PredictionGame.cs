@@ -13,7 +13,7 @@ public class PredictionGame
 
     private static uint PredictionGameIDCounter = 0;
 
-    private List<Member> Members { get; set; }
+    private List<Member<Prediction, Match>> Members { get; set; }
 
     public List<ScheduleTypes> ScheduleTypes { get; }
 
@@ -33,7 +33,7 @@ public class PredictionGame
     /// <summary>
     /// Registers a new member to the prediction game.
     /// </summary>
-    public void Register(Member member)
+    public void Register(Member<Prediction, Match> member)
     {
         // ChatGPT Vorschlag --> Members.Add(member);
     }

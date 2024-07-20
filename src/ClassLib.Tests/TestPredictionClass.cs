@@ -14,7 +14,11 @@ public class TestPredictionClass
     [Fact]
     public static void TestFootballPredictionCtor()
     {
-        FootballMatch match2 = new FootballMatch("../../../../../csv-files/EM_2024.csv", 51);
+        FootballMatch match2 = new FootballMatch(
+            "../../../../../csv-files/EM_2024.csv",
+            51,
+            SportsTypes.Football
+        );
         DateTime expectedDate = DateTime.Now;
         FootballPrediction prediction1 = new FootballPrediction(1, match2, expectedDate, 1, 3);
         TestPrediction testprediction1 = new TestPrediction(1, match2, expectedDate);
@@ -33,7 +37,11 @@ public class TestPredictionClass
     [Fact]
     public static void TestValidatePrediction()
     {
-        FootballMatch match2 = new FootballMatch("../../../../../csv-files/EM_2024.csv", 51);
+        FootballMatch match2 = new FootballMatch(
+            "../../../../../csv-files/EM_2024.csv",
+            51,
+            SportsTypes.Football
+        );
         FootballPrediction prediction2 = new FootballPrediction(1, match2, DateTime.Now, 1, 3);
 
         Assert.False(prediction2.ValidatePrediction());
