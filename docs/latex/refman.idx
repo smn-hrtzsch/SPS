@@ -1,7 +1,7 @@
 \indexentry{CSVReader$<$ M $>$@{CSVReader$<$ M $>$}|hyperpage}{5}
 \indexentry{CSVReader$<$ M $>$@{CSVReader$<$ M $>$}!GetMatchDataFromCsvFile@{GetMatchDataFromCsvFile}|hyperpage}{5}
 \indexentry{GetMatchDataFromCsvFile@{GetMatchDataFromCsvFile}!CSVReader$<$ M $>$@{CSVReader$<$ M $>$}|hyperpage}{5}
-\indexentry{CSVWriter$<$ M $>$@{CSVWriter$<$ M $>$}|hyperpage}{6}
+\indexentry{CSVWriter$<$ M, P $>$@{CSVWriter$<$ M, P $>$}|hyperpage}{6}
 \indexentry{EmailService@{EmailService}|hyperpage}{6}
 \indexentry{EmailService@{EmailService}!EmailService@{EmailService}|hyperpage}{6}
 \indexentry{EmailService@{EmailService}!EmailService@{EmailService}|hyperpage}{6}
@@ -17,17 +17,17 @@
 \indexentry{SearchPredictionDone@{SearchPredictionDone}!Member$<$ P, M $>$@{Member$<$ P, M $>$}|hyperpage}{11}
 \indexentry{Member$<$ P, M $>$@{Member$<$ P, M $>$}!Scores@{Scores}|hyperpage}{11}
 \indexentry{Scores@{Scores}!Member$<$ P, M $>$@{Member$<$ P, M $>$}|hyperpage}{11}
-\indexentry{Prediction@{Prediction}|hyperpage}{11}
+\indexentry{Prediction@{Prediction}|hyperpage}{12}
 \indexentry{PredictionGame@{PredictionGame}|hyperpage}{12}
-\indexentry{PredictionGame@{PredictionGame}!PredictionGame@{PredictionGame}|hyperpage}{12}
-\indexentry{PredictionGame@{PredictionGame}!PredictionGame@{PredictionGame}|hyperpage}{12}
+\indexentry{PredictionGame@{PredictionGame}!PredictionGame@{PredictionGame}|hyperpage}{13}
+\indexentry{PredictionGame@{PredictionGame}!PredictionGame@{PredictionGame}|hyperpage}{13}
 \indexentry{PredictionGame@{PredictionGame}!Register@{Register}|hyperpage}{13}
 \indexentry{Register@{Register}!PredictionGame@{PredictionGame}|hyperpage}{13}
 \indexentry{PredictionGame@{PredictionGame}!SendDailyEmail@{SendDailyEmail}|hyperpage}{13}
 \indexentry{SendDailyEmail@{SendDailyEmail}!PredictionGame@{PredictionGame}|hyperpage}{13}
-\indexentry{PredictionGame@{PredictionGame}!Unsubscribe@{Unsubscribe}|hyperpage}{13}
-\indexentry{Unsubscribe@{Unsubscribe}!PredictionGame@{PredictionGame}|hyperpage}{13}
-\indexentry{PredictionGame@{PredictionGame}!PredictionGameID@{PredictionGameID}|hyperpage}{13}
-\indexentry{PredictionGameID@{PredictionGameID}!PredictionGame@{PredictionGame}|hyperpage}{13}
+\indexentry{PredictionGame@{PredictionGame}!Unsubscribe@{Unsubscribe}|hyperpage}{14}
+\indexentry{Unsubscribe@{Unsubscribe}!PredictionGame@{PredictionGame}|hyperpage}{14}
+\indexentry{PredictionGame@{PredictionGame}!PredictionGameID@{PredictionGameID}|hyperpage}{14}
+\indexentry{PredictionGameID@{PredictionGameID}!PredictionGame@{PredictionGame}|hyperpage}{14}
 \indexentry{Schedule$<$ M $>$@{Schedule$<$ M $>$}|hyperpage}{14}
-\indexentry{Score@{Score}|hyperpage}{14}
+\indexentry{Score@{Score}|hyperpage}{15}
