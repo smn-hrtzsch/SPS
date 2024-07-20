@@ -8,7 +8,11 @@ public interface IMatchFactory<M>
 
 public class FootballMatchFactory : IMatchFactory<FootballMatch>
 {
-    public FootballMatch CreateMatch(string PathToMatchDataCsvFile, int line_number, SportsTypes sport_type)
+    public FootballMatch CreateMatch(
+        string PathToMatchDataCsvFile,
+        int line_number,
+        SportsTypes sport_type
+    )
     {
         return new FootballMatch(PathToMatchDataCsvFile, line_number, sport_type);
     }
