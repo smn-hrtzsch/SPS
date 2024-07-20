@@ -11,8 +11,8 @@ public class Member<P, M>
     public uint MemberID { get; }
     protected string? forename { get; set; }
     protected string? surname { get; set; }
-    protected string EmailAddress { get; set; }
-    protected string password { get; set; }
+    protected string EmailAddress { get; }
+    protected string Password { get; }
 
     /// \brief List of Schedules the member chose to participate predicting.
     protected List<Schedule<M>> ParticipatingSchedules { get; }
@@ -30,12 +30,18 @@ public class Member<P, M>
     /// \details There is exactly one score for every schedule the member predicts.
     protected List<Score> Scores;
 
+    public List<Score> GetScores
+    {
+        get { return Scores; }
+    }
+
     /// \brief Initializes a new instance of the <see cref="Member"/> class.
-    public Member(string forename, string surname, string emailaddress)
+    public Member(string forename, string surname, string emailaddress, string password)
     {
         this.forename = forename;
         this.surname = surname;
         this.EmailAddress = emailaddress;
+        this.Password = password;
         this.MemberID = (uint)GetHashCode();
         this.ParticipatingSchedules = new List<Schedule<M>>();
         this.PredictionsToDo = new List<M>();
@@ -169,5 +175,15 @@ public class Member<P, M>
                     break;
             }
         }
+    }
+
+    public override string ToString()
+    {
+        string mi = $"{MemberID}";
+        string fn = $"{forename}";
+        string sn = $"{surname}";
+        string ea = $"{EmailAddress}";
+        string pw = $"{Password}";
+        return $"{mi};{fn};{sn};{ea};{pw}";
     }
 }
