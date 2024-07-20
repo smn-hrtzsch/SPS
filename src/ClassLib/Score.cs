@@ -6,7 +6,7 @@ using System.Xml.XPath;
 public class Score
 {
     public ScheduleTypes ScoreID { get; }
-    public uint AmountOfPoints { get; private set; }
+    protected uint AmountOfPoints { get; private set; }
 
     public Score(ScheduleTypes predicted_schedule)
     {
