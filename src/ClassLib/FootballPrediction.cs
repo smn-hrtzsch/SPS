@@ -2,8 +2,8 @@ using System;
 
 public class FootballPrediction : Prediction
 {
-    private byte PredictionHome { get; set; }
-    private byte PredictionAway { get; set; }
+    public byte PredictionHome { get; set; }
+    public byte PredictionAway { get; set; }
 
     public FootballPrediction(
         uint MemberID,
