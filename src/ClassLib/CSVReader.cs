@@ -4,8 +4,15 @@ using System.IO;
 using System.Linq;
 
 public class CSVReader<M>
-    where M : Match
+    where M : Match, new()
 {
+    private static IMatchFactory<M> MatchFactory;
+
+    public static void SetMatchFactory(IMatchFactory<M> match_factory)
+    {
+        MatchFactory = match_factory;
+    }
+
     /// \brief Reads the match data from a CSV file.
     /// \param PathToMatchDataCsvFile The path to the CSV file containing match data.
     /// \param MatchID The unique identifier of the match.
@@ -26,16 +33,20 @@ public class CSVReader<M>
         }
     }
 
-    public static List<Match> GetScheduleFromCsvFile(string PathToCsvFile, SportsTypes sport_type)
+    public static List<M> GetScheduleFromCsvFile(string PathToCsvFile, SportsTypes sport_type)
     {
-        List<Match> schedule = new List<Match>();
+        if (MatchFactory == null)
+        {
+            throw new InvalidOperationException("Match factory is not set.");
+        }
+        List<M> schedule = new List<M>();
         var all_lines = File.ReadLines(PathToCsvFile).ToList();
         for (int line_number = 1; line_number < all_lines.Count; line_number++)
         {
             switch (sport_type)
             {
                 case SportsTypes.Football:
-                    FootballMatch match = new FootballMatch(PathToCsvFile, line_number);
+                    M match = MatchFactory.CreateMatch(PathToCsvFile, line_number, sport_type);
                     schedule.Add(match);
                     break;
                 // could be extended by serveral sport types
