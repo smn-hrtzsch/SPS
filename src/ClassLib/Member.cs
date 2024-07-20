@@ -96,7 +96,7 @@ public class Member<P, M>
         }
     }
 
-    /// \brief Removes a prediction from the member's list of predictions to do.
+    /// \brief Removes a match from the member's list of PredictionsToDo.
     public void RemovePredictionToDo(uint MatchID) // remove specific match (if needed, for example for debugging and testing)
     {
         M? matchToRemove = null;
@@ -112,6 +112,35 @@ public class Member<P, M>
         if (matchToRemove != null)
         {
             PredictionsToDo.Remove(matchToRemove);
+        }
+        else
+        {
+            throw new InvalidOperationException("Match is not included in 'PredictionsToDo'-List");
+        }
+    }
+
+    /// \brief If user has predicted a certain match (specified by MatchID), a new prediction will be created (Prediction ctor call) and will be added to the PredictionsDone-list
+    public void ConvertPredictionsDone(uint MatchID, byte prediction_home, byte prediction_away)
+    {
+        M? predictedMatch = null;
+        foreach(var match in PredictionsToDo)
+        {
+            if (match.MatchID == MatchID)
+            {
+                predictedMatch = match;
+                break;
+            }
+        }
+        if (predictedMatch != null)
+        {
+            switch(predictedMatch.SportsType) //switch case for ctor calls
+            {
+                case SportsTypes.Football:
+                FootballPrediction predictionDone = new FootballPrediction(MemberID, predictedMatch as FootballMatch, predictedMatch.MatchDate, prediction_home, prediction_away);
+                PredictionsDone.Add(predictionDone as P);
+                break;
+            }
+            PredictionsToDo.Remove(predictedMatch);
         }
         else
         {
@@ -140,13 +169,34 @@ public class Member<P, M>
         return searchedprediction;
     }
 
-    public void AddPrediction()
+    /// \brief Removes a prediction from the member's list of PredictionsDone.
+    public void RemovePredictionsDone(uint PredictionID) // remove specific prediction (if needed, for example for debugging and testing)
     {
-        //
+        P? predictionToRemove = null;
+        foreach (var prediction in PredictionsDone)
+        {
+            if (prediction.PredictionID == PredictionID)
+            {
+                predictionToRemove = prediction;
+                break;
+            }
+        }
+
+        if (predictionToRemove != null)
+        {
+            PredictionsDone.Remove(predictionToRemove);
+        }
+        else
+        {
+            throw new InvalidOperationException("Match is not included in 'PredictionsDone-List");
+        }
     }
+
 
     public void CalculateScores()
     {
+        List<P> predictionsToArchive = new List<P>();
+
         foreach (var score in Scores)
         {
             switch (score.ScoreID)
@@ -160,14 +210,19 @@ public class Member<P, M>
                                 prediction as FootballPrediction
                             );
                             score.IncrementAmountOfPoints(ScoreForPrediction);
-                            PredictionsDone.Remove(prediction);
-                            ArchivedPredictions.Add(prediction);
+                            predictionsToArchive.Add(prediction);
                         }
                     }
                     break;
                 default:
                     break;
             }
+        }
+
+        foreach (var prediction in predictionsToArchive)
+        {
+            PredictionsDone.Remove(prediction);
+            ArchivedPredictions.Add(prediction);
         }
     }
 }
