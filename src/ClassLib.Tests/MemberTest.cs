@@ -28,7 +28,7 @@ public class TestMember : Member<Prediction, Match>
 
 public class MemberTest
 {
-    private IMatchFactory<FootballMatch> footballMatchFactory = new FootballMatchFactory();
+    private static IMatchFactory<FootballMatch> footballMatchFactory = new FootballMatchFactory();
 
     [Fact]
     public void TestMemberCtor()
