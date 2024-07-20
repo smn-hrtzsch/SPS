@@ -15,7 +15,7 @@ public class PredictionGame
 
     private EmailService email_service { get; set; }
 
-    internal protected List<Member<Prediction, Match>> Members { get; private set; }
+    protected List<Member<Prediction, Match>> Members { get; set; }
 
     public List<ScheduleTypes> ScheduleTypesList { get; }
 
