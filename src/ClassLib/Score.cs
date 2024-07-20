@@ -70,4 +70,9 @@ public class Score
         }
         return ScoreForPrediction;
     }
+
+    public override string ToString()
+    {
+        return $"{AmountOfPoints}";
+    }
 }
