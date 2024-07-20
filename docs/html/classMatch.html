@@ -84,84 +84,48 @@ Inheritance diagram for Match:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab999e43735c5ebbf9284b5a1f98fd57b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatch.html#ab999e43735c5ebbf9284b5a1f98fd57b">Match</a> (string PathToMatchDataCsvFile, int line_number)</td></tr>
-<tr class="memdesc:ab999e43735c5ebbf9284b5a1f98fd57b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor to initialize a match object.  <a href="classMatch.html#ab999e43735c5ebbf9284b5a1f98fd57b">More...</a><br /></td></tr>
-<tr class="separator:ab999e43735c5ebbf9284b5a1f98fd57b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa32023355199562c556cf6453bc53b0e"><td class="memItemLeft" align="right" valign="top"><a id="aa32023355199562c556cf6453bc53b0e"></a>
 override int&#160;</td><td class="memItemRight" valign="bottom"><b>GetHashCode</b> ()</td></tr>
 <tr class="separator:aa32023355199562c556cf6453bc53b0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9b3f98f0c60f0bf72056c3151932824"><td class="memItemLeft" align="right" valign="top"><a id="aa9b3f98f0c60f0bf72056c3151932824"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>Team1Won</b> ()</td></tr>
+<tr class="separator:aa9b3f98f0c60f0bf72056c3151932824"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf4b0a56795b33f493c48810f9f3acc7"><td class="memItemLeft" align="right" valign="top"><a id="adf4b0a56795b33f493c48810f9f3acc7"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>Team2Won</b> ()</td></tr>
+<tr class="separator:adf4b0a56795b33f493c48810f9f3acc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ad8cc089c1d77cb81300a6d23312ee5"><td class="memItemLeft" align="right" valign="top"><a id="a8ad8cc089c1d77cb81300a6d23312ee5"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>Tie</b> ()</td></tr>
+<tr class="separator:a8ad8cc089c1d77cb81300a6d23312ee5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:a521024726846dbb8a1f5349378f63eb6"><td class="memItemLeft" align="right" valign="top"><a id="a521024726846dbb8a1f5349378f63eb6"></a>
-uint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatch.html#a521024726846dbb8a1f5349378f63eb6">MatchID</a><code> [get]</code></td></tr>
+uint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatch.html#a521024726846dbb8a1f5349378f63eb6">MatchID</a><code> [get, protected set]</code></td></tr>
 <tr class="memdesc:a521024726846dbb8a1f5349378f63eb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unique identifier for the match. <br /></td></tr>
 <tr class="separator:a521024726846dbb8a1f5349378f63eb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18ed97ff00981610e8a39cd3833d5297"><td class="memItemLeft" align="right" valign="top"><a id="a18ed97ff00981610e8a39cd3833d5297"></a>
-DateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatch.html#a18ed97ff00981610e8a39cd3833d5297">MatchDate</a><code> [get]</code></td></tr>
+DateTime&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatch.html#a18ed97ff00981610e8a39cd3833d5297">MatchDate</a><code> [get, protected set]</code></td></tr>
 <tr class="memdesc:a18ed97ff00981610e8a39cd3833d5297"><td class="mdescLeft">&#160;</td><td class="mdescRight">Date and time when the match takes place. <br /></td></tr>
 <tr class="separator:a18ed97ff00981610e8a39cd3833d5297"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8acf6bcb6478595930f1dfcb26ba047"><td class="memItemLeft" align="right" valign="top"><a id="ad8acf6bcb6478595930f1dfcb26ba047"></a>
-byte?&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatch.html#ad8acf6bcb6478595930f1dfcb26ba047">ResultTeam1</a><code> [get]</code></td></tr>
+byte?&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatch.html#ad8acf6bcb6478595930f1dfcb26ba047">ResultTeam1</a><code> [get, protected set]</code></td></tr>
 <tr class="memdesc:ad8acf6bcb6478595930f1dfcb26ba047"><td class="mdescLeft">&#160;</td><td class="mdescRight">Result of team 1 in the match. <br /></td></tr>
 <tr class="separator:ad8acf6bcb6478595930f1dfcb26ba047"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9578633d6013c209ae659014d38653a"><td class="memItemLeft" align="right" valign="top"><a id="ac9578633d6013c209ae659014d38653a"></a>
-byte?&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatch.html#ac9578633d6013c209ae659014d38653a">ResultTeam2</a><code> [get]</code></td></tr>
+byte?&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMatch.html#ac9578633d6013c209ae659014d38653a">ResultTeam2</a><code> [get, protected set]</code></td></tr>
 <tr class="memdesc:ac9578633d6013c209ae659014d38653a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Result of team 2 in the match. <br /></td></tr>
 <tr class="separator:ac9578633d6013c209ae659014d38653a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a025162623e08ad4ece5347ab715f34b0"><td class="memItemLeft" align="right" valign="top"><a id="a025162623e08ad4ece5347ab715f34b0"></a>
+SportsTypes&#160;</td><td class="memItemRight" valign="bottom"><b>SportsType</b><code> [get, protected set]</code></td></tr>
+<tr class="separator:a025162623e08ad4ece5347ab715f34b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a703f369af50c6d0957df9ca72c6c8757"><td class="memItemLeft" align="right" valign="top"><a id="a703f369af50c6d0957df9ca72c6c8757"></a>
-string[]&#160;</td><td class="memItemRight" valign="bottom"><b>MatchArray</b><code> [get]</code></td></tr>
+string[]&#160;</td><td class="memItemRight" valign="bottom"><b>MatchArray</b><code> [get, protected set]</code></td></tr>
 <tr class="separator:a703f369af50c6d0957df9ca72c6c8757"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Abstract match class to set a frame for sport-specific kinds of matches. </p>
 <p>This class provides the basic structure for any kind of sports match, including common properties like MatchID, MatchDate, and Results. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ab999e43735c5ebbf9284b5a1f98fd57b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab999e43735c5ebbf9284b5a1f98fd57b">&#9670;&nbsp;</a></span>Match()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">Match.Match </td>
-          <td>(</td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>PathToMatchDataCsvFile</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>line_number</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Constructor to initialize a match object. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">PathToMatchDataCsvFile</td><td>The path to the CSV file containing match data. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>src/ClassLib/Match.cs</li>
 </ul>
 </div><!-- contents -->

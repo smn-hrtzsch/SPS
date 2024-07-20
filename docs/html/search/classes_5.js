@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['schedule_36',['Schedule',['../classSchedule.html',1,'']]],
-  ['score_37',['Score',['../classScore.html',1,'']]]
+  ['prediction_45',['Prediction',['../classPrediction.html',1,'']]],
+  ['predictiongame_46',['PredictionGame',['../classPredictionGame.html',1,'']]]
 ];

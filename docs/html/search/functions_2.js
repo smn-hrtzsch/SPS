@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['getmatchdatafromcsvfile_41',['GetMatchDataFromCsvFile',['../classCSVReader.html#a4a046f97b378142ef0b9626aa6e61477',1,'CSVReader']]]
+  ['footballmatch_52',['FootballMatch',['../classFootballMatch.html#a68f5f40c532b065426bd492acfb3178a',1,'FootballMatch']]]
 ];

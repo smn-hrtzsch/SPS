@@ -15,26 +15,28 @@
 \contentsline {subsection}{\numberline {3.3.3}Member Function Documentation}{7}{subsection.3.3.3}%
 \contentsline {subsubsection}{\numberline {3.3.3.1}SendEmail()}{7}{subsubsection.3.3.3.1}%
 \contentsline {section}{\numberline {3.4}Football\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Match Class Reference}{7}{section.3.4}%
-\contentsline {section}{\numberline {3.5}Football\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Prediction Class Reference}{8}{section.3.5}%
-\contentsline {section}{\numberline {3.6}Match Class Reference}{8}{section.3.6}%
-\contentsline {subsection}{\numberline {3.6.1}Detailed Description}{9}{subsection.3.6.1}%
-\contentsline {subsection}{\numberline {3.6.2}Constructor \& Destructor Documentation}{9}{subsection.3.6.2}%
-\contentsline {subsubsection}{\numberline {3.6.2.1}Match()}{9}{subsubsection.3.6.2.1}%
-\contentsline {section}{\numberline {3.7}Member Class Reference}{9}{section.3.7}%
-\contentsline {subsection}{\numberline {3.7.1}Detailed Description}{10}{subsection.3.7.1}%
-\contentsline {subsection}{\numberline {3.7.2}Member Function Documentation}{10}{subsection.3.7.2}%
-\contentsline {subsubsection}{\numberline {3.7.2.1}SearchPredictionDone()}{11}{subsubsection.3.7.2.1}%
-\contentsline {section}{\numberline {3.8}Prediction Class Reference}{11}{section.3.8}%
-\contentsline {section}{\numberline {3.9}Prediction\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Game Class Reference}{11}{section.3.9}%
-\contentsline {subsection}{\numberline {3.9.1}Detailed Description}{12}{subsection.3.9.1}%
-\contentsline {subsection}{\numberline {3.9.2}Constructor \& Destructor Documentation}{12}{subsection.3.9.2}%
-\contentsline {subsubsection}{\numberline {3.9.2.1}PredictionGame()}{12}{subsubsection.3.9.2.1}%
-\contentsline {subsection}{\numberline {3.9.3}Member Function Documentation}{12}{subsection.3.9.3}%
-\contentsline {subsubsection}{\numberline {3.9.3.1}Register()}{12}{subsubsection.3.9.3.1}%
-\contentsline {subsubsection}{\numberline {3.9.3.2}SendDailyEmail()}{13}{subsubsection.3.9.3.2}%
-\contentsline {subsubsection}{\numberline {3.9.3.3}Unsubscribe()}{13}{subsubsection.3.9.3.3}%
-\contentsline {subsection}{\numberline {3.9.4}Property Documentation}{13}{subsection.3.9.4}%
-\contentsline {subsubsection}{\numberline {3.9.4.1}PredictionGameID}{13}{subsubsection.3.9.4.1}%
-\contentsline {section}{\numberline {3.10}Schedule Class Reference}{13}{section.3.10}%
-\contentsline {subsection}{\numberline {3.10.1}Detailed Description}{14}{subsection.3.10.1}%
-\contentsline {section}{\numberline {3.11}Score Class Reference}{14}{section.3.11}%
+\contentsline {section}{\numberline {3.5}Football\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Match\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Factory Class Reference}{8}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Football\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Prediction Class Reference}{8}{section.3.6}%
+\contentsline {section}{\numberline {3.7}IMatch\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Factory$<$ M $>$ Interface Template Reference}{9}{section.3.7}%
+\contentsline {section}{\numberline {3.8}Match Class Reference}{9}{section.3.8}%
+\contentsline {subsection}{\numberline {3.8.1}Detailed Description}{10}{subsection.3.8.1}%
+\contentsline {section}{\numberline {3.9}Member$<$ P, M $>$ Class Template Reference}{10}{section.3.9}%
+\contentsline {subsection}{\numberline {3.9.1}Detailed Description}{11}{subsection.3.9.1}%
+\contentsline {subsection}{\numberline {3.9.2}Member Function Documentation}{11}{subsection.3.9.2}%
+\contentsline {subsubsection}{\numberline {3.9.2.1}SearchPredictionDone()}{11}{subsubsection.3.9.2.1}%
+\contentsline {subsection}{\numberline {3.9.3}Member Data Documentation}{11}{subsection.3.9.3}%
+\contentsline {subsubsection}{\numberline {3.9.3.1}Scores}{11}{subsubsection.3.9.3.1}%
+\contentsline {section}{\numberline {3.10}Prediction Class Reference}{11}{section.3.10}%
+\contentsline {section}{\numberline {3.11}Prediction\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Game Class Reference}{12}{section.3.11}%
+\contentsline {subsection}{\numberline {3.11.1}Detailed Description}{12}{subsection.3.11.1}%
+\contentsline {subsection}{\numberline {3.11.2}Constructor \& Destructor Documentation}{12}{subsection.3.11.2}%
+\contentsline {subsubsection}{\numberline {3.11.2.1}PredictionGame()}{13}{subsubsection.3.11.2.1}%
+\contentsline {subsection}{\numberline {3.11.3}Member Function Documentation}{13}{subsection.3.11.3}%
+\contentsline {subsubsection}{\numberline {3.11.3.1}Register()}{13}{subsubsection.3.11.3.1}%
+\contentsline {subsubsection}{\numberline {3.11.3.2}SendDailyEmail()}{13}{subsubsection.3.11.3.2}%
+\contentsline {subsubsection}{\numberline {3.11.3.3}Unsubscribe()}{13}{subsubsection.3.11.3.3}%
+\contentsline {subsection}{\numberline {3.11.4}Property Documentation}{13}{subsection.3.11.4}%
+\contentsline {subsubsection}{\numberline {3.11.4.1}PredictionGameID}{13}{subsubsection.3.11.4.1}%
+\contentsline {section}{\numberline {3.12}Schedule$<$ M $>$ Class Template Reference}{14}{section.3.12}%
+\contentsline {subsection}{\numberline {3.12.1}Detailed Description}{14}{subsection.3.12.1}%
+\contentsline {section}{\numberline {3.13}Score Class Reference}{14}{section.3.13}%

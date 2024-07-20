@@ -14,28 +14,38 @@ Inheritance diagram for Match\+:\begin{figure}[H]
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{classMatch_ab999e43735c5ebbf9284b5a1f98fd57b}{Match}} (string Path\+To\+Match\+Data\+Csv\+File, int line\+\_\+number)
-\begin{DoxyCompactList}\small\item\em Constructor to initialize a match object. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classMatch_aa32023355199562c556cf6453bc53b0e}\label{classMatch_aa32023355199562c556cf6453bc53b0e}} 
 override int {\bfseries Get\+Hash\+Code} ()
+\item 
+\mbox{\Hypertarget{classMatch_aa9b3f98f0c60f0bf72056c3151932824}\label{classMatch_aa9b3f98f0c60f0bf72056c3151932824}} 
+bool {\bfseries Team1\+Won} ()
+\item 
+\mbox{\Hypertarget{classMatch_adf4b0a56795b33f493c48810f9f3acc7}\label{classMatch_adf4b0a56795b33f493c48810f9f3acc7}} 
+bool {\bfseries Team2\+Won} ()
+\item 
+\mbox{\Hypertarget{classMatch_a8ad8cc089c1d77cb81300a6d23312ee5}\label{classMatch_a8ad8cc089c1d77cb81300a6d23312ee5}} 
+bool {\bfseries Tie} ()
 \end{DoxyCompactItemize}
 \doxysubsection*{Properties}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{classMatch_a521024726846dbb8a1f5349378f63eb6}\label{classMatch_a521024726846dbb8a1f5349378f63eb6}} 
-uint \mbox{\hyperlink{classMatch_a521024726846dbb8a1f5349378f63eb6}{Match\+ID}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+uint \mbox{\hyperlink{classMatch_a521024726846dbb8a1f5349378f63eb6}{Match\+ID}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, protected set\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Unique identifier for the match. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classMatch_a18ed97ff00981610e8a39cd3833d5297}\label{classMatch_a18ed97ff00981610e8a39cd3833d5297}} 
-Date\+Time \mbox{\hyperlink{classMatch_a18ed97ff00981610e8a39cd3833d5297}{Match\+Date}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+Date\+Time \mbox{\hyperlink{classMatch_a18ed97ff00981610e8a39cd3833d5297}{Match\+Date}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, protected set\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Date and time when the match takes place. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classMatch_ad8acf6bcb6478595930f1dfcb26ba047}\label{classMatch_ad8acf6bcb6478595930f1dfcb26ba047}} 
-byte? \mbox{\hyperlink{classMatch_ad8acf6bcb6478595930f1dfcb26ba047}{Result\+Team1}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+byte? \mbox{\hyperlink{classMatch_ad8acf6bcb6478595930f1dfcb26ba047}{Result\+Team1}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, protected set\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Result of team 1 in the match. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classMatch_ac9578633d6013c209ae659014d38653a}\label{classMatch_ac9578633d6013c209ae659014d38653a}} 
-byte? \mbox{\hyperlink{classMatch_ac9578633d6013c209ae659014d38653a}{Result\+Team2}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+byte? \mbox{\hyperlink{classMatch_ac9578633d6013c209ae659014d38653a}{Result\+Team2}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, protected set\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Result of team 2 in the match. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classMatch_a025162623e08ad4ece5347ab715f34b0}\label{classMatch_a025162623e08ad4ece5347ab715f34b0}} 
+Sports\+Types {\bfseries Sports\+Type}\hspace{0.3cm}{\ttfamily  \mbox{[}get, protected set\mbox{]}}
+\item 
 \mbox{\Hypertarget{classMatch_a703f369af50c6d0957df9ca72c6c8757}\label{classMatch_a703f369af50c6d0957df9ca72c6c8757}} 
-string\mbox{[}$\,$\mbox{]} {\bfseries Match\+Array}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+string\mbox{[}$\,$\mbox{]} {\bfseries Match\+Array}\hspace{0.3cm}{\ttfamily  \mbox{[}get, protected set\mbox{]}}
 \end{DoxyCompactItemize}
 
 
@@ -43,24 +53,6 @@ string\mbox{[}$\,$\mbox{]} {\bfseries Match\+Array}\hspace{0.3cm}{\ttfamily  \mb
 Abstract match class to set a frame for sport-\/specific kinds of matches. 
 
 This class provides the basic structure for any kind of sports match, including common properties like Match\+ID, Match\+Date, and Results. 
-
-\doxysubsection{Constructor \& Destructor Documentation}
-\mbox{\Hypertarget{classMatch_ab999e43735c5ebbf9284b5a1f98fd57b}\label{classMatch_ab999e43735c5ebbf9284b5a1f98fd57b}} 
-\index{Match@{Match}!Match@{Match}}
-\index{Match@{Match}!Match@{Match}}
-\doxysubsubsection{\texorpdfstring{Match()}{Match()}}
-{\footnotesize\ttfamily Match.\+Match (\begin{DoxyParamCaption}\item[{string}]{Path\+To\+Match\+Data\+Csv\+File,  }\item[{int}]{line\+\_\+number }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
-
-
-
-Constructor to initialize a match object. 
-
-
-\begin{DoxyParams}{Parameters}
-{\em Path\+To\+Match\+Data\+Csv\+File} & The path to the CSV file containing match data. \\
-\hline
-\end{DoxyParams}
-
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

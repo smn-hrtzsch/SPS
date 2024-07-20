@@ -1,5 +1,5 @@
-\hypertarget{classSchedule}{}\doxysection{Schedule Class Reference}
-\label{classSchedule}\index{Schedule@{Schedule}}
+\hypertarget{classSchedule}{}\doxysection{Schedule$<$ M $>$ Class Template Reference}
+\label{classSchedule}\index{Schedule$<$ M $>$@{Schedule$<$ M $>$}}
 
 
 Generic class \mbox{\hyperlink{classSchedule}{Schedule}} which represents a tournament.  
@@ -8,23 +8,23 @@ Generic class \mbox{\hyperlink{classSchedule}{Schedule}} which represents a tour
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classSchedule_aa1eca7f4a88cf55f77cfe3611ee12385}\label{classSchedule_aa1eca7f4a88cf55f77cfe3611ee12385}} 
+\mbox{\Hypertarget{classSchedule_a5bba5787422204b4c62e01e38f6da14e}\label{classSchedule_a5bba5787422204b4c62e01e38f6da14e}} 
 {\bfseries Schedule} (string Path\+To\+Csv\+File, Sports\+Types sport\+\_\+type, Schedule\+Types schedule\+\_\+type)
 \item 
-\mbox{\Hypertarget{classSchedule_a71f12f4012cc4833f0400913a3409462}\label{classSchedule_a71f12f4012cc4833f0400913a3409462}} 
-List$<$ \mbox{\hyperlink{classMatch}{Match}} $>$ {\bfseries Get\+Matches\+From\+Csv\+File} (string Path\+To\+Csv\+File, Sports\+Types sport\+\_\+type)
+\mbox{\Hypertarget{classSchedule_ae40ae0809704ff1f3d86934b71b3d7e9}\label{classSchedule_ae40ae0809704ff1f3d86934b71b3d7e9}} 
+List$<$ \mbox{\hyperlink{classFootballMatch}{Football\+Match}} $>$ {\bfseries Get\+Football\+Schedule\+From\+Csv\+File} (string Path\+To\+Csv\+File, Sports\+Types sport\+\_\+type)
 \item 
-\mbox{\Hypertarget{classSchedule_ab78faa32f7ed46a6b3a48aea330ad820}\label{classSchedule_ab78faa32f7ed46a6b3a48aea330ad820}} 
-List$<$ \mbox{\hyperlink{classMatch}{Match}} $>$ {\bfseries Get\+Matches\+On\+Day} ()
+\mbox{\Hypertarget{classSchedule_a4c947b06033f92b0770f47e4ce125753}\label{classSchedule_a4c947b06033f92b0770f47e4ce125753}} 
+List$<$ M $>$ {\bfseries Get\+Matches\+On\+Day} ()
 \end{DoxyCompactItemize}
 \doxysubsection*{Properties}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classSchedule_aff6eee337f11de5a8c2b49ca87517ca8}\label{classSchedule_aff6eee337f11de5a8c2b49ca87517ca8}} 
+\mbox{\Hypertarget{classSchedule_a09e1e52276adce5cb9e805c30548ebff}\label{classSchedule_a09e1e52276adce5cb9e805c30548ebff}} 
 Schedule\+Types {\bfseries Schedule\+ID}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
 \item 
-\mbox{\Hypertarget{classSchedule_af4e32962dffec9b2a0aa7b10326692f5}\label{classSchedule_af4e32962dffec9b2a0aa7b10326692f5}} 
-List$<$ \mbox{\hyperlink{classMatch}{Match}} $>$ {\bfseries Matches}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\mbox{\Hypertarget{classSchedule_ad3e46850e8fd71886e742b9c1b437027}\label{classSchedule_ad3e46850e8fd71886e742b9c1b437027}} 
+List$<$ M $>$? {\bfseries Matches}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
 \end{DoxyCompactItemize}
 
 
@@ -33,7 +33,11 @@ Generic class \mbox{\hyperlink{classSchedule}{Schedule}} which represents a tour
 
 It contains a list of all the matches which take place during the tournament.
 
-Added to that it also contains a list of all the matches on the specific day of the tournament. 
+Added to that it also contains a list of all the matches on the specific day of the tournament. \begin{Desc}
+\item[Type Constraints]\begin{description}
+\item[{\em M} : {\em \mbox{\hyperlink{classMatch}{Match}}}]\end{description}
+\end{Desc}
+
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

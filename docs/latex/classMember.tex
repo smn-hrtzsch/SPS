@@ -1,5 +1,5 @@
-\hypertarget{classMember}{}\doxysection{Member Class Reference}
-\label{classMember}\index{Member@{Member}}
+\hypertarget{classMember}{}\doxysection{Member$<$ P, M $>$ Class Template Reference}
+\label{classMember}\index{Member$<$ P, M $>$@{Member$<$ P, M $>$}}
 
 
 Represents a member participating in the Sport \mbox{\hyperlink{classPrediction}{Prediction}} System (SPS).  
@@ -8,73 +8,82 @@ Represents a member participating in the Sport \mbox{\hyperlink{classPrediction}
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classMember_a5be409630be77cc0ec6f8a1e598c4dcb}\label{classMember_a5be409630be77cc0ec6f8a1e598c4dcb}} 
-\mbox{\hyperlink{classMember_a5be409630be77cc0ec6f8a1e598c4dcb}{Member}} (string forename, string surname, string emailaddress)
+\mbox{\Hypertarget{classMember_ac6644cf6173030ee8b2e7080947fbdb4}\label{classMember_ac6644cf6173030ee8b2e7080947fbdb4}} 
+\mbox{\hyperlink{classMember_ac6644cf6173030ee8b2e7080947fbdb4}{Member}} (string forename, string surname, string emailaddress)
 \begin{DoxyCompactList}\small\item\em Initializes a new instance of the \mbox{\hyperlink{classMember}{Member}} class. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classMember_a3edb7725bba1568ec7cba6ee71e0c78d}\label{classMember_a3edb7725bba1568ec7cba6ee71e0c78d}} 
+\mbox{\Hypertarget{classMember_abc26b343a82543241a6cc0fa825b072f}\label{classMember_abc26b343a82543241a6cc0fa825b072f}} 
 override int {\bfseries Get\+Hash\+Code} ()
 \item 
-\mbox{\Hypertarget{classMember_a040acc0b6203dc8b0c03b4d54e01708e}\label{classMember_a040acc0b6203dc8b0c03b4d54e01708e}} 
-void \mbox{\hyperlink{classMember_a040acc0b6203dc8b0c03b4d54e01708e}{Add\+Participating\+Schedule}} (\mbox{\hyperlink{classSchedule}{Schedule}} schedule)
+\mbox{\Hypertarget{classMember_a78e8acf145678211070c1220df541fbe}\label{classMember_a78e8acf145678211070c1220df541fbe}} 
+void \mbox{\hyperlink{classMember_a78e8acf145678211070c1220df541fbe}{Add\+Participating\+Schedule}} (\mbox{\hyperlink{classSchedule}{Schedule}}$<$ M $>$ schedule, Schedule\+Types schedule\+\_\+type)
 \begin{DoxyCompactList}\small\item\em Adds a schedule to the member\textquotesingle{}s list of participating schedules. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classMember_a356ec25cc475ee1169ec33c29899d02f}\label{classMember_a356ec25cc475ee1169ec33c29899d02f}} 
-void \mbox{\hyperlink{classMember_a356ec25cc475ee1169ec33c29899d02f}{Remove\+Participating\+Schedule}} (Schedule\+Types schedule\+\_\+type)
+\mbox{\Hypertarget{classMember_abcab35b78d9508e733f58e379c3d77a7}\label{classMember_abcab35b78d9508e733f58e379c3d77a7}} 
+void \mbox{\hyperlink{classMember_abcab35b78d9508e733f58e379c3d77a7}{Remove\+Participating\+Schedule}} (Schedule\+Types schedule\+\_\+type)
 \begin{DoxyCompactList}\small\item\em Removes a schedule from the member\textquotesingle{}s list of participating schedules. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classMember_a1987f5572feba5d12ada4712843844e5}\label{classMember_a1987f5572feba5d12ada4712843844e5}} 
-void \mbox{\hyperlink{classMember_a1987f5572feba5d12ada4712843844e5}{Add\+Prediction\+To\+Do}} ()
+\mbox{\Hypertarget{classMember_ad727b5e37f261255b6544a94cb3b8704}\label{classMember_ad727b5e37f261255b6544a94cb3b8704}} 
+void \mbox{\hyperlink{classMember_ad727b5e37f261255b6544a94cb3b8704}{Add\+Prediction\+To\+Do}} ()
 \begin{DoxyCompactList}\small\item\em Adds a prediction to the member\textquotesingle{}s list of predictions to do. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classMember_a4220d0451dae1bab9cbcb6fc3efdacf9}\label{classMember_a4220d0451dae1bab9cbcb6fc3efdacf9}} 
-void \mbox{\hyperlink{classMember_a4220d0451dae1bab9cbcb6fc3efdacf9}{Remove\+Prediction\+To\+Do}} (uint Match\+ID)
+\mbox{\Hypertarget{classMember_af48183dd2efb8e1b3aa5e12395cb84ae}\label{classMember_af48183dd2efb8e1b3aa5e12395cb84ae}} 
+void \mbox{\hyperlink{classMember_af48183dd2efb8e1b3aa5e12395cb84ae}{Remove\+Prediction\+To\+Do}} (uint Match\+ID)
 \begin{DoxyCompactList}\small\item\em Removes a prediction from the member\textquotesingle{}s list of predictions to do. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classPrediction}{Prediction}} \mbox{\hyperlink{classMember_a1f856e2972a4684a9be70966e5dab1b8}{Search\+Prediction\+Done}} (uint Prediction\+ID)
+\mbox{\hyperlink{classPrediction}{Prediction}} \mbox{\hyperlink{classMember_a277d9d6198127cb74c21bfeda9d960c1}{Search\+Prediction\+Done}} (uint Prediction\+ID)
 \begin{DoxyCompactList}\small\item\em Searches for a specific prediction in the member\textquotesingle{}s list. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classMember_a7fd4d585e342a4bab6bffe6b1506b0dd}\label{classMember_a7fd4d585e342a4bab6bffe6b1506b0dd}} 
+\mbox{\Hypertarget{classMember_a0c6fb2acac3943a0599bf1becd476b62}\label{classMember_a0c6fb2acac3943a0599bf1becd476b62}} 
 void {\bfseries Add\+Prediction} ()
+\item 
+\mbox{\Hypertarget{classMember_aacc42eef692fa157141e512d2867ab44}\label{classMember_aacc42eef692fa157141e512d2867ab44}} 
+void {\bfseries Calculate\+Scores} ()
 \end{DoxyCompactItemize}
 \doxysubsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classMember_a1c27193207bee5901f1939ead362063b}\label{classMember_a1c27193207bee5901f1939ead362063b}} 
-List$<$ \mbox{\hyperlink{classScore}{Score}} $>$ {\bfseries Scores}
-\end{DoxyCompactItemize}
+List$<$ \mbox{\hyperlink{classScore}{Score}} $>$ \mbox{\hyperlink{classMember_a88fc693fc84bd07584efde1d198582b5}{Scores}}
+\begin{DoxyCompactList}\small\item\em List of Scores. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Properties}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{classMember_aa261726bae3313c10e3708b820a27ba5}\label{classMember_aa261726bae3313c10e3708b820a27ba5}} 
-uint \mbox{\hyperlink{classMember_aa261726bae3313c10e3708b820a27ba5}{Member\+ID}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\mbox{\Hypertarget{classMember_ad2af94d3c5ad489392191f8f0cc9b056}\label{classMember_ad2af94d3c5ad489392191f8f0cc9b056}} 
+uint \mbox{\hyperlink{classMember_ad2af94d3c5ad489392191f8f0cc9b056}{Member\+ID}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Gets the unique ID of the member. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{classMember_a4678f70a7007fb1d918d9f3a0b65b876}\label{classMember_a4678f70a7007fb1d918d9f3a0b65b876}} 
+\mbox{\Hypertarget{classMember_aeb11e745400efa8e4d4aa132323306e8}\label{classMember_aeb11e745400efa8e4d4aa132323306e8}} 
 string? {\bfseries forename}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
 \item 
-\mbox{\Hypertarget{classMember_a4c64ba29b37e2b55637c9cac34f1757c}\label{classMember_a4c64ba29b37e2b55637c9cac34f1757c}} 
+\mbox{\Hypertarget{classMember_a0a2f4b6045aee05a286311d8c3be2557}\label{classMember_a0a2f4b6045aee05a286311d8c3be2557}} 
 string? {\bfseries surname}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
 \item 
-\mbox{\Hypertarget{classMember_af0f0cf10a03ca12b845ffdf2387acf86}\label{classMember_af0f0cf10a03ca12b845ffdf2387acf86}} 
+\mbox{\Hypertarget{classMember_a41490da41d90d6a5359ca15d1de7523f}\label{classMember_a41490da41d90d6a5359ca15d1de7523f}} 
 string {\bfseries Email\+Address}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
 \item 
-\mbox{\Hypertarget{classMember_a84d5626fe6377b819001326e5c273365}\label{classMember_a84d5626fe6377b819001326e5c273365}} 
+\mbox{\Hypertarget{classMember_a8fd67c7c5948ad2ca443bbf898092d6c}\label{classMember_a8fd67c7c5948ad2ca443bbf898092d6c}} 
 string {\bfseries password}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
 \item 
-\mbox{\Hypertarget{classMember_a22f28b06b245ce59bf0527424cd8f6ef}\label{classMember_a22f28b06b245ce59bf0527424cd8f6ef}} 
-List$<$ \mbox{\hyperlink{classSchedule}{Schedule}} $>$ {\bfseries Participating\+Schedules}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
-\item 
-\mbox{\Hypertarget{classMember_acaa0b5fbd9c1987c9b20a67e1d454827}\label{classMember_acaa0b5fbd9c1987c9b20a67e1d454827}} 
-List$<$ \mbox{\hyperlink{classMatch}{Match}} $>$ {\bfseries Predictions\+To\+Do}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
-\item 
-\mbox{\Hypertarget{classMember_a7eaca2fe8c00c30ffe82d1bf4f77d21c}\label{classMember_a7eaca2fe8c00c30ffe82d1bf4f77d21c}} 
-List$<$ \mbox{\hyperlink{classPrediction}{Prediction}} $>$ {\bfseries Predictions\+Done}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
-\end{DoxyCompactItemize}
+\mbox{\Hypertarget{classMember_a0a8adc9dce13d3df7090ada6ebe3d5db}\label{classMember_a0a8adc9dce13d3df7090ada6ebe3d5db}} 
+List$<$ \mbox{\hyperlink{classSchedule}{Schedule}}$<$ M $>$ $>$ \mbox{\hyperlink{classMember_a0a8adc9dce13d3df7090ada6ebe3d5db}{Participating\+Schedules}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em List of Schedules the member chose to participate predicting. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classMember_a42b88439052aa2cc90ffc6816a21f044}\label{classMember_a42b88439052aa2cc90ffc6816a21f044}} 
+List$<$ M $>$ \mbox{\hyperlink{classMember_a42b88439052aa2cc90ffc6816a21f044}{Predictions\+To\+Do}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em List of Matches, which need to be predicted on the specific day. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classMember_a51ffd0be4378265869ac64fb2eeeb305}\label{classMember_a51ffd0be4378265869ac64fb2eeeb305}} 
+List$<$ P $>$ \mbox{\hyperlink{classMember_a51ffd0be4378265869ac64fb2eeeb305}{Predictions\+Done}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em List, which contains all Predictions where the match is already predicted, but a score was not calculated yet. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classMember_a7bcfa6d2da2e1ce048c53e3194bd2624}\label{classMember_a7bcfa6d2da2e1ce048c53e3194bd2624}} 
+List$<$ P $>$ \mbox{\hyperlink{classMember_a7bcfa6d2da2e1ce048c53e3194bd2624}{Archived\+Predictions}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em List, which contains all Predictions where no score must be calculated anymore. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-Represents a member participating in the Sport \mbox{\hyperlink{classPrediction}{Prediction}} System (SPS). 
+Represents a member participating in the Sport \mbox{\hyperlink{classPrediction}{Prediction}} System (SPS). \begin{Desc}
+\item[Type Constraints]\begin{description}
+\item[{\em P} : {\em \mbox{\hyperlink{classPrediction}{Prediction}}}]\item[{\em M} : {\em \mbox{\hyperlink{classMatch}{Match}}}]\end{description}
+\end{Desc}
+
 
 \doxysubsection{Member Function Documentation}
-\mbox{\Hypertarget{classMember_a1f856e2972a4684a9be70966e5dab1b8}\label{classMember_a1f856e2972a4684a9be70966e5dab1b8}} 
-\index{Member@{Member}!SearchPredictionDone@{SearchPredictionDone}}
-\index{SearchPredictionDone@{SearchPredictionDone}!Member@{Member}}
+\mbox{\Hypertarget{classMember_a277d9d6198127cb74c21bfeda9d960c1}\label{classMember_a277d9d6198127cb74c21bfeda9d960c1}} 
+\index{Member$<$ P, M $>$@{Member$<$ P, M $>$}!SearchPredictionDone@{SearchPredictionDone}}
+\index{SearchPredictionDone@{SearchPredictionDone}!Member$<$ P, M $>$@{Member$<$ P, M $>$}}
 \doxysubsubsection{\texorpdfstring{SearchPredictionDone()}{SearchPredictionDone()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classPrediction}{Prediction}} Member.\+Search\+Prediction\+Done (\begin{DoxyParamCaption}\item[{uint}]{Prediction\+ID }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classPrediction}{Prediction}} \mbox{\hyperlink{classMember}{Member}}$<$ P, M $>$.Search\+Prediction\+Done (\begin{DoxyParamCaption}\item[{uint}]{Prediction\+ID }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
 
 
 
@@ -84,6 +93,19 @@ Searches for a specific prediction in the member\textquotesingle{}s list.
 The prediction if found, otherwise null. 
 \end{DoxyReturn}
 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classMember_a88fc693fc84bd07584efde1d198582b5}\label{classMember_a88fc693fc84bd07584efde1d198582b5}} 
+\index{Member$<$ P, M $>$@{Member$<$ P, M $>$}!Scores@{Scores}}
+\index{Scores@{Scores}!Member$<$ P, M $>$@{Member$<$ P, M $>$}}
+\doxysubsubsection{\texorpdfstring{Scores}{Scores}}
+{\footnotesize\ttfamily List$<$\mbox{\hyperlink{classScore}{Score}}$>$ \mbox{\hyperlink{classMember}{Member}}$<$ P, M $>$.Scores\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+List of Scores. 
+
+There is exactly one score for every schedule the member predicts. 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
