@@ -9,26 +9,26 @@ public class Member<P, M>
 {
     ///\brief Gets the unique ID of the member.
     public uint MemberID { get; }
-    protected string? forename { get; set; }
-    protected string? surname { get; set; }
-    protected string EmailAddress { get; set; }
-    protected string password { get; set; }
+    internal protected string? forename { get; private set; }
+    internal protected string? surname { get; private set; }
+    internal protected string EmailAddress { get; private set; }
+    protected string? password { get; set; }
 
     /// \brief List of Schedules the member chose to participate predicting.
     protected List<Schedule<M>> ParticipatingSchedules { get; }
 
     /// \brief List of Matches, which need to be predicted on the specific day.
-    protected List<M> PredictionsToDo { get; }
+    internal protected List<M> PredictionsToDo { get; private set;}
 
     /// \brief List, which contains all Predictions where the match is already predicted, but a score was not calculated yet.
     protected List<P> PredictionsDone { get; }
 
     /// \brief List, which contains all Predictions where no score must be calculated anymore
-    protected List<P> ArchivedPredictions { get; }
+    internal protected List<P> ArchivedPredictions { get; }
 
     /// \brief List of Scores <summary>
     /// \details There is exactly one score for every schedule the member predicts.
-    protected List<Score> Scores;
+    internal protected List<Score> Scores;
 
     /// \brief Initializes a new instance of the <see cref="Member"/> class.
     public Member(string forename, string surname, string emailaddress)
