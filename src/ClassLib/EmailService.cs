@@ -11,7 +11,6 @@ public class EmailService
     /// \brief Gets or sets the SMTP server port.
     private int SmtpPort { get; set; }
 
-    // Implementation for sending email goes here
     /// \brief Gets or sets the username for SMTP authentication.
     private string Username { get; set; }
 
@@ -36,13 +35,14 @@ public class EmailService
     /// \param subject The subject of the email.
     /// \param content The content of the email.
 
-    public void SendEmail(string Recipient, string Sender, string Subject, string Content)
+    public void StartEmail(string Recipient, string Sender, string Subject, string Content)
     {
         MailMessage Email = new MailMessage();
         Email.From = new MailAddress(Sender);
         Email.To.Add(Recipient);
         Email.Subject = Subject;
         Email.Body = Content;
+        Email.IsBodyHtml = true;
 
         SmtpClient MailClient = new SmtpClient(SmtpServer, SmtpPort);
         MailClient.EnableSsl = true;
@@ -51,6 +51,16 @@ public class EmailService
         MailClient.Credentials = new System.Net.NetworkCredential(Username, Password);
 
         MailClient.Send(Email);
+    }
+
+    public void SendEmail(string Recipient, string Sender, string Subject, string Template, Dictionary<string, string> placeholders)
+    {
+        foreach (var placeholder in placeholders)
+        {
+            Template = Template.Replace($"{{{{{placeholder.Key}}}}}", placeholder.Value);
+        }
+        StartEmail(Recipient, Sender, Subject, Template);
+    
     }
 }
 
