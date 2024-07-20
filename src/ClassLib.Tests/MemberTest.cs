@@ -2,8 +2,8 @@ using System.Reflection.Metadata.Ecma335;
 
 public class TestMember : Member<Prediction, Match>
 {
-    public TestMember(string forename, string surname, string emailaddress)
-        : base(forename, surname, emailaddress) { }
+    public TestMember(string forename, string surname, string emailaddress, string password)
+        : base(forename, surname, emailaddress, password) { }
 
     public List<Schedule<Match>> ParticipatingSchedulesTest
     {
@@ -36,8 +36,9 @@ public class MemberTest
         string vorname = "Maria";
         string nachname = "Magdalena";
         string email = "maria.magdalena@online.de";
+        string password = "1234";
 
-        TestMember TestMember = new TestMember(vorname, nachname, email);
+        TestMember TestMember = new TestMember(vorname, nachname, email, password);
         Assert.True(TestMember.MemberID == (uint)TestMember.GetHashCode());
     }
 
@@ -47,8 +48,9 @@ public class MemberTest
         string vorname = "Maria";
         string nachname = "Magdalena";
         string email = "maria.magdalena@online.de";
+        string password = "1234";
 
-        TestMember TestMember = new TestMember(vorname, nachname, email);
+        TestMember TestMember = new TestMember(vorname, nachname, email, password);
         CSVReader<FootballMatch>.SetMatchFactory(footballMatchFactory);
         Schedule<Match> schedule = new Schedule<Match>(
             "../../../EM_2024Test.csv",
@@ -66,8 +68,9 @@ public class MemberTest
         string vorname = "Maria";
         string nachname = "Magdalena";
         string email = "maria.magdalena@online.de";
+        string password = "1234";
 
-        TestMember TestMember = new TestMember(vorname, nachname, email);
+        TestMember TestMember = new TestMember(vorname, nachname, email, password);
         CSVReader<FootballMatch>.SetMatchFactory(footballMatchFactory);
         Schedule<Match> schedule = new Schedule<Match>(
             "../../../EM_2024Test.csv",
@@ -86,8 +89,9 @@ public class MemberTest
         string vorname = "Maria";
         string nachname = "Magdalena";
         string email = "maria.magdalena@online.de";
+        string password = "1234";
 
-        TestMember TestMember = new TestMember(vorname, nachname, email);
+        TestMember TestMember = new TestMember(vorname, nachname, email, password);
         CSVReader<FootballMatch>.SetMatchFactory(footballMatchFactory);
         Schedule<Match> schedule = new Schedule<Match>(
             "../../../EM_2024Test.csv",
@@ -109,8 +113,9 @@ public class MemberTest
         string vorname = "Maria";
         string nachname = "Magdalena";
         string email = "maria.magdalena@online.de";
+        string password = "1234";
 
-        TestMember TestMember = new TestMember(vorname, nachname, email);
+        TestMember TestMember = new TestMember(vorname, nachname, email, password);
 
         FootballMatch match1 = new FootballMatch(
             "../../../EM_2024Test.csv",
