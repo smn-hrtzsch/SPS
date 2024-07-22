@@ -98,8 +98,8 @@ public class TestCsvFileIO
     {
         List<Member<Prediction, Match>> testMembers = new List<Member<Prediction, Match>>()
         {
-            new TestMember("Artim", "Meyer", "artimmeyer@gmail.com", "SPSistCool"),
-            new TestMember("Simon", "Hörtzsch", "simon.hoertzsch@gmail.com", "SPSistCool1234")
+            new TestMember("Artim", "Meyer", "Artim.Meyer@student.tu-freiberg.de", "SPSistCool"),
+            new TestMember("Simon", "Hörtzsch", "Simon.Hoertzsch@student.tu-freiberg.de", "SPSistCool1234")
         };
 
         string testFilePath = "../../../MembersTest.csv";
@@ -111,11 +111,11 @@ public class TestCsvFileIO
         Assert.Equal(3, lines.Length);
         Assert.Equal("MemberID;Forename;Surname;Email Address;Password", lines[0]);
         Assert.Equal(
-            $"{testMembers[0].MemberID};Artim;Meyer;artimmeyer@gmail.com;SPSistCool",
+            $"{testMembers[0].MemberID};Artim;Meyer;Artim.Meyer@student.tu-freiberg.de;SPSistCool",
             lines[1]
         );
         Assert.Equal(
-            $"{testMembers[1].MemberID};Simon;Hörtzsch;simon.hoertzsch@gmail.com;SPSistCool1234",
+            $"{testMembers[1].MemberID};Simon;Hörtzsch;Simon.Hoertzsch@student.tu-freiberg.de;SPSistCool1234",
             lines[2]
         );
     }
@@ -132,13 +132,13 @@ public class TestCsvFileIO
             new Member<Prediction, FootballMatch>(
                 "Artim",
                 "Meyer",
-                "artimmeyer@gmail.com",
+                "Artim.Meyer@student.tu-freiberg.de",
                 "SPSistCool"
             ),
             new Member<Prediction, FootballMatch>(
                 "Simon",
                 "Hörtzsch",
-                "simon.hoertzsch@gmail.com",
+                "Simon.Hoertzsch@student.tu-freiberg.de",
                 "SPSistCool1234"
             )
         };
@@ -164,16 +164,4 @@ public class TestCsvFileIO
         Assert.Equal($"{testMembers[0].MemberID};0", lines[1]);
         Assert.Equal($"{testMembers[1].MemberID};0", lines[2]);
     }
-
-    // [Fact]
-    // public static void TestMail()
-    // {
-    //     EmailService HeutigeMail = new EmailService();
-    //     HeutigeMail.SendEmail(
-    //         "artimmeyer@gmail.com",
-    //         "sportspredictionsystem@gmail.com",
-    //         "test email",
-    //         "Hallo Artim. Diese Mail wird per C# gesendet!"
-    //     );
-    // }
 }
