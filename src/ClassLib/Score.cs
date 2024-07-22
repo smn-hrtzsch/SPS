@@ -6,7 +6,7 @@ using System.Xml.XPath;
 public class Score
 {
     public ScheduleTypes ScoreID { get; }
-    protected uint AmountOfPoints { get; private set; }
+    protected uint AmountOfPoints { get; set; }
 
     public Score(ScheduleTypes predicted_schedule)
     {
@@ -21,7 +21,7 @@ public class Score
 
     public uint CalculateFootballScore(FootballPrediction prediction)
     {
-        uint ScoreForPrediction = 0;
+        uint ScoreForPrediction = 0; // wenn nichts der unten genannten Ereignisse eintrifft gibt es für die Prediction keine Punkte
         if (
             prediction.PredictionHome > prediction.PredictionAway
             && prediction.PredictedMatch.Team1Won()
@@ -50,7 +50,7 @@ public class Score
                 ScoreForPrediction += 3; // bei richtig getippter Tordifferenz gibt es 3 extra Punkte
             }
         }
-        else if (
+        if (
             prediction.PredictionHome == prediction.PredictionAway
             && prediction.PredictedMatch.Tie()
         )
@@ -64,7 +64,6 @@ public class Score
         {
             ScoreForPrediction += 10; // wenn Ergebnis exakt richtig getippt wurde, gibt es 10 extra Punkte (nur, wenn es kein )
         }
-
         return ScoreForPrediction;
     }
 }

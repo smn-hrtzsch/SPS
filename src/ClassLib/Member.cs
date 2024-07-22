@@ -202,6 +202,7 @@ public class Member<P, M>
             switch (score.ScoreID)
             {
                 case ScheduleTypes.EM_2024:
+                    List<P> predictionsToRemove = new List<P>();
                     foreach (P prediction in PredictionsDone)
                     {
                         if (prediction.PredictedMatch.SportsType == SportsTypes.Football)
@@ -210,8 +211,13 @@ public class Member<P, M>
                                 prediction as FootballPrediction
                             );
                             score.IncrementAmountOfPoints(ScoreForPrediction);
-                            predictionsToArchive.Add(prediction);
+                            predictionsToRemove.Add(prediction);
                         }
+                    }
+                    foreach (P prediction in predictionsToRemove)
+                    {
+                        PredictionsDone.Remove(prediction);
+                        ArchivedPredictions.Add(prediction);
                     }
                     break;
                 default:
