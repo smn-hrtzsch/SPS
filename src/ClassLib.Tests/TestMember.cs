@@ -154,13 +154,13 @@ public class MemberTest
     }
 
     [Fact]
-    public void TestMemberSearchPrediction() //TODO
+    public void TestMemberSearchPrediction()
     {
         string vorname = "Maria";
         string nachname = "Magdalena";
         string email = "maria.magdalena@online.de";
 
-        TestMember TestMember = new TestMember(vorname, nachname, email);
+        TestMember TestMember = new TestMember(vorname, nachname, email, "1234");
         FootballMatch match1 = new FootballMatch(
             "../../../EM_2024Test.csv",
             1,
