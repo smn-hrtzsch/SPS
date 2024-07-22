@@ -10,7 +10,7 @@ public class PredictionGameTest
         EmailService HeutigeMail = new EmailService();
         List<ScheduleTypes> scheduleTypes = new List<ScheduleTypes>();
         scheduleTypes.Add(ScheduleTypes.EM_2024);
-        PredictionGame predictionGame = new PredictionGame(HeutigeMail, scheduleTypes);
+        PredictionGame predictionGame = new PredictionGame(HeutigeMail);
 
         Schedule<Match> schedule = new Schedule<Match>(
             "../../../EM_2024Test.csv",
