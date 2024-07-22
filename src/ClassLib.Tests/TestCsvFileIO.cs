@@ -99,7 +99,12 @@ public class TestCsvFileIO
         List<Member<Prediction, Match>> testMembers = new List<Member<Prediction, Match>>()
         {
             new TestMember("Artim", "Meyer", "Artim.Meyer@student.tu-freiberg.de", "SPSistCool"),
-            new TestMember("Simon", "Hörtzsch", "Simon.Hoertzsch@student.tu-freiberg.de", "SPSistCool1234")
+            new TestMember(
+                "Simon",
+                "Hörtzsch",
+                "Simon.Hoertzsch@student.tu-freiberg.de",
+                "SPSistCool1234"
+            )
         };
 
         string testFilePath = "../../../MembersTest.csv";
@@ -123,7 +128,8 @@ public class TestCsvFileIO
     [Fact]
     public static void TestTrackScoreData()
     {
-        PredictionGame.ScheduleTypes = new List<ScheduleTypes> { ScheduleTypes.EM_2024 };
+        PredictionGame test_prediction_game = new PredictionGame(new EmailService());
+        test_prediction_game.ScheduleTypes.Add(ScheduleTypes.EM_2024);
 
         List<Member<Prediction, FootballMatch>> testMembers = new List<
             Member<Prediction, FootballMatch>
@@ -155,7 +161,7 @@ public class TestCsvFileIO
 
         string testFilePath = "../../../MemberScoresTest.csv";
 
-        CSVWriter<FootballMatch, Prediction>.TrackScoreData(testFilePath, testMembers);
+        CSVWriter<FootballMatch, Prediction>.TrackScoreData(testFilePath, testMembers, test_prediction_game);
 
         var lines = File.ReadAllLines(testFilePath);
 
