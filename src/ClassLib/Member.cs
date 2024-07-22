@@ -163,7 +163,7 @@ public class Member<P, M> : IMemberData
                     FootballPrediction predictionDone = new FootballPrediction(
                         MemberID,
                         predictedMatch as FootballMatch,
-                        predictedMatch.MatchDate,
+                        DateTime.Now,
                         prediction_home,
                         prediction_away
                     );
