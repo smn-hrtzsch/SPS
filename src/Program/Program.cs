@@ -7,8 +7,7 @@ class Program
     {
         //Gerneral Programm variable declaration
         EmailService emailService = new EmailService();
-        List<ScheduleTypes> scheduleTypes = new List<ScheduleTypes>() {ScheduleTypes.EM_2024};
-        PredictionGame predictionGame = new PredictionGame(emailService, scheduleTypes /*,PathToCSVFile* <- zum Einlesen der Daten in den Member Konstruktor/);
+        PredictionGame predictionGame = new PredictionGame(emailService/*,PathToCSVFile  <- zum Einlesen der Daten in den Member Konstruktor*/);
 
         //Email continuous Integration
 
