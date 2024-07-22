@@ -20,12 +20,24 @@ public class PredictionGame
 
     /// \brief Initializes a new instance of the <see cref="PredictionGame"/> class.
 
-    public PredictionGame(EmailService emailService, List<ScheduleTypes> scheduleTypes)
+    public PredictionGame(EmailService emailService)
     {
         email_service = emailService;
         PredictionGameID = (uint)GetHashCode();
         Members = new List<Member<Prediction, Match>>();
-        ScheduleTypesList = scheduleTypes;
+        ScheduleTypesList = ScheduleTypesList;
+    }
+
+    private List<ScheduleTypes> GetAllScheduleTypes()
+    {
+        List<ScheduleTypes> ScheduleTypesList = new List<ScheduleTypes>();
+
+        foreach(ScheduleTypes scheduleType in ScheduleTypes.GetValues((typeof(ScheduleTypes))))
+        {
+            ScheduleTypesList.Add(scheduleType);
+        }
+
+        return ScheduleTypesList;
     }
 
     /// \brief Get a unique Hashcode -> PredictionGameIDCounter necassary for generation
@@ -40,7 +52,6 @@ public class PredictionGame
     public void Register(Member<Prediction, Match> member)
     {
         Members.Add(member);
-        //CSV File writing
     }
 
     /// \brief Unsubscribes a member from the prediction game.
@@ -48,7 +59,6 @@ public class PredictionGame
     public void Unsubscribe(int MemberID)
     {
         Members.RemoveAll(m => m.MemberID == MemberID);
-        //Delete CSV File Entry
     }
 
     /// \brief Sends a daily email to all members with the matches that need to be predicted.
