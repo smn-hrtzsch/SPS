@@ -161,7 +161,11 @@ public class TestCsvFileIO
 
         string testFilePath = "../../../MemberScoresTest.csv";
 
-        CSVWriter<FootballMatch, Prediction>.TrackScoreData(testFilePath, testMembers, test_prediction_game);
+        CSVWriter<FootballMatch, Prediction>.TrackScoreData(
+            testFilePath,
+            testMembers,
+            test_prediction_game
+        );
 
         var lines = File.ReadAllLines(testFilePath);
 
