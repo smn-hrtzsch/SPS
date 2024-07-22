@@ -21,7 +21,8 @@ public class PredictionGameTest
         TestMember member1 = new TestMember(
             "Artim",
             "Meyer",
-            "Artim-Werner.Meyer@student.tu-freiberg.de"
+            "Artim-Werner.Meyer@student.tu-freiberg.de",
+            "1234"
         );
         //MemberData member2 = new MemberData("Simon", "Hörtzsch", "Simon.Hoertzsch@student.tu-freiberg.de");
 
@@ -53,7 +54,6 @@ public class PredictionGameTest
         //predictionGame.Register(member2);
 
 
-        predictionGame.SendRoutineEmail(EmailTypes.TippTemplate);
-        predictionGame.SendRoutineEmail(EmailTypes.ResultTemplate);
+        predictionGame.SendDailyEmail();
     }
 }
