@@ -18,15 +18,17 @@ class Program
 
         if(dateTimeNow == dateTimeAtNineThirty) //get daily Tipp-email
         {
-            predictionGame.SendRoutineEmail(EmailTypes.TippTemplate);   
+            predictionGame.SendDailyEmail();   
         }
 
         if(dateTimeNow.DayOfWeek == DayOfWeek.Sunday && dateTimeNow == dateTimeAtEighteenOClock) //get Results-email once a week
         {
-            predictionGame.SendRoutineEmail(EmailTypes.ResultTemplate);
+            predictionGame.SendDailyEmail();
         }
 
         //Email continous Integration end
+
+        Console.WriteLine("Hallo Artim");
 
 
     }
