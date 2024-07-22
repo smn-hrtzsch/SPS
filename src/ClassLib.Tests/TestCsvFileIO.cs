@@ -99,7 +99,12 @@ public class TestCsvFileIO
         List<Member<Prediction, Match>> testMembers = new List<Member<Prediction, Match>>()
         {
             new TestMember("Artim", "Meyer", "Artim.Meyer@student.tu-freiberg.de", "SPSistCool"),
-            new TestMember("Simon", "Hörtzsch", "Simon.Hoertzsch@student.tu-freiberg.de", "SPSistCool1234")
+            new TestMember(
+                "Simon",
+                "Hörtzsch",
+                "Simon.Hoertzsch@student.tu-freiberg.de",
+                "SPSistCool1234"
+            )
         };
 
         string testFilePath = "../../../MembersTest.csv";
