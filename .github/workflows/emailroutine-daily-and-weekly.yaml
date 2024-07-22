@@ -1,0 +1,35 @@
+name: Email Sender
+
+on:
+  schedule:
+    - cron: '30 9 * * *' # Runs every day at 9:30 UTC
+    - cron: '0 18 * * 0' # Runs every Sunday at 18:00 UTC
+  push:
+    branches:
+      -'**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: '8.x'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build the project
+      run: dotnet build --configuration Release
+
+    - name: Run email sender
+      env: 
+        SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+        SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+      run: dotnet run --project /src/Program/Program.cs
