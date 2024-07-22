@@ -35,6 +35,11 @@ public class Member<P, M>
         get { return Scores; }
     }
 
+    public List<P> GetArchivedPredictions
+    {
+        get { return ArchivedPredictions; }
+    }
+
     /// \brief Initializes a new instance of the <see cref="Member"/> class.
     public Member(string forename, string surname, string emailaddress, string password)
     {
