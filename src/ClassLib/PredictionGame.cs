@@ -13,9 +13,9 @@ public class PredictionGame
 
     private static uint PredictionGameIDCounter = 0;
 
-    private List<Member<Prediction, Match>> Members { get; set; }
+    public List<Member<Prediction, Match>> Members { get; }
 
-    public static List<ScheduleTypes> ScheduleTypes { get; set; }
+    public List<ScheduleTypes> ScheduleTypes { get; private set;}
 
     private EmailService email_service { get; set; }
 
