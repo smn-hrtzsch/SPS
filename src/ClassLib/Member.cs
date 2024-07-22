@@ -253,7 +253,6 @@ public class Member<P, M> : IMemberData
                 default:
                     break;
             }
-
         }
         foreach (var prediction in predictionsToArchive)
         {
@@ -271,5 +270,4 @@ public class Member<P, M> : IMemberData
         string pw = $"{Password}";
         return $"{mi};{fn};{sn};{ea};{pw}";
     }
-    
 }

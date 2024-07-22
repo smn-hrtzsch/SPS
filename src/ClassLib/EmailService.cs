@@ -9,7 +9,7 @@ public class EmailService
     private string SmtpServer { get; set; }
 
     /// \brief Gets or sets the SMTP server port.
-    private int SmtpPort {  get; set; }
+    private int SmtpPort { get; set; }
 
     /// \brief Gets or sets the username for SMTP authentication.
     private string Username { get; set; }
@@ -35,8 +35,13 @@ public class EmailService
     /// \param subject The subject of the email.
     /// \param content The content of the email.
 
-    public void SendEmail(string Recipient, string Sender, string Subject, string Template,
-        Dictionary<string, string> placeholders)
+    public void SendEmail(
+        string Recipient,
+        string Sender,
+        string Subject,
+        string Template,
+        Dictionary<string, string> placeholders
+    )
     {
         foreach (var placeholder in placeholders)
         {

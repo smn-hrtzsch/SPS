@@ -3,11 +3,13 @@ using System.Collections.Generic;
 
 class Program
 {
-    public static void Main(string[] args) 
+    public static void Main(string[] args)
     {
         //Gerneral Programm variable declaration
         EmailService emailService = new EmailService();
-        PredictionGame predictionGame = new PredictionGame(emailService/*,PathToCSVFile  <- zum Einlesen der Daten in den Member Konstruktor*/);
+        PredictionGame predictionGame = new PredictionGame(
+            emailService /*,PathToCSVFile  <- zum Einlesen der Daten in den Member Konstruktor*/
+        );
 
         //Email continuous Integration
 
@@ -17,4 +19,3 @@ class Program
         //Email continous Integration end
     }
 }
-

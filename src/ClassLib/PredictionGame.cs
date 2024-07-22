@@ -32,7 +32,7 @@ public class PredictionGame
     {
         List<ScheduleTypes> ScheduleTypesList = new List<ScheduleTypes>();
 
-        foreach(ScheduleTypes scheduleType in ScheduleTypes.GetValues((typeof(ScheduleTypes))))
+        foreach (ScheduleTypes scheduleType in ScheduleTypes.GetValues((typeof(ScheduleTypes))))
         {
             ScheduleTypesList.Add(scheduleType);
         }
@@ -95,52 +95,49 @@ public class PredictionGame
                 string resultsList = string.Empty;
                 uint totalPoints = 0;
 
-                        foreach (var match in member.GetPredictionsToDo())
-                        {
-                            if (schedule == ScheduleTypes.EM_2024)
+                foreach (var match in member.GetPredictionsToDo())
+                {
+                    if (schedule == ScheduleTypes.EM_2024)
+                    {
+                        matchesList +=
+                            $"<li style='font-size: 16px; color: #444; margin: 5px 0;'>{(match as FootballMatch).HomeTeam} vs  {(match as FootballMatch).HomeTeam} am {(match as FootballMatch).MatchDate.ToString("dd.MM.yyyy HH:mm")}</li>";
+                    }
+                }
+                foreach (var score in member.GetScores())
+                {
+                    switch (score.ScoreID)
+                    {
+                        case ScheduleTypes.EM_2024:
+                            foreach (Prediction prediction in member.GetArchivedPredictions())
                             {
-                                matchesList +=
-                                    $"<li style='font-size: 16px; color: #444; margin: 5px 0;'>{(match as FootballMatch).HomeTeam} vs  {(match as FootballMatch).HomeTeam} am {(match as FootballMatch).MatchDate.ToString("dd.MM.yyyy HH:mm")}</li>";
+                                uint points = score.CalculateFootballScore(
+                                    prediction as FootballPrediction
+                                );
+                                totalPoints += points;
+                                resultsList +=
+                                    $"<li style='font-size: 16px; color: #444; margin: 5px 0;'>{(prediction.PredictedMatch as FootballMatch).HomeTeam} vs {(prediction.PredictedMatch as FootballMatch).MatchDate.ToString("dd.MM.yyyy HH:mm")}: {(prediction.PredictedMatch as FootballMatch).ResultTeam1} - {(prediction.PredictedMatch as FootballMatch).ResultTeam2} (Deine Vorhersage: {(prediction as FootballPrediction).PredictionHome} -  {(prediction as FootballPrediction).PredictionAway}, Punkte: {points})</li>";
                             }
-                        }
-                        foreach (var score in member.GetScores())
-                        {
-                            switch (score.ScoreID)
-                            {
-                                case ScheduleTypes.EM_2024:
-                                    foreach (
-                                        Prediction prediction in member.GetArchivedPredictions()
-                                    )
-                                    {
-                                        uint points = score.CalculateFootballScore(
-                                            prediction as FootballPrediction
-                                        );
-                                        totalPoints += points;
-                                        resultsList +=
-                                            $"<li style='font-size: 16px; color: #444; margin: 5px 0;'>{(prediction.PredictedMatch as FootballMatch).HomeTeam} vs {(prediction.PredictedMatch as FootballMatch).MatchDate.ToString("dd.MM.yyyy HH:mm")}: {(prediction.PredictedMatch as FootballMatch).ResultTeam1} - {(prediction.PredictedMatch as FootballMatch).ResultTeam2} (Deine Vorhersage: {(prediction as FootballPrediction).PredictionHome} -  {(prediction as FootballPrediction).PredictionAway}, Punkte: {points})</li>";
-                                    }
-                                    break;
+                            break;
 
-                                default:
-                                    break;
-                            }
-                        }
-                        Dictionary<string, string> TippDic = new Dictionary<string, string>
-                        {
-                            { "forename", member.GetForename() },
-                            { "matches", matchesList },
-                            { "link", "https://github.com/smn-hrtzsch/SPS" },
-                            { "results", resultsList },
-                            { "totalPoints", totalPoints.ToString() }
-                        };
-                        email_service.SendEmail(
-                            member.GetEmailAddress(),
-                            "sportspredictionsystem@gmail.com",
-                            "Klick hier um zu Tippen! ;D",
-                            TippTemplate,
-                            TippDic
-                        );
-                
+                        default:
+                            break;
+                    }
+                }
+                Dictionary<string, string> TippDic = new Dictionary<string, string>
+                {
+                    { "forename", member.GetForename() },
+                    { "matches", matchesList },
+                    { "link", "https://github.com/smn-hrtzsch/SPS" },
+                    { "results", resultsList },
+                    { "totalPoints", totalPoints.ToString() }
+                };
+                email_service.SendEmail(
+                    member.GetEmailAddress(),
+                    "sportspredictionsystem@gmail.com",
+                    "Klick hier um zu Tippen! ;D",
+                    TippTemplate,
+                    TippDic
+                );
             }
         }
     }
