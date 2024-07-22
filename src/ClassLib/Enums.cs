@@ -2,9 +2,10 @@ using System;
 
 public enum EmailTypes
 {
-    TippTemplate, 
+    TippTemplate,
     ResultTemplate
 }
+
 public enum SportsTypes
 {
     Football

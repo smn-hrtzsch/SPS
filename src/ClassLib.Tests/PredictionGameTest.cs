@@ -18,14 +18,26 @@ public class PredictionGameTest
             ScheduleTypes.EM_2024
         );
 
-        TestMember member1 = new TestMember("Artim", "Meyer", "Artim-Werner.Meyer@student.tu-freiberg.de");
+        TestMember member1 = new TestMember(
+            "Artim",
+            "Meyer",
+            "Artim-Werner.Meyer@student.tu-freiberg.de"
+        );
         //MemberData member2 = new MemberData("Simon", "Hörtzsch", "Simon.Hoertzsch@student.tu-freiberg.de");
 
         predictionGame.Register(member1);
 
-        FootballMatch match1 = new FootballMatch("../../../EM_2024Test.csv", 1, SportsTypes.Football);
-        FootballMatch match2 = new FootballMatch("../../../EM_2024Test.csv", 51, SportsTypes.Football);
-        
+        FootballMatch match1 = new FootballMatch(
+            "../../../EM_2024Test.csv",
+            1,
+            SportsTypes.Football
+        );
+        FootballMatch match2 = new FootballMatch(
+            "../../../EM_2024Test.csv",
+            51,
+            SportsTypes.Football
+        );
+
         member1.AddParticipatingSchedule(schedule, ScheduleTypes.EM_2024);
         member1.AddPredictionToDo();
         member1.PredictionsToDoTest.Add(match1);
@@ -37,7 +49,7 @@ public class PredictionGameTest
         Assert.True(member1.GetArchivedPredictions().Count == 2);
         Assert.True(member1.GetScores().Count() == 1);
         Assert.True(member1.GetScores().First().ScoreID == ScheduleTypes.EM_2024);
-        
+
         //predictionGame.Register(member2);
 
 

@@ -27,7 +27,7 @@ public class Member<P, M> : IMemberData
     protected List<Schedule<M>> ParticipatingSchedules { get; }
 
     /// \brief List of Matches, which need to be predicted on the specific day.
-    protected List<M> PredictionsToDo { get; set;}
+    protected List<M> PredictionsToDo { get; set; }
 
     /// \brief List, which contains all Predictions where the match is already predicted, but a score was not calculated yet.
     protected List<P> PredictionsDone { get; }
@@ -147,7 +147,7 @@ public class Member<P, M> : IMemberData
     public void ConvertPredictionsDone(uint MatchID, byte prediction_home, byte prediction_away)
     {
         M? predictedMatch = null;
-        foreach(var match in PredictionsToDo)
+        foreach (var match in PredictionsToDo)
         {
             if (match.MatchID == MatchID)
             {
@@ -157,12 +157,18 @@ public class Member<P, M> : IMemberData
         }
         if (predictedMatch != null)
         {
-            switch(predictedMatch.SportsType) //switch case for ctor calls
+            switch (predictedMatch.SportsType) //switch case for ctor calls
             {
                 case SportsTypes.Football:
-                FootballPrediction predictionDone = new FootballPrediction(MemberID, predictedMatch as FootballMatch, predictedMatch.MatchDate, prediction_home, prediction_away);
-                PredictionsDone.Add(predictionDone as P);
-                break;
+                    FootballPrediction predictionDone = new FootballPrediction(
+                        MemberID,
+                        predictedMatch as FootballMatch,
+                        predictedMatch.MatchDate,
+                        prediction_home,
+                        prediction_away
+                    );
+                    PredictionsDone.Add(predictionDone as P);
+                    break;
             }
             PredictionsToDo.Remove(predictedMatch);
         }
@@ -215,7 +221,6 @@ public class Member<P, M> : IMemberData
             throw new InvalidOperationException("Match is not included in 'PredictionsDone-List");
         }
     }
-
 
     public void CalculateScores()
     {

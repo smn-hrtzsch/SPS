@@ -27,13 +27,15 @@ public class TestMember : Member<Prediction, Match>
 
     public List<Prediction> ArchivedPredictionsTest
     {
-        get { return ArchivedPredictions;}
+        get { return ArchivedPredictions; }
     }
 }
 
 public class TestScores : Score
 {
-    public TestScores(ScheduleTypes predicted_schedule) : base (predicted_schedule) {}
+    public TestScores(ScheduleTypes predicted_schedule)
+        : base(predicted_schedule) { }
+
     public uint AmountOfPointsTest
     {
         get { return AmountOfPoints; }
@@ -154,13 +156,23 @@ public class MemberTest
         string email = "maria.magdalena@online.de";
 
         TestMember TestMember = new TestMember(vorname, nachname, email);
-        FootballMatch match1 = new FootballMatch("../../../EM_2024Test.csv", 1, SportsTypes.Football);
-        FootballPrediction prediction1 = new FootballPrediction(TestMember.MemberID, match1, match1.MatchDate, 1,5);
+        FootballMatch match1 = new FootballMatch(
+            "../../../EM_2024Test.csv",
+            1,
+            SportsTypes.Football
+        );
+        FootballPrediction prediction1 = new FootballPrediction(
+            TestMember.MemberID,
+            match1,
+            match1.MatchDate,
+            1,
+            5
+        );
         TestMember.PredictionsDoneTest.Add(prediction1);
 
-        FootballPrediction prediction2 = (FootballPrediction)TestMember.SearchPredictionDone(prediction1.PredictionID);
+        FootballPrediction prediction2 = (FootballPrediction)
+            TestMember.SearchPredictionDone(prediction1.PredictionID);
         Assert.True(prediction1.PredictionHome == prediction2.PredictionHome);
-
     }
 
     // [Fact]
@@ -198,7 +210,7 @@ public class MemberTest
     //     TestMember.ConvertPredictionsDone(match1.MatchID, 5, 1);
     //     TestMember.ConvertPredictionsDone(match2.MatchID, 2, 1);
     //     Assert.True(TestMember.PredictionsDoneTest.Count == 2);
-    //      
+    //
     //     Assert.True(TestMember.ScoresTest.First().AmountOfPointsTest == 36); //36, because 2x18 poin for perfect predictions
     //     Assert.True(TestMember.PredictionsDoneTest.Count == 0);
     //     Assert.True(TestMember.ArchivedPredictionsTest.Count == 2);

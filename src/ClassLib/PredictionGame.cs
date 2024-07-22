@@ -6,7 +6,6 @@ using System.Numerics;
 /// \brief Represents a prediction game in the Sport Prediction System (SPS).
 public class PredictionGame
 {
-
     /// \brief Gets the unique ID of the prediction game.
 
     public uint PredictionGameID { get; }
@@ -19,16 +18,14 @@ public class PredictionGame
 
     public List<ScheduleTypes> ScheduleTypesList { get; }
 
-
-
     /// \brief Initializes a new instance of the <see cref="PredictionGame"/> class.
 
     public PredictionGame(EmailService emailService, List<ScheduleTypes> scheduleTypes)
     {
-          email_service = emailService;
-          PredictionGameID = (uint)GetHashCode();
-          Members = new List<Member<Prediction, Match>>();
-          ScheduleTypesList = scheduleTypes;
+        email_service = emailService;
+        PredictionGameID = (uint)GetHashCode();
+        Members = new List<Member<Prediction, Match>>();
+        ScheduleTypesList = scheduleTypes;
     }
 
     /// \brief Get a unique Hashcode -> PredictionGameIDCounter necassary for generation
@@ -58,7 +55,8 @@ public class PredictionGame
 
     public void SendRoutineEmail(EmailTypes emailTypes)
     {
-        string TippTemplate = @"
+        string TippTemplate =
+            @"
         <html>
             <body style='font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;'>
                 <h1 style='color: #444;'>Hallo {{forename}},</h1>
@@ -71,7 +69,8 @@ public class PredictionGame
             </body>
         </html>";
 
-        string ResultTemplate = @"
+        string ResultTemplate =
+            @"
         <html>
             <body style='font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;'>
                 <h1 style='color: #444;'>Hallo {{forename}},</h1>
@@ -84,7 +83,7 @@ public class PredictionGame
             </body>
         </html>";
 
-        foreach(var schedule in ScheduleTypesList)
+        foreach (var schedule in ScheduleTypesList)
         {
             foreach (var member in Members)
             {
@@ -92,50 +91,68 @@ public class PredictionGame
                 string resultsList = string.Empty;
                 uint totalPoints = 0;
 
-                switch(emailTypes)
+                switch (emailTypes)
                 {
                     case EmailTypes.TippTemplate:
-                    foreach(var match in member.GetPredictionsToDo())
-                    {
-                        if(schedule == ScheduleTypes.EM_2024)
+                        foreach (var match in member.GetPredictionsToDo())
                         {
-                            matchesList += $"<li style='font-size: 16px; color: #444; margin: 5px 0;'>{(match as FootballMatch).HomeTeam} vs  {(match as FootballMatch).HomeTeam} am {(match as FootballMatch).MatchDate.ToString("dd.MM.yyyy HH:mm")}</li>";
+                            if (schedule == ScheduleTypes.EM_2024)
+                            {
+                                matchesList +=
+                                    $"<li style='font-size: 16px; color: #444; margin: 5px 0;'>{(match as FootballMatch).HomeTeam} vs  {(match as FootballMatch).HomeTeam} am {(match as FootballMatch).MatchDate.ToString("dd.MM.yyyy HH:mm")}</li>";
+                            }
                         }
-                    }
-                    Dictionary<string, string> TippDic = new Dictionary<string, string>
-                    {
-                        { "forename", member.GetForename()},
-                        { "matches", matchesList },
-                        { "link", "https://github.com/smn-hrtzsch/SPS" }
-                    };
-                    email_service.SendEmail(member.GetEmailAddress(), "sportspredictionsystem@gmail.com", "Klick hier um zu Tippen! ;D", TippTemplate, TippDic);
-                    break;
+                        Dictionary<string, string> TippDic = new Dictionary<string, string>
+                        {
+                            { "forename", member.GetForename() },
+                            { "matches", matchesList },
+                            { "link", "https://github.com/smn-hrtzsch/SPS" }
+                        };
+                        email_service.SendEmail(
+                            member.GetEmailAddress(),
+                            "sportspredictionsystem@gmail.com",
+                            "Klick hier um zu Tippen! ;D",
+                            TippTemplate,
+                            TippDic
+                        );
+                        break;
 
                     case EmailTypes.ResultTemplate:
-                    foreach(var score in member.GetScores())
-                    {
-                        switch(score.ScoreID)
+                        foreach (var score in member.GetScores())
                         {
-                            case ScheduleTypes.EM_2024:
-                            foreach(Prediction prediction in member.GetArchivedPredictions())
+                            switch (score.ScoreID)
                             {
-                                uint points = score.CalculateFootballScore(prediction as FootballPrediction);
-                                totalPoints += points;
-                                resultsList += $"<li style='font-size: 16px; color: #444; margin: 5px 0;'>{(prediction.PredictedMatch as FootballMatch).HomeTeam} vs {(prediction.PredictedMatch as FootballMatch).MatchDate.ToString("dd.MM.yyyy HH:mm")}: {(prediction.PredictedMatch as FootballMatch).ResultTeam1} - {(prediction.PredictedMatch as FootballMatch).ResultTeam2} (Deine Vorhersage: {(prediction as FootballPrediction).PredictionHome} -  {(prediction as FootballPrediction).PredictionAway}, Punkte: {points})</li>";
-                            }
-                            break;
+                                case ScheduleTypes.EM_2024:
+                                    foreach (
+                                        Prediction prediction in member.GetArchivedPredictions()
+                                    )
+                                    {
+                                        uint points = score.CalculateFootballScore(
+                                            prediction as FootballPrediction
+                                        );
+                                        totalPoints += points;
+                                        resultsList +=
+                                            $"<li style='font-size: 16px; color: #444; margin: 5px 0;'>{(prediction.PredictedMatch as FootballMatch).HomeTeam} vs {(prediction.PredictedMatch as FootballMatch).MatchDate.ToString("dd.MM.yyyy HH:mm")}: {(prediction.PredictedMatch as FootballMatch).ResultTeam1} - {(prediction.PredictedMatch as FootballMatch).ResultTeam2} (Deine Vorhersage: {(prediction as FootballPrediction).PredictionHome} -  {(prediction as FootballPrediction).PredictionAway}, Punkte: {points})</li>";
+                                    }
+                                    break;
 
-                            default:
-                                break;
+                                default:
+                                    break;
+                            }
                         }
-                    }
-                    Dictionary<string, string> ResultDic = new Dictionary<string, string>
-                    {
-                        { "forename", member.GetForename()},
-                        { "results", resultsList },
-                        { "totalPoints", totalPoints.ToString() }
-                    };
-                    email_service.SendEmail(member.GetEmailAddress(), "sportspredictionsystem@gmail.com", "Schau dir Deine Erfolge an!", ResultTemplate, ResultDic);
+                        Dictionary<string, string> ResultDic = new Dictionary<string, string>
+                        {
+                            { "forename", member.GetForename() },
+                            { "results", resultsList },
+                            { "totalPoints", totalPoints.ToString() }
+                        };
+                        email_service.SendEmail(
+                            member.GetEmailAddress(),
+                            "sportspredictionsystem@gmail.com",
+                            "Schau dir Deine Erfolge an!",
+                            ResultTemplate,
+                            ResultDic
+                        );
                         break;
 
                     default:

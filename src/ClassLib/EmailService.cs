@@ -53,14 +53,19 @@ public class EmailService
         MailClient.Send(Email);
     }
 
-    public void SendEmail(string Recipient, string Sender, string Subject, string Template, Dictionary<string, string> placeholders)
+    public void SendEmail(
+        string Recipient,
+        string Sender,
+        string Subject,
+        string Template,
+        Dictionary<string, string> placeholders
+    )
     {
         foreach (var placeholder in placeholders)
         {
             Template = Template.Replace($"{{{{{placeholder.Key}}}}}", placeholder.Value);
         }
         StartEmail(Recipient, Sender, Subject, Template);
-    
     }
 }
 
