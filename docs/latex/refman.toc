@@ -18,25 +18,18 @@
 \contentsline {section}{\numberline {3.5}Football\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Match\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Factory Class Reference}{8}{section.3.5}%
 \contentsline {section}{\numberline {3.6}Football\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Prediction Class Reference}{8}{section.3.6}%
 \contentsline {section}{\numberline {3.7}IMatch\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Factory$<$ M $>$ Interface Template Reference}{9}{section.3.7}%
-\contentsline {section}{\numberline {3.8}Match Class Reference}{9}{section.3.8}%
-\contentsline {subsection}{\numberline {3.8.1}Detailed Description}{10}{subsection.3.8.1}%
-\contentsline {section}{\numberline {3.9}Member$<$ P, M $>$ Class Template Reference}{10}{section.3.9}%
-\contentsline {subsection}{\numberline {3.9.1}Detailed Description}{11}{subsection.3.9.1}%
-\contentsline {subsection}{\numberline {3.9.2}Member Function Documentation}{11}{subsection.3.9.2}%
-\contentsline {subsubsection}{\numberline {3.9.2.1}SearchPredictionDone()}{11}{subsubsection.3.9.2.1}%
-\contentsline {subsection}{\numberline {3.9.3}Member Data Documentation}{11}{subsection.3.9.3}%
-\contentsline {subsubsection}{\numberline {3.9.3.1}Scores}{12}{subsubsection.3.9.3.1}%
-\contentsline {section}{\numberline {3.10}Prediction Class Reference}{12}{section.3.10}%
-\contentsline {section}{\numberline {3.11}Prediction\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Game Class Reference}{12}{section.3.11}%
-\contentsline {subsection}{\numberline {3.11.1}Detailed Description}{13}{subsection.3.11.1}%
-\contentsline {subsection}{\numberline {3.11.2}Constructor \& Destructor Documentation}{13}{subsection.3.11.2}%
-\contentsline {subsubsection}{\numberline {3.11.2.1}PredictionGame()}{13}{subsubsection.3.11.2.1}%
-\contentsline {subsection}{\numberline {3.11.3}Member Function Documentation}{13}{subsection.3.11.3}%
-\contentsline {subsubsection}{\numberline {3.11.3.1}Register()}{13}{subsubsection.3.11.3.1}%
-\contentsline {subsubsection}{\numberline {3.11.3.2}SendDailyEmail()}{14}{subsubsection.3.11.3.2}%
-\contentsline {subsubsection}{\numberline {3.11.3.3}Unsubscribe()}{14}{subsubsection.3.11.3.3}%
-\contentsline {subsection}{\numberline {3.11.4}Property Documentation}{14}{subsection.3.11.4}%
-\contentsline {subsubsection}{\numberline {3.11.4.1}PredictionGameID}{14}{subsubsection.3.11.4.1}%
-\contentsline {section}{\numberline {3.12}Schedule$<$ M $>$ Class Template Reference}{14}{section.3.12}%
-\contentsline {subsection}{\numberline {3.12.1}Detailed Description}{15}{subsection.3.12.1}%
-\contentsline {section}{\numberline {3.13}Score Class Reference}{15}{section.3.13}%
+\contentsline {section}{\numberline {3.8}IMember\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Data Interface Reference}{9}{section.3.8}%
+\contentsline {section}{\numberline {3.9}Match Class Reference}{9}{section.3.9}%
+\contentsline {subsection}{\numberline {3.9.1}Detailed Description}{10}{subsection.3.9.1}%
+\contentsline {section}{\numberline {3.10}Member$<$ P, M $>$ Class Template Reference}{10}{section.3.10}%
+\contentsline {subsection}{\numberline {3.10.1}Detailed Description}{12}{subsection.3.10.1}%
+\contentsline {subsection}{\numberline {3.10.2}Member Function Documentation}{12}{subsection.3.10.2}%
+\contentsline {subsubsection}{\numberline {3.10.2.1}SearchPredictionDone()}{12}{subsubsection.3.10.2.1}%
+\contentsline {subsection}{\numberline {3.10.3}Member Data Documentation}{12}{subsection.3.10.3}%
+\contentsline {subsubsection}{\numberline {3.10.3.1}Scores}{12}{subsubsection.3.10.3.1}%
+\contentsline {section}{\numberline {3.11}Prediction Class Reference}{12}{section.3.11}%
+\contentsline {section}{\numberline {3.12}Prediction\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Game Class Reference}{13}{section.3.12}%
+\contentsline {subsection}{\numberline {3.12.1}Detailed Description}{13}{subsection.3.12.1}%
+\contentsline {section}{\numberline {3.13}Schedule$<$ M $>$ Class Template Reference}{14}{section.3.13}%
+\contentsline {subsection}{\numberline {3.13.1}Detailed Description}{14}{subsection.3.13.1}%
+\contentsline {section}{\numberline {3.14}Score Class Reference}{14}{section.3.14}%
