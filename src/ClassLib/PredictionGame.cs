@@ -15,7 +15,7 @@ public class PredictionGame
 
     private List<Member<Prediction, Match>> Members { get; set; }
 
-    public List<ScheduleTypes> ScheduleTypes { get; }
+    public static List<ScheduleTypes> ScheduleTypes { get; set; }
 
     private EmailService email_service { get; set; }
 
