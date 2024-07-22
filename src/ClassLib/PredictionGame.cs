@@ -56,7 +56,7 @@ public class PredictionGame
 
     /// \brief Sends a daily email to all members with the matches that need to be predicted.
 
-    public void SendDailyEmail(EmailTypes emailTypes)
+    public void SendRoutineEmail(EmailTypes emailTypes)
     {
         string TippTemplate = @"
         <html>
@@ -86,7 +86,7 @@ public class PredictionGame
 
         foreach(var schedule in ScheduleTypesList)
         {
-            foreach (Member<Prediction, Match> member in Members)
+            foreach (var member in Members)
             {
                 string matchesList = string.Empty;
                 string resultsList = string.Empty;
@@ -95,7 +95,7 @@ public class PredictionGame
                 switch(emailTypes)
                 {
                     case EmailTypes.TippTemplate:
-                    foreach(var match in member.PredictionsToDo)
+                    foreach(var match in member.GetPredictionsToDo())
                     {
                         if(schedule == ScheduleTypes.EM_2024)
                         {
@@ -104,20 +104,20 @@ public class PredictionGame
                     }
                     Dictionary<string, string> TippDic = new Dictionary<string, string>
                     {
-                        { "forename", member.forename },
+                        { "forename", member.GetForename()},
                         { "matches", matchesList },
                         { "link", "https://github.com/smn-hrtzsch/SPS" }
                     };
-                    email_service.SendEmail(member.EmailAddress, "sportspredictionsystem@gmail.com", "Klick hier um zu Tippen! ;D", TippTemplate, TippDic);
+                    email_service.SendEmail(member.GetEmailAddress(), "sportspredictionsystem@gmail.com", "Klick hier um zu Tippen! ;D", TippTemplate, TippDic);
                     break;
 
                     case EmailTypes.ResultTemplate:
-                    foreach(var score in member.Scores)
+                    foreach(var score in member.GetScores())
                     {
                         switch(score.ScoreID)
                         {
                             case ScheduleTypes.EM_2024:
-                            foreach(Prediction prediction in member.ArchivedPredictions)
+                            foreach(Prediction prediction in member.GetArchivedPredictions())
                             {
                                 uint points = score.CalculateFootballScore(prediction as FootballPrediction);
                                 totalPoints += points;
@@ -131,11 +131,11 @@ public class PredictionGame
                     }
                     Dictionary<string, string> ResultDic = new Dictionary<string, string>
                     {
-                        { "forename", member.forename },
+                        { "forename", member.GetForename()},
                         { "results", resultsList },
                         { "totalPoints", totalPoints.ToString() }
                     };
-                    email_service.SendEmail(member.EmailAddress, "sportspredictionsystem@gmail.com", "Schau dir Deine Erfolge an!", ResultTemplate, ResultDic);
+                    email_service.SendEmail(member.GetEmailAddress(), "sportspredictionsystem@gmail.com", "Schau dir Deine Erfolge an!", ResultTemplate, ResultDic);
                         break;
 
                     default:
