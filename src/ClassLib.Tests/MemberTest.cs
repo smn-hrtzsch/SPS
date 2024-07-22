@@ -172,7 +172,7 @@ public class MemberTest
 
         FootballPrediction prediction2 = (FootballPrediction)
             TestMember.SearchPredictionDone(prediction1.PredictionID);
-        Assert.True(prediction1.PredictionHome == prediction2.PredictionHome);
+        Assert.True(prediction1 == prediction2);
     }
 
     // [Fact]
