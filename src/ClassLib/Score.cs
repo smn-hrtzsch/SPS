@@ -14,6 +14,12 @@ public class Score
         AmountOfPoints = 0;
     }
 
+    public Score(ScheduleTypes predicted_schedule, uint amount_of_points)
+    {
+        ScoreID = predicted_schedule;
+        AmountOfPoints = amount_of_points;
+    }
+
     public void IncrementAmountOfPoints(uint points)
     {
         AmountOfPoints += points;
