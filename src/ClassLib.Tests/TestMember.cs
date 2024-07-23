@@ -1,7 +1,7 @@
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.VisualStudio.TestPlatform.CrossPlatEngine;
 
-public class TestMember : Member<Prediction, Match>
+public class TestMember : Member<Match, Prediction>
 {
     public TestMember(string forename, string surname, string emailaddress, string password)
         : base(forename, surname, emailaddress, password) { }
@@ -68,7 +68,7 @@ public class MemberTest
         string password = "1234";
 
         TestMember TestMember = new TestMember(vorname, nachname, email, password);
-        CSVReader<FootballMatch>.SetMatchFactory(footballMatchFactory);
+        CSVReader<FootballMatch, FootballPrediction>.SetMatchFactory(footballMatchFactory);
         Schedule<Match> schedule = new Schedule<Match>(
             "../../../EM_2024Test.csv",
             SportsTypes.Football,
@@ -89,7 +89,7 @@ public class MemberTest
         string password = "1234";
 
         TestMember TestMember = new TestMember(vorname, nachname, email, password);
-        CSVReader<FootballMatch>.SetMatchFactory(footballMatchFactory);
+        CSVReader<FootballMatch, FootballPrediction>.SetMatchFactory(footballMatchFactory);
         Schedule<Match> schedule = new Schedule<Match>(
             "../../../EM_2024Test.csv",
             SportsTypes.Football,
@@ -110,7 +110,7 @@ public class MemberTest
         string password = "1234";
 
         TestMember TestMember = new TestMember(vorname, nachname, email, password);
-        CSVReader<FootballMatch>.SetMatchFactory(footballMatchFactory);
+        CSVReader<FootballMatch, FootballPrediction>.SetMatchFactory(footballMatchFactory);
         Schedule<Match> schedule = new Schedule<Match>(
             "../../../EM_2024Test.csv",
             SportsTypes.Football,

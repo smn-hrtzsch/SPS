@@ -14,7 +14,7 @@ public class PredictionGame
 
     private EmailService email_service { get; set; }
 
-    public List<Member<Prediction, Match>> Members { get; set; }
+    public List<Member<Match, Prediction>> Members { get; set; }
 
     public List<ScheduleTypes> ScheduleTypesList { get; }
 
@@ -24,20 +24,13 @@ public class PredictionGame
     {
         email_service = emailService;
         PredictionGameID = (uint)GetHashCode();
-        Members = new List<Member<Prediction, Match>>();
+        Members = new List<Member<Match, Prediction>>();
         ScheduleTypesList = GetAllScheduleTypes();
     }
 
     private List<ScheduleTypes> GetAllScheduleTypes()
     {
-        List<ScheduleTypes> ScheduleTypesList = new List<ScheduleTypes>();
-
-        foreach (ScheduleTypes scheduleType in ScheduleTypes.GetValues((typeof(ScheduleTypes))))
-        {
-            ScheduleTypesList.Add(scheduleType);
-        }
-
-        return ScheduleTypesList;
+        return Enum.GetValues(typeof(ScheduleTypes)).Cast<ScheduleTypes>().ToList();
     }
 
     /// \brief Get a unique Hashcode -> PredictionGameIDCounter necassary for generation
@@ -49,7 +42,7 @@ public class PredictionGame
 
     /// \brief Registers a new member to the prediction game.
 
-    public void Register(Member<Prediction, Match> member)
+    public void Register(Member<Match, Prediction> member)
     {
         Members.Add(member);
     }
