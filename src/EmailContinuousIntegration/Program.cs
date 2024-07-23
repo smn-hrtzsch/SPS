@@ -11,7 +11,12 @@ class Program
             emailService /*,PathToCSVFile  <- zum Einlesen der Daten in den Member Konstruktor*/
         );
 
-        Member <Prediction, Match> member = new Member<Prediction, Match>("SportsPrediction", "System", "sportspredictionsystem@gmail.com", "1234");
+        Member<Prediction, Match> member = new Member<Prediction, Match>(
+            "SportsPrediction",
+            "System",
+            "sportspredictionsystem@gmail.com",
+            "1234"
+        );
         predictionGame.Register(member);
 
         //Email continuous Integration

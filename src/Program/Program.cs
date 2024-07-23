@@ -10,6 +10,5 @@ class Program
         PredictionGame predictionGame = new PredictionGame(
             emailService /*,PathToCSVFile  <- zum Einlesen der Daten in den Member Konstruktor*/
         );
-    
     }
 }

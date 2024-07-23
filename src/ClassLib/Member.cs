@@ -271,16 +271,17 @@ public class Member<P, M> : IMemberData
     {
         Score? searchedScore = null;
 
-        foreach(var score in Scores)
+        foreach (var score in Scores)
         {
-            if(score.ScoreID == schedule_type)
+            if (score.ScoreID == schedule_type)
             {
-                searchedScore = score;   
+                searchedScore = score;
             }
-
             else
             {
-                throw new InvalidOperationException("There exists no score for searched schedule type.");
+                throw new InvalidOperationException(
+                    "There exists no score for searched schedule type."
+                );
             }
         }
 

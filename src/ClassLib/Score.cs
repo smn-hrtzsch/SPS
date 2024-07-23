@@ -72,4 +72,3 @@ public class Score
         return $"{AmountOfPoints}";
     }
 }
-
