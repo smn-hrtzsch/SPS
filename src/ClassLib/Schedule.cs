@@ -17,7 +17,7 @@ public class Schedule<M>
         {
             case SportsTypes.Football:
                 Matches = ConvertToGenericList(
-                    CSVReader<FootballMatch>.GetScheduleFromCsvFile(PathToCsvFile, sport_type)
+                    CSVReader<FootballMatch, FootballPrediction>.GetScheduleFromCsvFile(PathToCsvFile, sport_type)
                 );
                 break;
         }
@@ -38,7 +38,7 @@ public class Schedule<M>
         SportsTypes sport_type
     )
     {
-        return CSVReader<FootballMatch>.GetScheduleFromCsvFile(PathToCsvFile, sport_type);
+        return CSVReader<FootballMatch, FootballPrediction>.GetScheduleFromCsvFile(PathToCsvFile, sport_type);
     }
 
     public List<M> GetMatchesOnDay()
