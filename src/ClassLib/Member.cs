@@ -254,11 +254,6 @@ public class Member<P, M> : IMemberData
                     break;
             }
         }
-        foreach (var prediction in predictionsToArchive)
-        {
-            PredictionsDone.Remove(prediction);
-            ArchivedPredictions.Add(prediction);
-        }
     }
 
     public override string ToString()

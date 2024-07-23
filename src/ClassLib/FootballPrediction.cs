@@ -2,8 +2,10 @@ using System;
 
 public class FootballPrediction : Prediction
 {
-    public byte PredictionHome { get; set; }
-    public byte PredictionAway { get; set; }
+    public string? HomeTeam { get; }
+    public string? AwayTeam { get; }
+    public byte PredictionHome { get; protected set; }
+    public byte PredictionAway { get; protected set; }
 
     public FootballPrediction(
         uint MemberID,
@@ -16,6 +18,8 @@ public class FootballPrediction : Prediction
     {
         PredictionHome = prediction_home;
         PredictionAway = prediction_away;
+        HomeTeam = football_match.HomeTeam;
+        AwayTeam = football_match.AwayTeam;
     }
 
     public void ChangePrediction(byte? NewPredictionHome, byte? NewPredictionAway)

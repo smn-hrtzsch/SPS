@@ -37,24 +37,28 @@ public class CSVWriter<M, P>
         }
     }
 
-    public static void TrackScoreData(string PathToCsvFile, PredictionGame predictionGame)
+    public static void TrackScoreData(
+        string PathToCsvFile,
+        List<Member<P, M>> members,
+        PredictionGame prediction_game
+    )
     {
-        if (predictionGame.ScheduleTypesList.Count == 0)
+        if (prediction_game.ScheduleTypesList.Count == 0)
         {
             throw new InvalidOperationException("PredictionGame.ScheduleTypes is not initialized.");
         }
 
         using (StreamWriter sw = new StreamWriter(PathToCsvFile))
         {
-            int AmountOfScheduleTypes = predictionGame.ScheduleTypesList.Count;
+            int AmountOfScheduleTypes = prediction_game.ScheduleTypesList.Count;
             string[] PredictableSchedules = new string[AmountOfScheduleTypes];
             for (int i = 0; i < AmountOfScheduleTypes; i++)
             {
-                PredictableSchedules[i] = $";{predictionGame.ScheduleTypesList[i]}";
+                PredictableSchedules[i] = $";{prediction_game.ScheduleTypesList[i]}";
             }
             sw.WriteLine($"MemberID{string.Join("", PredictableSchedules)}");
 
-            foreach (var member in predictionGame.Members)
+            foreach (var member in members)
             {
                 int AmountOfScores = member.GetScores().Count;
                 string[] Scores = new string[AmountOfScores];
@@ -63,6 +67,44 @@ public class CSVWriter<M, P>
                     Scores[i] = $";{member.GetScores()[i].ToString()}";
                 }
                 sw.WriteLine($"{member.MemberID}{string.Join("", Scores)}");
+            }
+        }
+    }
+
+    public static void TrackFootballPredictionData(
+        string PathToCsvFile,
+        List<FootballPrediction> PredictionsToArchive,
+        PredictionGame prediction_game
+    )
+    {
+        if (prediction_game.Members.Count == 0)
+        {
+            throw new InvalidOperationException(
+                "There are no members to track prediction data for."
+            );
+        }
+
+        using (StreamWriter sw = new StreamWriter(PathToCsvFile))
+        {
+            int member_count = prediction_game.Members.Count;
+            string[] member_ids = new string[member_count];
+            for (int i = 0; i < member_count; i++)
+            {
+                member_ids[i] = $";{prediction_game.Members[i].MemberID}";
+            }
+            sw.WriteLine($"MemberID{string.Join("", member_ids)}");
+
+            foreach (var prediction in PredictionsToArchive)
+            {
+                string prediced_match_data =
+                    $"{prediction.HomeTeam}" + " : " + $"{prediction.AwayTeam}";
+                foreach (var member in prediction_game.Members)
+                {
+                    string member_prediction =
+                        $"{prediction.PredictionHome}" + " : " + $"{prediction.PredictionAway}";
+
+                    sw.WriteLine(prediced_match_data + member_prediction);
+                }
             }
         }
     }
