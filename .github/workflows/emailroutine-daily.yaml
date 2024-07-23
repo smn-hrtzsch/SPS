@@ -22,13 +22,19 @@ jobs:
         dotnet-version: '8.x'
 
     - name: Restore dependencies
-      run: dotnet restore src/EmailContinuousIntegration/EmailCIPipeline.csproj
+      run: |
+        cd scr/EmailContinuousIntegration
+        dotnet restore
 
     - name: Build the project
-      run: dotnet build src/EmailContinuousIntegration/EmailCIPipeline.csproj --configuration Release
+      run: |
+        cd src/EmailContinuousIntegration
+        dotnet build
 
     - name: Run email sender
       env: 
         SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
         SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-      run: dotnet run --project src/EmailContinuousIntegration/EmailCIPipeline.csproj
+      run: 
+        cd scr/EmailContinuousIntegration
+        dotnet run
