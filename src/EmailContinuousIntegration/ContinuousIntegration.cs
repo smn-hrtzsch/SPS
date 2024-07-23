@@ -24,7 +24,6 @@ class Program
         predictionGame.SendDailyEmail();
         //Email continous Integration end
 
-        //this is a comment for testing: 0
     }
 }
 
