@@ -37,4 +37,4 @@ jobs:
         SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
       run: |
         cd src/EmailContinuousIntegration
-        dotnet run --project EmailCIPipeline.csproj
+        dotnet run --project EmailCIPipeline.cs.csproj
