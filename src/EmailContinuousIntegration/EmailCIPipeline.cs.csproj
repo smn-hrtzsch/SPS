@@ -4,6 +4,6 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClassLib\ClassLib.csproj" />
+    <ProjectReference Include="../ClassLib/ClassLib.csproj" />
   </ItemGroup>
 </Project>
