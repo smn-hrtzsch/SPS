@@ -35,7 +35,7 @@ public class FootballMatch : Match
         SportsTypes sport_type
     )
     {
-        MatchArray = CSVReader<FootballMatch>.GetMatchDataFromCsvFile(
+        MatchArray = CSVReader<FootballMatch, FootballPrediction>.GetMatchDataFromCsvFile(
             PathToMatchDataCsvFile,
             line_number
         );

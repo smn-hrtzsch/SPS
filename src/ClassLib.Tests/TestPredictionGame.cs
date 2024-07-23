@@ -5,7 +5,7 @@ public class PredictionGameTest
     [Fact]
     public void SendDailyEmailTest()
     {
-        CSVReader<FootballMatch>.SetMatchFactory(footballMatchFactory);
+        CSVReader<FootballMatch, FootballPrediction>.SetMatchFactory(footballMatchFactory);
 
         EmailService HeutigeMail = new EmailService();
         List<ScheduleTypes> scheduleTypes = new List<ScheduleTypes>();

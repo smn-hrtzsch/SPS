@@ -9,7 +9,7 @@ public class TestCsvFileIO
     [Fact]
     public static void TestGetMatchDataFromCsvFile()
     {
-        string[] MatchArray = CSVReader<FootballMatch>.GetMatchDataFromCsvFile(
+        string[] MatchArray = CSVReader<FootballMatch, FootballPrediction>.GetMatchDataFromCsvFile(
             "../../../../../csv-files/EM_2024.csv",
             1
         );
@@ -40,8 +40,8 @@ public class TestCsvFileIO
     [Fact]
     public static void TestGetScheduleFromCsvFile()
     {
-        CSVReader<FootballMatch>.SetMatchFactory(footballMatchFactory);
-        List<FootballMatch> schedule = CSVReader<FootballMatch>.GetScheduleFromCsvFile(
+        CSVReader<FootballMatch, FootballPrediction>.SetMatchFactory(footballMatchFactory);
+        List<FootballMatch> schedule = CSVReader<FootballMatch, FootballPrediction>.GetScheduleFromCsvFile(
             "../../../../../csv-files/EM_2024.csv",
             SportsTypes.Football
         );
@@ -59,7 +59,7 @@ public class TestCsvFileIO
     [Fact]
     public static void TestUpdateSchedule()
     {
-        CSVReader<FootballMatch>.SetMatchFactory(footballMatchFactory);
+        CSVReader<FootballMatch, FootballPrediction>.SetMatchFactory(footballMatchFactory);
         Schedule<FootballMatch> schedule = new Schedule<FootballMatch>(
             "../../../../../csv-files/EM_2024.csv",
             SportsTypes.Football,
@@ -96,31 +96,30 @@ public class TestCsvFileIO
     [Fact]
     public static void TestWriteMemberData()
     {
-        List<Member<Prediction, Match>> testMembers = new List<Member<Prediction, Match>>()
-        {
-            new TestMember("Artim", "Meyer", "Artim.Meyer@student.tu-freiberg.de", "SPSistCool"),
-            new TestMember(
+        PredictionGame test_prediction_game = new PredictionGame(new EmailService());
+
+        test_prediction_game.Register(new TestMember("Artim", "Meyer", "Artim.Meyer@student.tu-freiberg.de", "SPSistCool"));
+        test_prediction_game.Register(new TestMember(
                 "Simon",
                 "Hörtzsch",
                 "Simon.Hoertzsch@student.tu-freiberg.de",
                 "SPSistCool1234"
-            )
-        };
+            ));
 
         string testFilePath = "../../../MembersTest.csv";
 
-        CSVWriter<Match, Prediction>.WriteMemberData(testFilePath, testMembers);
+        CSVWriter<Match, Prediction>.WriteMemberData(testFilePath, test_prediction_game);
 
         var lines = File.ReadAllLines(testFilePath);
 
         Assert.Equal(3, lines.Length);
         Assert.Equal("MemberID;Forename;Surname;Email Address;Password", lines[0]);
         Assert.Equal(
-            $"{testMembers[0].MemberID};Artim;Meyer;Artim.Meyer@student.tu-freiberg.de;SPSistCool",
+            $"{test_prediction_game.Members[0].MemberID};Artim;Meyer;Artim.Meyer@student.tu-freiberg.de;SPSistCool",
             lines[1]
         );
         Assert.Equal(
-            $"{testMembers[1].MemberID};Simon;Hörtzsch;Simon.Hoertzsch@student.tu-freiberg.de;SPSistCool1234",
+            $"{test_prediction_game.Members[1].MemberID};Simon;Hörtzsch;Simon.Hoertzsch@student.tu-freiberg.de;SPSistCool1234",
             lines[2]
         );
     }
@@ -130,39 +129,28 @@ public class TestCsvFileIO
     {
         PredictionGame test_prediction_game = new PredictionGame(new EmailService());
 
-        List<Member<Prediction, FootballMatch>> testMembers = new List<
-            Member<Prediction, FootballMatch>
-        >()
-        {
-            new Member<Prediction, FootballMatch>(
-                "Artim",
-                "Meyer",
-                "Artim.Meyer@student.tu-freiberg.de",
-                "SPSistCool"
-            ),
-            new Member<Prediction, FootballMatch>(
+        test_prediction_game.Register(new TestMember("Artim", "Meyer", "Artim.Meyer@student.tu-freiberg.de", "SPSistCool"));
+        test_prediction_game.Register(new TestMember(
                 "Simon",
                 "Hörtzsch",
                 "Simon.Hoertzsch@student.tu-freiberg.de",
                 "SPSistCool1234"
-            )
-        };
+            ));
 
-        CSVReader<FootballMatch>.SetMatchFactory(footballMatchFactory);
-        Schedule<FootballMatch> schedule = new Schedule<FootballMatch>(
+        CSVReader<FootballMatch, FootballPrediction>.SetMatchFactory(footballMatchFactory);
+        Schedule<Match> schedule = new Schedule<Match>(
             "../../../../../csv-files/EM_2024.csv",
             SportsTypes.Football,
             ScheduleTypes.EM_2024
         );
 
-        testMembers[0].AddParticipatingSchedule(schedule, schedule.ScheduleID);
-        testMembers[1].AddParticipatingSchedule(schedule, schedule.ScheduleID);
+        test_prediction_game.Members[0].AddParticipatingSchedule(schedule, schedule.ScheduleID);
+        test_prediction_game.Members[1].AddParticipatingSchedule(schedule, schedule.ScheduleID);
 
         string testFilePath = "../../../MemberScoresTest.csv";
 
         CSVWriter<FootballMatch, Prediction>.TrackScoreData(
             testFilePath,
-            testMembers,
             test_prediction_game
         );
 
@@ -170,7 +158,63 @@ public class TestCsvFileIO
 
         Assert.Equal(3, lines.Length);
         Assert.Equal("MemberID;EM_2024", lines[0]);
-        Assert.Equal($"{testMembers[0].MemberID};0", lines[1]);
-        Assert.Equal($"{testMembers[1].MemberID};0", lines[2]);
+        Assert.Equal($"{test_prediction_game.Members[0].MemberID};0", lines[1]);
+        Assert.Equal($"{test_prediction_game.Members[1].MemberID};0", lines[2]);
     }
+
+    [Fact]
+public static void TestTrackFootballPredictionData()
+{
+    PredictionGame test_prediction_game = new PredictionGame(new EmailService());
+
+    test_prediction_game.Register(new TestMember("Artim", "Meyer", "Artim.Meyer@student.tu-freiberg.de", "SPSistCool"));
+    test_prediction_game.Register(new TestMember(
+                "Simon",
+                "Hörtzsch",
+                "Simon.Hoertzsch@student.tu-freiberg.de",
+                "SPSistCool1234"
+            ));
+
+    CSVReader<FootballMatch, FootballPrediction>.SetMatchFactory(footballMatchFactory);
+    Schedule<Match> schedule = new Schedule<Match>("../../../EM_2024Test.csv", SportsTypes.Football, ScheduleTypes.EM_2024);
+
+    test_prediction_game.Members[0].AddParticipatingSchedule(schedule, ScheduleTypes.EM_2024);
+    test_prediction_game.Members[1].AddParticipatingSchedule(schedule, ScheduleTypes.EM_2024);
+
+    test_prediction_game.Members[0].AddPredictionToDo();
+    test_prediction_game.Members[1].AddPredictionToDo();
+
+    Assert.Equal(2, test_prediction_game.Members[0].GetPredictionsToDo().Count);
+    Assert.Equal(2, test_prediction_game.Members[1].GetPredictionsToDo().Count);
+
+    List<Match> predictionsToDoMember1 = test_prediction_game.Members[0].GetPredictionsToDo();
+    List<Match> predictionsToDoMember2 = test_prediction_game.Members[1].GetPredictionsToDo();
+
+    test_prediction_game.Members[0].ConvertPredictionsDone(predictionsToDoMember1[0].MatchID, 1, 2);
+    test_prediction_game.Members[0].ConvertPredictionsDone(predictionsToDoMember1[1].MatchID, 2, 3);
+    test_prediction_game.Members[1].ConvertPredictionsDone(predictionsToDoMember2[0].MatchID, 3, 0);
+    test_prediction_game.Members[1].ConvertPredictionsDone(predictionsToDoMember2[1].MatchID, 4, 2);
+
+    test_prediction_game.Members[0].CalculateScores();
+    test_prediction_game.Members[1].CalculateScores();
+
+    string testFilePath = "../../../MemberPredictionsTest.csv";
+
+    CSVWriter<FootballMatch, Prediction>.TrackFootballPredictionData(testFilePath, test_prediction_game);
+
+    var lines = File.ReadAllLines(testFilePath);
+
+    // Überprüfen der Kopfzeile
+    Assert.Equal($"Predicted Match;{test_prediction_game.Members[0].MemberID};{test_prediction_game.Members[1].MemberID}", lines[0]);
+
+    FootballPrediction prediction1 = (FootballPrediction)test_prediction_game.Members[0].GetArchivedPredictions()[0];
+    FootballPrediction prediction2 = (FootballPrediction)test_prediction_game.Members[0].GetArchivedPredictions()[1];
+    FootballPrediction prediction3 = (FootballPrediction)test_prediction_game.Members[1].GetArchivedPredictions()[0];
+    FootballPrediction prediction4 = (FootballPrediction)test_prediction_game.Members[1].GetArchivedPredictions()[1];
+
+    // Beispielwerte überprüfen (Hier musst du sicherstellen, dass die Vorhersagen vorhanden sind)
+    Assert.Equal($"{prediction1.HomeTeam} - {prediction1.AwayTeam};{prediction1.PredictionHome}:{prediction1.PredictionAway};{prediction3.PredictionHome}:{prediction3.PredictionAway}", lines[1]); // Beispielwerte, passe sie an deine Daten an
+    Assert.Equal($"{prediction2.HomeTeam} - {prediction2.AwayTeam};{prediction2.PredictionHome}:{prediction2.PredictionAway};{prediction4.PredictionHome}:{prediction4.PredictionAway}", lines[2]); // Beispielwerte, passe sie an deine Daten an
+}
+
 }
