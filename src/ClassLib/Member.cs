@@ -2,8 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
+public interface IMemberData //for further implementation (e.g. premium membership etc.)
+{
+    string GetForename();
+    string GetEmailAddress();
+    List<Match> GetPredictionsToDo();
+    List<Prediction> GetArchivedPredictions();
+    List<Score> GetScores();
+}
+
 ///\brief Represents a member participating in the Sport Prediction System (SPS).
-public class Member<P, M>
+public class Member<P, M> : IMemberData
     where P : Prediction
     where M : Match
 {
@@ -18,7 +27,7 @@ public class Member<P, M>
     protected List<Schedule<M>> ParticipatingSchedules { get; }
 
     /// \brief List of Matches, which need to be predicted on the specific day.
-    protected List<M> PredictionsToDo { get; }
+    protected List<M> PredictionsToDo { get; set; }
 
     /// \brief List, which contains all Predictions where the match is already predicted, but a score was not calculated yet.
     protected List<P> PredictionsDone { get; }
@@ -30,15 +39,20 @@ public class Member<P, M>
     /// \details There is exactly one score for every schedule the member predicts.
     protected List<Score> Scores;
 
-    public List<Score> GetScores
-    {
-        get { return Scores; }
-    }
+    /// \brief Retrieves the forename of the member.
+    public string GetForename() => forename;
 
-    public List<P> GetArchivedPredictions
-    {
-        get { return ArchivedPredictions; }
-    }
+    /// \brief Retrieves the email address of the member.
+    public string GetEmailAddress() => EmailAddress;
+
+    /// \brief Retrieves a copy of the list of matches that need to be predicted.
+    public List<Match> GetPredictionsToDo() => new List<Match>(PredictionsToDo);
+
+    /// \brief Retrieves a copy of the list of archived predictions.
+    public List<Prediction> GetArchivedPredictions() => new List<Prediction>(ArchivedPredictions);
+
+    /// \brief Retrieves a copy of the scores list.
+    public List<Score> GetScores() => new List<Score>(Scores);
 
     /// \brief Initializes a new instance of the <see cref="Member"/> class.
     public Member(string forename, string surname, string emailaddress, string password)
@@ -107,7 +121,7 @@ public class Member<P, M>
         }
     }
 
-    /// \brief Removes a prediction from the member's list of predictions to do.
+    /// \brief Removes a match from the member's list of PredictionsToDo.
     public void RemovePredictionToDo(uint MatchID) // remove specific match (if needed, for example for debugging and testing)
     {
         M? matchToRemove = null;
@@ -123,6 +137,41 @@ public class Member<P, M>
         if (matchToRemove != null)
         {
             PredictionsToDo.Remove(matchToRemove);
+        }
+        else
+        {
+            throw new InvalidOperationException("Match is not included in 'PredictionsToDo'-List");
+        }
+    }
+
+    /// \brief If user has predicted a certain match (specified by MatchID), a new prediction will be created (Prediction ctor call) and will be added to the PredictionsDone-list
+    public void ConvertPredictionsDone(uint MatchID, byte prediction_home, byte prediction_away)
+    {
+        M? predictedMatch = null;
+        foreach (var match in PredictionsToDo)
+        {
+            if (match.MatchID == MatchID)
+            {
+                predictedMatch = match;
+                break;
+            }
+        }
+        if (predictedMatch != null)
+        {
+            switch (predictedMatch.SportsType) //switch case for ctor calls
+            {
+                case SportsTypes.Football:
+                    FootballPrediction predictionDone = new FootballPrediction(
+                        MemberID,
+                        predictedMatch as FootballMatch,
+                        DateTime.Now,
+                        prediction_home,
+                        prediction_away
+                    );
+                    PredictionsDone.Add(predictionDone as P);
+                    break;
+            }
+            PredictionsToDo.Remove(predictedMatch);
         }
         else
         {
@@ -151,13 +200,33 @@ public class Member<P, M>
         return searchedprediction;
     }
 
-    public void AddPrediction()
+    /// \brief Removes a prediction from the member's list of PredictionsDone.
+    public void RemovePredictionsDone(uint PredictionID) // remove specific prediction (if needed, for example for debugging and testing)
     {
-        //
+        P? predictionToRemove = null;
+        foreach (var prediction in PredictionsDone)
+        {
+            if (prediction.PredictionID == PredictionID)
+            {
+                predictionToRemove = prediction;
+                break;
+            }
+        }
+
+        if (predictionToRemove != null)
+        {
+            PredictionsDone.Remove(predictionToRemove);
+        }
+        else
+        {
+            throw new InvalidOperationException("Match is not included in 'PredictionsDone-List");
+        }
     }
 
     public void CalculateScores()
     {
+        List<P> predictionsToArchive = new List<P>();
+
         foreach (var score in Scores)
         {
             switch (score.ScoreID)

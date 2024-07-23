@@ -11,7 +11,6 @@ public class EmailService
     /// \brief Gets or sets the SMTP server port.
     private int SmtpPort { get; set; }
 
-    // Implementation for sending email goes here
     /// \brief Gets or sets the username for SMTP authentication.
     private string Username { get; set; }
 
@@ -36,13 +35,25 @@ public class EmailService
     /// \param subject The subject of the email.
     /// \param content The content of the email.
 
-    public void SendEmail(string Recipient, string Sender, string Subject, string Content)
+    public void SendEmail(
+        string Recipient,
+        string Sender,
+        string Subject,
+        string Template,
+        Dictionary<string, string> placeholders
+    )
     {
+        foreach (var placeholder in placeholders)
+        {
+            Template = Template.Replace($"{{{{{placeholder.Key}}}}}", placeholder.Value);
+        }
+
         MailMessage Email = new MailMessage();
         Email.From = new MailAddress(Sender);
         Email.To.Add(Recipient);
         Email.Subject = Subject;
-        Email.Body = Content;
+        Email.Body = Template;
+        Email.IsBodyHtml = true;
 
         SmtpClient MailClient = new SmtpClient(SmtpServer, SmtpPort);
         MailClient.EnableSsl = true;
@@ -53,11 +64,3 @@ public class EmailService
         MailClient.Send(Email);
     }
 }
-
-
-// Beispielaufruf
-//EmailService HeutigeMail = new EmailService(smtp.gmail.com, 587, dream.customer@gmail.com, ijktczbomupswmrs)
-//SendEmail("dream.customer@gmail.com", "sportspredictionsystem@gmail.com", "test email", "Hallo Jose. Diese Mail wird per C# gesendet!")
-// siehe ClassLib.Tests
-
-//App Passwort: ijktczbomupswmrs
