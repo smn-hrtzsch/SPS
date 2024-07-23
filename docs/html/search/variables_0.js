@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['archivedpredictions_83',['ArchivedPredictions',['../classMember.html#a223e8df4809808b34b23d5dc3c847e16',1,'Member']]]
+  ['scores_81',['Scores',['../classMember.html#a88fc693fc84bd07584efde1d198582b5',1,'Member']]]
 ];
