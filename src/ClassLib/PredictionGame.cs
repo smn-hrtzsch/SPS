@@ -150,7 +150,7 @@ public class PredictionGame
                     { "matches", matchesList },
                     { "link", "https://github.com/smn-hrtzsch/SPS" },
                     //{ "results", resultsList },
-                    //{ "totalPoints", totalPoints.ToStrmember.GetEmailAddress()ing() }
+                    //{ "totalPoints", totalPoints.ToString() }
                 };
                 email_service.SendEmail(
                     member.GetEmailAddress(),
