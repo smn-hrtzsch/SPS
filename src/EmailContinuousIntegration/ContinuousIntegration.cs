@@ -23,7 +23,6 @@ class Program
 
         predictionGame.SendDailyEmail();
         //Email continous Integration end
-
     }
 }
 
