@@ -129,7 +129,6 @@ public class TestCsvFileIO
     public static void TestTrackScoreData()
     {
         PredictionGame test_prediction_game = new PredictionGame(new EmailService());
-        test_prediction_game.ScheduleTypes.Add(ScheduleTypes.EM_2024);
 
         List<Member<Prediction, FootballMatch>> testMembers = new List<
             Member<Prediction, FootballMatch>

@@ -43,28 +43,28 @@ public class CSVWriter<M, P>
         PredictionGame prediction_game
     )
     {
-        if (prediction_game.ScheduleTypes.Count == 0)
+        if (prediction_game.ScheduleTypesList.Count == 0)
         {
             throw new InvalidOperationException("PredictionGame.ScheduleTypes is not initialized.");
         }
 
         using (StreamWriter sw = new StreamWriter(PathToCsvFile))
         {
-            int AmountOfScheduleTypes = prediction_game.ScheduleTypes.Count;
+            int AmountOfScheduleTypes = prediction_game.ScheduleTypesList.Count;
             string[] PredictableSchedules = new string[AmountOfScheduleTypes];
             for (int i = 0; i < AmountOfScheduleTypes; i++)
             {
-                PredictableSchedules[i] = $";{prediction_game.ScheduleTypes[i]}";
+                PredictableSchedules[i] = $";{prediction_game.ScheduleTypesList[i]}";
             }
             sw.WriteLine($"MemberID{string.Join("", PredictableSchedules)}");
 
             foreach (var member in members)
             {
-                int AmountOfScores = member.GetScores.Count;
+                int AmountOfScores = member.GetScores().Count;
                 string[] Scores = new string[AmountOfScores];
                 for (int i = 0; i < AmountOfScores; i++)
                 {
-                    Scores[i] = $";{member.GetScores[i].ToString()}";
+                    Scores[i] = $";{member.GetScores()[i].ToString()}";
                 }
                 sw.WriteLine($"{member.MemberID}{string.Join("", Scores)}");
             }
