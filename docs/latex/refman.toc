@@ -4,7 +4,7 @@
 \contentsline {chapter}{\numberline {2}Class Index}{3}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Class List}{3}{section.2.1}%
 \contentsline {chapter}{\numberline {3}Class Documentation}{5}{chapter.3}%
-\contentsline {section}{\numberline {3.1}CSVReader$<$ M $>$ Class Template Reference}{5}{section.3.1}%
+\contentsline {section}{\numberline {3.1}CSVReader$<$ M, P $>$ Class Template Reference}{5}{section.3.1}%
 \contentsline {subsection}{\numberline {3.1.1}Member Function Documentation}{5}{subsection.3.1.1}%
 \contentsline {subsubsection}{\numberline {3.1.1.1}GetMatchDataFromCsvFile()}{5}{subsubsection.3.1.1.1}%
 \contentsline {section}{\numberline {3.2}CSVWriter$<$ M, P $>$ Class Template Reference}{6}{section.3.2}%
@@ -18,17 +18,17 @@
 \contentsline {section}{\numberline {3.5}Football\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Match\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Factory Class Reference}{8}{section.3.5}%
 \contentsline {section}{\numberline {3.6}Football\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Prediction Class Reference}{8}{section.3.6}%
 \contentsline {section}{\numberline {3.7}IMatch\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Factory$<$ M $>$ Interface Template Reference}{9}{section.3.7}%
-\contentsline {section}{\numberline {3.8}IMember\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Data Interface Reference}{9}{section.3.8}%
+\contentsline {section}{\numberline {3.8}IMember\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Data$<$ M, P $>$ Interface Template Reference}{9}{section.3.8}%
 \contentsline {section}{\numberline {3.9}Match Class Reference}{10}{section.3.9}%
 \contentsline {subsection}{\numberline {3.9.1}Detailed Description}{10}{subsection.3.9.1}%
-\contentsline {section}{\numberline {3.10}Member$<$ P, M $>$ Class Template Reference}{11}{section.3.10}%
+\contentsline {section}{\numberline {3.10}Member$<$ M, P $>$ Class Template Reference}{11}{section.3.10}%
 \contentsline {subsection}{\numberline {3.10.1}Detailed Description}{12}{subsection.3.10.1}%
 \contentsline {subsection}{\numberline {3.10.2}Member Function Documentation}{12}{subsection.3.10.2}%
 \contentsline {subsubsection}{\numberline {3.10.2.1}SearchPredictionDone()}{12}{subsubsection.3.10.2.1}%
-\contentsline {subsection}{\numberline {3.10.3}Member Data Documentation}{12}{subsection.3.10.3}%
+\contentsline {subsection}{\numberline {3.10.3}Member Data Documentation}{13}{subsection.3.10.3}%
 \contentsline {subsubsection}{\numberline {3.10.3.1}Scores}{13}{subsubsection.3.10.3.1}%
 \contentsline {section}{\numberline {3.11}Prediction Class Reference}{13}{section.3.11}%
-\contentsline {section}{\numberline {3.12}Prediction\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Game Class Reference}{13}{section.3.12}%
+\contentsline {section}{\numberline {3.12}Prediction\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Game Class Reference}{14}{section.3.12}%
 \contentsline {subsection}{\numberline {3.12.1}Detailed Description}{14}{subsection.3.12.1}%
 \contentsline {section}{\numberline {3.13}Schedule$<$ M $>$ Class Template Reference}{14}{section.3.13}%
 \contentsline {subsection}{\numberline {3.13.1}Detailed Description}{15}{subsection.3.13.1}%

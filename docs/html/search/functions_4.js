@@ -1,10 +1,11 @@
 var searchData=
 [
-  ['getarchivedpredictions_64',['GetArchivedPredictions',['../classMember.html#af69056409fb0c57e7e8e1ec2f6bfbec4',1,'Member']]],
-  ['getemailaddress_65',['GetEmailAddress',['../classMember.html#a10dc9d16b01f095f0ad0be7a69b23f62',1,'Member']]],
-  ['getforename_66',['GetForename',['../classMember.html#a9f2e39fbd68a834fff9af6958991a614',1,'Member']]],
-  ['gethashcode_67',['GetHashCode',['../classPredictionGame.html#a80560ef2715df1d685fe88a91cbe2771',1,'PredictionGame']]],
-  ['getmatchdatafromcsvfile_68',['GetMatchDataFromCsvFile',['../classCSVReader.html#a4a046f97b378142ef0b9626aa6e61477',1,'CSVReader']]],
-  ['getpredictionstodo_69',['GetPredictionsToDo',['../classMember.html#ad0c7098bb48c13e4bb0862ef97da06ae',1,'Member']]],
-  ['getscores_70',['GetScores',['../classMember.html#a2a1bfb212d961cb654980cf2cbffebbc',1,'Member']]]
+  ['getarchivedpredictions_65',['GetArchivedPredictions',['../classMember.html#a20c0a16e1fde80478746ac42ddf6c2a0',1,'Member']]],
+  ['getemailaddress_66',['GetEmailAddress',['../classMember.html#a511361fa2285ca401aafc2e9d28cd76a',1,'Member']]],
+  ['getforename_67',['GetForename',['../classMember.html#ac3651d0348d7a27ce17ec3c7d3970683',1,'Member']]],
+  ['gethashcode_68',['GetHashCode',['../classPredictionGame.html#a80560ef2715df1d685fe88a91cbe2771',1,'PredictionGame']]],
+  ['getmatchdatafromcsvfile_69',['GetMatchDataFromCsvFile',['../classCSVReader.html#a1a1ab857ad382cc857f406ce3cf52285',1,'CSVReader']]],
+  ['getpredictionsdone_70',['GetPredictionsDone',['../classMember.html#a97ed15893c1242787ffc24fa162aaa0a',1,'Member']]],
+  ['getpredictionstodo_71',['GetPredictionsToDo',['../classMember.html#a9dbd9316f2fb1d88120832bff43fcbc1',1,'Member']]],
+  ['getscores_72',['GetScores',['../classMember.html#a215f48b474f8329745ddebf511b56c77',1,'Member']]]
 ];
