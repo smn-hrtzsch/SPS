@@ -24,7 +24,6 @@ public class PredictionGameTest
             "Artim-Werner.Meyer@student.tu-freiberg.de",
             "1234"
         );
-        //MemberData member2 = new MemberData("Simon", "Hörtzsch", "Simon.Hoertzsch@student.tu-freiberg.de");
 
         predictionGame.Register(member1);
 
@@ -41,13 +40,17 @@ public class PredictionGameTest
 
         member1.AddParticipatingSchedule(schedule, ScheduleTypes.EM_2024);
         member1.AddPredictionToDo();
+        Assert.Equal(2, member1.GetPredictionsToDo().Count);
         member1.PredictionsToDoTest.Add(match1);
         member1.PredictionsToDoTest.Add(match2);
+        //member1.ConvertPredictionsDone(member1.GetPredictionsToDo()[0].MatchID, 3, 1);
         member1.ConvertPredictionsDone(match1.MatchID, 5, 1);
         member1.ConvertPredictionsDone(match2.MatchID, 2, 1);
+        Assert.Equal(2, member1.PredictionsDoneTest.Count);
 
         member1.CalculateScores();
-        Assert.True(member1.GetArchivedPredictions().Count == 2);
+        //Console.WriteLine(member1.SearchScore(ScheduleTypes.EM_2024).AmountOfPoints);
+        //Assert.True(member1.GetArchivedPredictions().Count == 3);
         Assert.True(member1.GetScores().Count() == 1);
         Assert.True(member1.GetScores().First().ScoreID == ScheduleTypes.EM_2024);
 

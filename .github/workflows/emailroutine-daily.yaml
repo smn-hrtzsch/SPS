@@ -2,11 +2,7 @@ name: Email Sender
 
 on:
   schedule:
-    - cron: '30 9 * * *' # Runs every day at 9:30 UTC
-    - cron: '0 18 * * 0' # Runs every Sunday at 18:00 UTC
-  push:
-    branches:
-      - '**'
+    - cron: '30 8 * * *' # Runs every day at 9:30 Berlin time
   workflow_dispatch:
 
 jobs:
@@ -23,13 +19,19 @@ jobs:
         dotnet-version: '8.x'
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: |
+        cd src/EmailContinuousIntegration
+        dotnet restore
 
     - name: Build the project
-      run: dotnet build --configuration Release
+      run: |
+        cd src/EmailContinuousIntegration
+        dotnet build
 
     - name: Run email sender
       env: 
         SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
         SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-      run: dotnet run --project /src/Program/Program.cs
+      run: |
+        cd src/EmailContinuousIntegration
+        dotnet run --project EmailCIPipeline.cs.csproj
