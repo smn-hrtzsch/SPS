@@ -2,24 +2,30 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-public interface IMemberData<M,P>  where M: Match where P: Prediction //for further implementation (e.g. premium membership etc.)
+public interface IMemberData<M, P>
+    where M : Match
+    where P : Prediction //for further implementation (e.g. premium membership etc.)
 {
-    string GetForename();
-    string GetEmailAddress();
-    List<M> GetPredictionsToDo();
-    List<P> GetArchivedPredictions();
-    List<Score> GetScores();
+    public string GetForename();
+    public string GetEmailAddress();
+    public List<M> GetPredictionsToDo();
+    public List<P> GetPredictionsDone();
+    public void SetPredictionsDone(List<P> done_predictions);
+    public List<P> GetArchivedPredictions();
+    public void SetArchivedPredictions(List<P> archived_predictions);
+    public List<Score> GetScores();
+    public void SetScores(List<Score> scores);
 }
 
 ///\brief Represents a member participating in the Sport Prediction System (SPS).
-public class Member<M, P> : IMemberData<M,P>
+public class Member<M, P> : IMemberData<M, P>
     where P : Prediction
     where M : Match
 {
     ///\brief Gets the unique ID of the member.
     public uint MemberID { get; }
-    protected string? forename { get; set; }
-    protected string? surname { get; set; }
+    protected string? Forename { get; set; }
+    protected string? Surname { get; set; }
     protected string EmailAddress { get; }
     protected string Password { get; }
 
@@ -27,20 +33,20 @@ public class Member<M, P> : IMemberData<M,P>
     protected List<Schedule<M>> ParticipatingSchedules { get; }
 
     /// \brief List of Matches, which need to be predicted on the specific day.
-    protected List<M> PredictionsToDo { get; set; }
+    protected List<M> PredictionsToDo;
 
     /// \brief List, which contains all Predictions where the match is already predicted, but a score was not calculated yet.
-    protected List<P> PredictionsDone { get; }
+    protected List<P> PredictionsDone;
 
     /// \brief List, which contains all Predictions where no score must be calculated anymore
-    protected List<P> ArchivedPredictions { get; }
+    protected List<P> ArchivedPredictions;
 
     /// \brief List of Scores <summary>
     /// \details There is exactly one score for every schedule the member predicts.
     protected List<Score> Scores;
 
     /// \brief Retrieves the forename of the member.
-    public string GetForename() => forename;
+    public string GetForename() => Forename;
 
     /// \brief Retrieves the email address of the member.
     public string GetEmailAddress() => EmailAddress;
@@ -49,19 +55,26 @@ public class Member<M, P> : IMemberData<M,P>
     public List<M> GetPredictionsToDo() => new List<M>(PredictionsToDo);
 
     /// \brief Retrieves a copy of the list of the predicitons already done, but not yet archived.
-    public List<P> GetPredictionsDone() => new List<P>(PredictionsDone);
+    public List<P> GetPredictionsDone() => PredictionsDone;
+
+    public void SetPredictionsDone(List<P> done_predictions) => PredictionsDone = done_predictions;
 
     /// \brief Retrieves a copy of the list of archived predictions.
     public List<P> GetArchivedPredictions() => new List<P>(ArchivedPredictions);
 
+    public void SetArchivedPredictions(List<P> archived_predictions) =>
+        ArchivedPredictions = archived_predictions;
+
     /// \brief Retrieves a copy of the scores list.
     public List<Score> GetScores() => new List<Score>(Scores);
+
+    public void SetScores(List<Score> scores) => Scores = scores;
 
     /// \brief Initializes a new instance of the <see cref="Member"/> class.
     public Member(string forename, string surname, string emailaddress, string password)
     {
-        this.forename = forename;
-        this.surname = surname;
+        this.Forename = forename;
+        this.Surname = surname;
         this.EmailAddress = emailaddress;
         this.Password = password;
         this.MemberID = (uint)GetHashCode();
@@ -72,9 +85,29 @@ public class Member<M, P> : IMemberData<M,P>
         this.Scores = new List<Score>();
     }
 
+    public Member(
+        uint member_id,
+        string forename,
+        string surname,
+        string emailaddress,
+        string password
+    )
+    {
+        MemberID = member_id;
+        Forename = forename;
+        Surname = surname;
+        EmailAddress = emailaddress;
+        Password = password;
+        ParticipatingSchedules = new List<Schedule<M>>();
+        PredictionsToDo = new List<M>();
+        PredictionsDone = new List<P>();
+        ArchivedPredictions = new List<P>();
+        Scores = new List<Score>();
+    }
+
     public override int GetHashCode()
     {
-        return HashCode.Combine(forename, surname, EmailAddress);
+        return HashCode.Combine(Forename, Surname, EmailAddress);
     }
 
     /// \brief Adds a schedule to the member's list of participating schedules.
@@ -262,8 +295,8 @@ public class Member<M, P> : IMemberData<M,P>
     public override string ToString()
     {
         string mi = $"{MemberID}";
-        string fn = $"{forename}";
-        string sn = $"{surname}";
+        string fn = $"{Forename}";
+        string sn = $"{Surname}";
         string ea = $"{EmailAddress}";
         string pw = $"{Password}";
         return $"{mi};{fn};{sn};{ea};{pw}";
