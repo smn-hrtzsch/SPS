@@ -23,7 +23,7 @@ jobs:
 
     - name: Restore dependencies
       run: |
-        cd scr/EmailContinuousIntegration
+        cd src/EmailContinuousIntegration
         dotnet restore
 
     - name: Build the project
@@ -36,5 +36,5 @@ jobs:
         SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
         SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
       run: 
-        cd scr/EmailContinuousIntegration
+        cd src/EmailContinuousIntegration
         dotnet run
