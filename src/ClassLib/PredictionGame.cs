@@ -65,29 +65,30 @@ public class PredictionGame
 
     public void SendDailyEmail()
     {
-//         string TippAndResultTemplate =
-//             @"
-//         <html>
-//     <body style='font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;'>
-//         <h1 style='color: #444;'>Hallo {{forename}},</h1>
-//         <p style='font-size: 16px; color: #666;'>Bereit, deine Erfolge zu feiern? Hier sind die faszinierenden Ergebnisse der letzten Spiele und die Punkte, die du erreicht hast:</p>
-//         <ul style='list-style-type: none; padding: 0;'>
-//             {{results}}
-//         </ul>
-//         <p style='font-size: 16px; color: #666;'>Deine Gesamtpunkte: <strong>{{totalPoints}}</strong></p>
-//         <p style='font-size: 16px; color: #666;'>Bleib am Ball und genieße das Tippspiel. Weiter so und viel Erfolg!</p>
+        //         string TippAndResultTemplate =
+        //             @"
+        //         <html>
+        //     <body style='font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;'>
+        //         <h1 style='color: #444;'>Hallo {{forename}},</h1>
+        //         <p style='font-size: 16px; color: #666;'>Bereit, deine Erfolge zu feiern? Hier sind die faszinierenden Ergebnisse der letzten Spiele und die Punkte, die du erreicht hast:</p>
+        //         <ul style='list-style-type: none; padding: 0;'>
+        //             {{results}}
+        //         </ul>
+        //         <p style='font-size: 16px; color: #666;'>Deine Gesamtpunkte: <strong>{{totalPoints}}</strong></p>
+        //         <p style='font-size: 16px; color: #666;'>Bleib am Ball und genieße das Tippspiel. Weiter so und viel Erfolg!</p>
 
-//         <h2 style='color: #444;'>Bereit für ein aufregendes Spielabenteuer?</h2>
-//         <p style='font-size: 16px; color: #666;'>Hier sind deine exklusiven Tipps für heute:</p>
-//         <ul style='list-style-type: none; padding: 0;'>
-//             {{matches}}
-//         </ul>
-//         <p style='font-size: 16px; color: #666;'>Spüre den Nervenkitzel, gebe deine Tipps ab, und lass dich von deinem Instinkt leiten. Klicke einfach auf diesen <a href='{{link}}' style='color: #ff6347; text-decoration: none;'>magischen Link</a> und tauche ein in die Welt von SportsPredictionSystem.</p>
-//         <p style='font-size: 16px; color: #666;'>Viel Erfolg und genieße den Moment!</p>
-//     </body>
-// </html>";
+        //         <h2 style='color: #444;'>Bereit für ein aufregendes Spielabenteuer?</h2>
+        //         <p style='font-size: 16px; color: #666;'>Hier sind deine exklusiven Tipps für heute:</p>
+        //         <ul style='list-style-type: none; padding: 0;'>
+        //             {{matches}}
+        //         </ul>
+        //         <p style='font-size: 16px; color: #666;'>Spüre den Nervenkitzel, gebe deine Tipps ab, und lass dich von deinem Instinkt leiten. Klicke einfach auf diesen <a href='{{link}}' style='color: #ff6347; text-decoration: none;'>magischen Link</a> und tauche ein in die Welt von SportsPredictionSystem.</p>
+        //         <p style='font-size: 16px; color: #666;'>Viel Erfolg und genieße den Moment!</p>
+        //     </body>
+        // </html>";
 
-string GeneralTippResult = @"<html>
+        string GeneralTippResult =
+            @"<html>
             <body style='font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;'>
                 <h1 style='color: #444;'>Hallo geehrter SPSMember,</h1>
                 <p style='font-size: 16px; color: #666;'>Bereit für ein aufregendes Spielabenteuer? Hier sind deine exklusiven Tipps für heute:</p>
@@ -125,7 +126,7 @@ string GeneralTippResult = @"<html>
                 //                 DateTime predictionDate = prediction.GetPredictionDate();
                 //                 DateTime yesterday = DateTime.Now.AddDays(-1);
                 //                 DateTime yesterday_yesterday = DateTime.Now.AddDays(-1);
-                                
+
                 //                 if(predictionDate.Day == DateTime.Now.Day || predictionDate.Day == yesterday.Day || predictionDate.Day == yesterday_yesterday.Day) //todays predictions, yesterdays predictions and the predictions two days a
                 //                 {
 
