@@ -16,6 +16,8 @@ public abstract class Prediction
         PredictionID = (uint)GetHashCode();
     }
 
+    public DateTime GetPredictionDate() => PredictionDate;
+
     public bool ValidatePrediction()
     {
         return PredictionDate < PredictedMatch.MatchDate;
