@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-public class CSVReader<M>
-    where M : Match, new()
+public class CSVReader<M,P>
+    where M : Match
+    where P: Prediction
 {
     private static IMatchFactory<M> MatchFactory;
 
@@ -53,5 +54,29 @@ public class CSVReader<M>
             }
         }
         return schedule;
+    }
+
+    public List<Member<M,P>> GetMemberDataFromCsvFile(string PathToCsvFile) {
+        List<Member<M,P>> members = new List<Member<M,P>>();
+
+        
+
+        return members;
+    }
+
+    public List<Score> GetScoresFromCsvFile(string PathToCsvFile) {
+        List<Score> scores = new List<Score>();
+
+        // code
+
+        return scores;
+    }
+
+    public List<P> GetArchivedPredictionsFromCsvFile(string PathToCsvFile) {
+        List<P> predictions = new List<P>();
+
+        // code 
+
+        return predictions;
     }
 }
