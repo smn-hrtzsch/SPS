@@ -6,7 +6,7 @@ public abstract class Prediction
     public uint PredictionID { get; }
     public uint MemberID { get; }
     public Match PredictedMatch { get; }
-    protected DateTime PredictionDate { get; set; }
+    public DateTime PredictionDate { get; protected set; }
 
     public Prediction(uint member_id, Match predicted_match, DateTime predictionDate)
     {
