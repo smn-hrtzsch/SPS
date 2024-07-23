@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
 public interface IMemberData //for further implementation (e.g. premium membership etc.)
@@ -264,5 +265,25 @@ public class Member<P, M> : IMemberData
         string ea = $"{EmailAddress}";
         string pw = $"{Password}";
         return $"{mi};{fn};{sn};{ea};{pw}";
+    }
+
+    public Score SearchScore(ScheduleTypes schedule_type)
+    {
+        Score? searchedScore = null;
+
+        foreach(var score in Scores)
+        {
+            if(score.ScoreID == schedule_type)
+            {
+                searchedScore = score;   
+            }
+
+            else
+            {
+                throw new InvalidOperationException("There exists no score for searched schedule type.");
+            }
+        }
+
+        return searchedScore;
     }
 }
