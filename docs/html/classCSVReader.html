@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Sport Prediction System: CSVReader&lt; M &gt; Class Template Reference</title>
+<title>Sport Prediction System: CSVReader&lt; M, P &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,28 +62,41 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classCSVReader-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">CSVReader&lt; M &gt; Class Template Reference</div>  </div>
+<div class="title">CSVReader&lt; M, P &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:aa4e69dcdf35b121fdb311ca9d3485987"><td class="memItemLeft" align="right" valign="top"><a id="aa4e69dcdf35b121fdb311ca9d3485987"></a>
+List&lt; <a class="el" href="classMember.html">Member</a>&lt; M, P &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GetMemberDataFromCsvFile</b> (string PathToCsvFile)</td></tr>
+<tr class="separator:aa4e69dcdf35b121fdb311ca9d3485987"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dd81b91bdb956f9e8665a5da0af07bf"><td class="memItemLeft" align="right" valign="top"><a id="a7dd81b91bdb956f9e8665a5da0af07bf"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>GetScoresFromCsvFile</b> (string PathToCsvFile, <a class="el" href="classPredictionGame.html">PredictionGame</a> prediction_game)</td></tr>
+<tr class="separator:a7dd81b91bdb956f9e8665a5da0af07bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b1f5ad47d550a0a944478b0e2aef2c4"><td class="memItemLeft" align="right" valign="top"><a id="a0b1f5ad47d550a0a944478b0e2aef2c4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>GetFootballPredictionsFromCsvFile</b> (string PathToCsvFile, <a class="el" href="classPredictionGame.html">PredictionGame</a> prediction_game, <a class="el" href="classSchedule.html">Schedule</a>&lt; <a class="el" href="classFootballMatch.html">FootballMatch</a> &gt; schedule)</td></tr>
+<tr class="separator:a0b1f5ad47d550a0a944478b0e2aef2c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:abc8caf22a816c3e3292aa08c76b1a40f"><td class="memItemLeft" align="right" valign="top"><a id="abc8caf22a816c3e3292aa08c76b1a40f"></a>
+<tr class="memitem:a571ed4eb62f459a85b616440027e7f60"><td class="memItemLeft" align="right" valign="top"><a id="a571ed4eb62f459a85b616440027e7f60"></a>
 static void&#160;</td><td class="memItemRight" valign="bottom"><b>SetMatchFactory</b> (<a class="el" href="interfaceIMatchFactory.html">IMatchFactory</a>&lt; M &gt; match_factory)</td></tr>
-<tr class="separator:abc8caf22a816c3e3292aa08c76b1a40f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a046f97b378142ef0b9626aa6e61477"><td class="memItemLeft" align="right" valign="top">static string[]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCSVReader.html#a4a046f97b378142ef0b9626aa6e61477">GetMatchDataFromCsvFile</a> (string PathToMatchDataCsvFile, int line_number)</td></tr>
-<tr class="memdesc:a4a046f97b378142ef0b9626aa6e61477"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the match data from a CSV file.  <a href="classCSVReader.html#a4a046f97b378142ef0b9626aa6e61477">More...</a><br /></td></tr>
-<tr class="separator:a4a046f97b378142ef0b9626aa6e61477"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abdf127f9a7b65e397c094cbdc4189782"><td class="memItemLeft" align="right" valign="top"><a id="abdf127f9a7b65e397c094cbdc4189782"></a>
+<tr class="separator:a571ed4eb62f459a85b616440027e7f60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a1ab857ad382cc857f406ce3cf52285"><td class="memItemLeft" align="right" valign="top">static string[]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCSVReader.html#a1a1ab857ad382cc857f406ce3cf52285">GetMatchDataFromCsvFile</a> (string PathToMatchDataCsvFile, int line_number)</td></tr>
+<tr class="memdesc:a1a1ab857ad382cc857f406ce3cf52285"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the match data from a CSV file.  <a href="classCSVReader.html#a1a1ab857ad382cc857f406ce3cf52285">More...</a><br /></td></tr>
+<tr class="separator:a1a1ab857ad382cc857f406ce3cf52285"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeee1b42a22464835f844aa287213b240"><td class="memItemLeft" align="right" valign="top"><a id="aeee1b42a22464835f844aa287213b240"></a>
 static List&lt; M &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>GetScheduleFromCsvFile</b> (string PathToCsvFile, SportsTypes sport_type)</td></tr>
-<tr class="separator:abdf127f9a7b65e397c094cbdc4189782"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:aeee1b42a22464835f844aa287213b240"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a4a046f97b378142ef0b9626aa6e61477"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4a046f97b378142ef0b9626aa6e61477">&#9670;&nbsp;</a></span>GetMatchDataFromCsvFile()</h2>
+<a id="a1a1ab857ad382cc857f406ce3cf52285"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a1ab857ad382cc857f406ce3cf52285">&#9670;&nbsp;</a></span>GetMatchDataFromCsvFile()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -92,7 +105,7 @@ static List&lt; M &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Get
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static string [] <a class="el" href="classCSVReader.html">CSVReader</a>&lt; M &gt;.GetMatchDataFromCsvFile </td>
+          <td class="memname">static string [] <a class="el" href="classCSVReader.html">CSVReader</a>&lt; M, P &gt;.GetMatchDataFromCsvFile </td>
           <td>(</td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>PathToMatchDataCsvFile</em>, </td>
