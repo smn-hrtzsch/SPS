@@ -37,30 +37,30 @@ public class CSVWriter<M, P>
         }
     }
 
-    public static void TrackScoreData(string PathToCsvFile, List<Member<P, M>> members)
+    public static void TrackScoreData(string PathToCsvFile, PredictionGame predictionGame)
     {
-        if (PredictionGame.ScheduleTypes == null)
+        if (predictionGame.ScheduleTypesList.Count == 0)
         {
             throw new InvalidOperationException("PredictionGame.ScheduleTypes is not initialized.");
         }
 
         using (StreamWriter sw = new StreamWriter(PathToCsvFile))
         {
-            int AmountOfScheduleTypes = PredictionGame.ScheduleTypes.Count;
+            int AmountOfScheduleTypes = predictionGame.ScheduleTypesList.Count;
             string[] PredictableSchedules = new string[AmountOfScheduleTypes];
             for (int i = 0; i < AmountOfScheduleTypes; i++)
             {
-                PredictableSchedules[i] = $";{PredictionGame.ScheduleTypes[i]}";
+                PredictableSchedules[i] = $";{predictionGame.ScheduleTypesList[i]}";
             }
             sw.WriteLine($"MemberID{string.Join("", PredictableSchedules)}");
 
-            foreach (var member in members)
+            foreach (var member in predictionGame.Members)
             {
-                int AmountOfScores = member.GetScores.Count;
+                int AmountOfScores = member.GetScores().Count;
                 string[] Scores = new string[AmountOfScores];
                 for (int i = 0; i < AmountOfScores; i++)
                 {
-                    Scores[i] = $";{member.GetScores[i].ToString()}";
+                    Scores[i] = $";{member.GetScores()[i].ToString()}";
                 }
                 sw.WriteLine($"{member.MemberID}{string.Join("", Scores)}");
             }

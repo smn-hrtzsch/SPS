@@ -1,5 +1,11 @@
 using System;
 
+public enum EmailTypes
+{
+    TippTemplate,
+    ResultTemplate
+}
+
 public enum SportsTypes
 {
     Football
