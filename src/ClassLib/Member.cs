@@ -2,17 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-public interface IMemberData //for further implementation (e.g. premium membership etc.)
+public interface IMemberData<M,P>  where M: Match where P: Prediction //for further implementation (e.g. premium membership etc.)
 {
     string GetForename();
     string GetEmailAddress();
-    List<Match> GetPredictionsToDo();
-    List<Prediction> GetArchivedPredictions();
+    List<M> GetPredictionsToDo();
+    List<P> GetArchivedPredictions();
     List<Score> GetScores();
 }
 
 ///\brief Represents a member participating in the Sport Prediction System (SPS).
-public class Member<P, M> : IMemberData
+public class Member<M, P> : IMemberData<M,P>
     where P : Prediction
     where M : Match
 {
@@ -46,10 +46,13 @@ public class Member<P, M> : IMemberData
     public string GetEmailAddress() => EmailAddress;
 
     /// \brief Retrieves a copy of the list of matches that need to be predicted.
-    public List<Match> GetPredictionsToDo() => new List<Match>(PredictionsToDo);
+    public List<M> GetPredictionsToDo() => new List<M>(PredictionsToDo);
+
+    /// \brief Retrieves a copy of the list of the predicitons already done, but not yet archived.
+    public List<P> GetPredictionsDone() => new List<P>(PredictionsDone);
 
     /// \brief Retrieves a copy of the list of archived predictions.
-    public List<Prediction> GetArchivedPredictions() => new List<Prediction>(ArchivedPredictions);
+    public List<P> GetArchivedPredictions() => new List<P>(ArchivedPredictions);
 
     /// \brief Retrieves a copy of the scores list.
     public List<Score> GetScores() => new List<Score>(Scores);
