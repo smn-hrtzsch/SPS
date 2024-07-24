@@ -19,98 +19,38 @@ class Program
         string PathToScheduleFile = "../../csv-files/EM_2024.csv";
         string PathToMemberDataFile = "../../csv-files/MemberData.csv";
         string PathToPredictionDataFile = "../../csv-files/PredictionData.csv";
-        string PathToScoreDataFile = "../../csv-files/ScoreData.csv";
 
         // Load schedule, members, predictions, and scores
-        Schedule<Match> em_2024;
-        if (File.Exists(PathToScheduleFile))
+        Schedule<Match>? em_2024 = null;
+        try
         {
-            em_2024 = new Schedule<Match>(
-                PathToScheduleFile,
-                SportsTypes.Football,
-                ScheduleTypes.EM_2024
-            );
-            if (File.Exists(PathToMemberDataFile))
+            if (File.Exists(PathToScheduleFile))
             {
-                prediction_game.Members = CSVReader<Match, Prediction>.GetMemberDataFromCsvFile(
-                    PathToMemberDataFile
+                em_2024 = new Schedule<Match>(
+                    PathToScheduleFile,
+                    SportsTypes.Football,
+                    ScheduleTypes.EM_2024
                 );
+                if (File.Exists(PathToMemberDataFile))
+                {
+                    prediction_game.Members = CSVReader<Match, Prediction>.GetMemberDataFromCsvFile(
+                        PathToMemberDataFile
+                    );
+                }
             }
-            if (File.Exists(PathToPredictionDataFile))
+            else
             {
-                CSVReader<Match, Prediction>.GetFootballPredictionsFromCsvFile(
-                    PathToPredictionDataFile,
-                    prediction_game,
-                    em_2024
-                );
+                throw new InvalidOperationException("There is no file to read the schedule from.");
             }
-            if (File.Exists(PathToScoreDataFile))
+
+            foreach (var member in prediction_game.Members)
             {
-                CSVReader<Match, Prediction>.GetScoresFromCsvFile(
-                    PathToScoreDataFile,
-                    prediction_game
-                );
+                member.AddParticipatingSchedule(em_2024, ScheduleTypes.EM_2024);
+                member.AddPredictionToDo();
             }
+
+            prediction_game.SendDailyEmail();
         }
-        else
-        {
-            throw new InvalidOperationException("There is no file to read the schedule from.");
-        }
-        // //Gerneral Programm variable declaration
-        // EmailService emailService = new EmailService();
-        // PredictionGame prediction_game = new PredictionGame(
-        //     emailService);
-        // string PathToMemberDataFile = "../../csv-files/MemberData.csv";
-
-        // if (File.Exists(PathToMemberDataFile))
-        // {
-        //     prediction_game.Members = CSVReader<Match, Prediction>.GetMemberDataFromCsvFile(
-        //         PathToMemberDataFile
-        //     );
-        // }
-
-        foreach (var member in prediction_game.Members)
-        {
-            member.AddParticipatingSchedule(em_2024, ScheduleTypes.EM_2024);
-            member.AddPredictionToDo();
-        }
-
-        //Email continuous Integration
-
-        prediction_game.SendDailyEmail();
-        //Email continous Integration end
+        catch (FormatException ex) { }
     }
 }
-
-
-// //Email continuous Integration
-
-//         DateTime dateTimeNow = DateTime.Now;
-//         DateTime dateTimeAtNineThirty = new DateTime(
-//             dateTimeNow.Year,
-//             dateTimeNow.Month,
-//             dateTimeNow.Day,
-//             9,
-//             30,
-//             0
-//         );
-//         DateTime dateTimeAtEighteenOClock = new DateTime(
-//             dateTimeNow.Year,
-//             dateTimeNow.Month,
-//             dateTimeNow.Day,
-//             18,
-//             0,
-//             0
-//         );
-
-//         if (dateTimeNow == dateTimeAtNineThirty) //get daily Tipp-email
-//         {
-//             predictionGame.SendDailyEmail();
-//         }
-
-//         if (dateTimeNow.DayOfWeek == DayOfWeek.Sunday && dateTimeNow == dateTimeAtEighteenOClock) //get Results-email once a week
-//         {
-//             predictionGame.SendDailyEmail();
-//         }
-
-//         //Email continous Integration end
