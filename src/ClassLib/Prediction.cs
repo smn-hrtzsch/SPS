@@ -38,7 +38,12 @@ public abstract class Prediction
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(PredictedMatch.GetHashCode(), PredictionDate, MemberID, PredictedMatch.ToString());
+        return HashCode.Combine(
+            PredictedMatch.GetHashCode(),
+            PredictionDate,
+            MemberID,
+            PredictedMatch.ToString()
+        );
     }
 
     public override string ToString()

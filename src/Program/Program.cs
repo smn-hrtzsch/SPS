@@ -24,18 +24,31 @@ public class Program
         Schedule<Match> em_2024;
         if (File.Exists(PathToScheduleFile))
         {
-            em_2024 = new Schedule<Match>(PathToScheduleFile, SportsTypes.Football, ScheduleTypes.EM_2024);
+            em_2024 = new Schedule<Match>(
+                PathToScheduleFile,
+                SportsTypes.Football,
+                ScheduleTypes.EM_2024
+            );
             if (File.Exists(PathToMemberDataFile))
             {
-                prediction_game.Members = CSVReader<Match, Prediction>.GetMemberDataFromCsvFile(PathToMemberDataFile);
+                prediction_game.Members = CSVReader<Match, Prediction>.GetMemberDataFromCsvFile(
+                    PathToMemberDataFile
+                );
             }
             if (File.Exists(PathToPredictionDataFile))
             {
-                CSVReader<Match, Prediction>.GetFootballPredictionsFromCsvFile(PathToPredictionDataFile, prediction_game, em_2024);
+                CSVReader<Match, Prediction>.GetFootballPredictionsFromCsvFile(
+                    PathToPredictionDataFile,
+                    prediction_game,
+                    em_2024
+                );
             }
             if (File.Exists(PathToScoreDataFile))
             {
-                CSVReader<Match, Prediction>.GetScoresFromCsvFile(PathToScoreDataFile, prediction_game);
+                CSVReader<Match, Prediction>.GetScoresFromCsvFile(
+                    PathToScoreDataFile,
+                    prediction_game
+                );
             }
         }
         else
@@ -69,7 +82,12 @@ public class Program
                     AddPrediction(prediction_game, em_2024);
                     break;
                 case "4":
-                    SaveAndExit(prediction_game, PathToMemberDataFile, PathToPredictionDataFile, PathToScoreDataFile);
+                    SaveAndExit(
+                        prediction_game,
+                        PathToMemberDataFile,
+                        PathToPredictionDataFile,
+                        PathToScoreDataFile
+                    );
                     return;
                 default:
                     Console.WriteLine("Invalid option. Please try again.");
@@ -157,10 +175,18 @@ public class Program
         Console.ReadKey();
     }
 
-    private static void SaveAndExit(PredictionGame prediction_game, string memberFilePath, string predictionFilePath, string scoreFilePath)
+    private static void SaveAndExit(
+        PredictionGame prediction_game,
+        string memberFilePath,
+        string predictionFilePath,
+        string scoreFilePath
+    )
     {
         CSVWriter<Match, Prediction>.WriteMemberData(memberFilePath, prediction_game);
-        CSVWriter<Match, Prediction>.TrackFootballPredictionData(predictionFilePath, prediction_game);
+        CSVWriter<Match, Prediction>.TrackFootballPredictionData(
+            predictionFilePath,
+            prediction_game
+        );
         CSVWriter<Match, Prediction>.TrackScoreData(scoreFilePath, prediction_game);
 
         Console.WriteLine("Data saved successfully. Exiting...");
@@ -170,109 +196,109 @@ public class Program
 }
 
 
-        // // Member<Match, Prediction> simon = new Member<Match, Prediction>(
-        // //     "Simon",
-        // //     "Hörtzsch",
-        // //     "Simon.Hoertzsch@student.tu-freiberg.de",
-        // //     "MeinCoolesPasswort"
-        // // );
-        // // Member<Match, Prediction> artim = new Member<Match, Prediction>(
-        // //     "Artim",
-        // //     "Meyer",
-        // //     "Artim.Meyer@student.tu-freiberg.de",
-        // //     "MeinPasswortIstCooler"
-        // // );
-        // // Member<Match, Prediction> zug = new Member<Match, Prediction>(
-        // //     "Sebastian",
-        // //     "Zug",
-        // //     "Sebastian.Zug@informatik.tu-freiberg.de",
-        // //     "Ich bin Prof"
-        // // );
+// // Member<Match, Prediction> simon = new Member<Match, Prediction>(
+// //     "Simon",
+// //     "Hörtzsch",
+// //     "Simon.Hoertzsch@student.tu-freiberg.de",
+// //     "MeinCoolesPasswort"
+// // );
+// // Member<Match, Prediction> artim = new Member<Match, Prediction>(
+// //     "Artim",
+// //     "Meyer",
+// //     "Artim.Meyer@student.tu-freiberg.de",
+// //     "MeinPasswortIstCooler"
+// // );
+// // Member<Match, Prediction> zug = new Member<Match, Prediction>(
+// //     "Sebastian",
+// //     "Zug",
+// //     "Sebastian.Zug@informatik.tu-freiberg.de",
+// //     "Ich bin Prof"
+// // );
 
-        // foreach (var member in prediction_game.Members)
-        // {
-        //     Console.WriteLine($"{member}");
-        //     Console.WriteLine($"Liste ArchivedPredicitons for {member.GetForename()}:");
-        //     foreach (var prediction in member.GetArchivedPredictions())
-        //     {
-        //         Console.WriteLine($"\t{prediction}");
-        //     }
-        //     Console.WriteLine($"Liste PredictionsDone for {member.GetForename()}:");
-        //     foreach (var prediction in member.GetPredictionsDone())
-        //     {
-        //         Console.WriteLine($"\t{prediction}");
-        //     }
-        //     Console.WriteLine($"Liste Scores for {member.GetForename()}:");
-        //     foreach (var score in member.GetScores())
-        //     {
-        //         Console.WriteLine($"\t{score}");
-        //     }
-        // }
+// foreach (var member in prediction_game.Members)
+// {
+//     Console.WriteLine($"{member}");
+//     Console.WriteLine($"Liste ArchivedPredicitons for {member.GetForename()}:");
+//     foreach (var prediction in member.GetArchivedPredictions())
+//     {
+//         Console.WriteLine($"\t{prediction}");
+//     }
+//     Console.WriteLine($"Liste PredictionsDone for {member.GetForename()}:");
+//     foreach (var prediction in member.GetPredictionsDone())
+//     {
+//         Console.WriteLine($"\t{prediction}");
+//     }
+//     Console.WriteLine($"Liste Scores for {member.GetForename()}:");
+//     foreach (var score in member.GetScores())
+//     {
+//         Console.WriteLine($"\t{score}");
+//     }
+// }
 
-        // // prediction_game.Register(simon);
-        // // prediction_game.Register(artim);
-        // // prediction_game.Register(zug);
+// // prediction_game.Register(simon);
+// // prediction_game.Register(artim);
+// // prediction_game.Register(zug);
 
-        // foreach (var member in prediction_game.Members)
-        // {
-        //     member.AddParticipatingSchedule(em_2024, ScheduleTypes.EM_2024);
-        //     member.AddPredictionToDo();
-        // }
+// foreach (var member in prediction_game.Members)
+// {
+//     member.AddParticipatingSchedule(em_2024, ScheduleTypes.EM_2024);
+//     member.AddPredictionToDo();
+// }
 
-        // // simon.AddParticipatingSchedule(em_2024, ScheduleTypes.EM_2024);
-        // // artim.AddParticipatingSchedule(em_2024, ScheduleTypes.EM_2024);
+// // simon.AddParticipatingSchedule(em_2024, ScheduleTypes.EM_2024);
+// // artim.AddParticipatingSchedule(em_2024, ScheduleTypes.EM_2024);
 
-        // // simon.AddPredictionToDo();
-        // // artim.AddPredictionToDo();
+// // simon.AddPredictionToDo();
+// // artim.AddPredictionToDo();
 
-        // prediction_game
-        //     .Members[0]
-        //     .ConvertPredictionsDone(
-        //         prediction_game.Members[0].GetPredictionsToDo()[0].MatchID,
-        //         3,
-        //         2
-        //     );
-        // prediction_game
-        //     .Members[1]
-        //     .ConvertPredictionsDone(
-        //         prediction_game.Members[1].GetPredictionsToDo()[0].MatchID,
-        //         1,
-        //         2
-        //     );
-        // prediction_game
-        //     .Members[2]
-        //     .ConvertPredictionsDone(
-        //         prediction_game.Members[2].GetPredictionsToDo()[0].MatchID,
-        //         1,
-        //         1
-        //     );
+// prediction_game
+//     .Members[0]
+//     .ConvertPredictionsDone(
+//         prediction_game.Members[0].GetPredictionsToDo()[0].MatchID,
+//         3,
+//         2
+//     );
+// prediction_game
+//     .Members[1]
+//     .ConvertPredictionsDone(
+//         prediction_game.Members[1].GetPredictionsToDo()[0].MatchID,
+//         1,
+//         2
+//     );
+// prediction_game
+//     .Members[2]
+//     .ConvertPredictionsDone(
+//         prediction_game.Members[2].GetPredictionsToDo()[0].MatchID,
+//         1,
+//         1
+//     );
 
-        // // simon.CalculateScores();
-        // // artim.CalculateScores();
+// // simon.CalculateScores();
+// // artim.CalculateScores();
 
-        // prediction_game
-        //     .Members[0]
-        //     .ConvertPredictionsDone(
-        //         prediction_game.Members[0].GetPredictionsToDo()[0].MatchID,
-        //         2,
-        //         3
-        //     );
-        // prediction_game
-        //     .Members[1]
-        //     .ConvertPredictionsDone(
-        //         prediction_game.Members[1].GetPredictionsToDo()[0].MatchID,
-        //         2,
-        //         1
-        //     );
-        // prediction_game
-        //     .Members[2]
-        //     .ConvertPredictionsDone(
-        //         prediction_game.Members[2].GetPredictionsToDo()[0].MatchID,
-        //         1,
-        //         1
-        //     );
+// prediction_game
+//     .Members[0]
+//     .ConvertPredictionsDone(
+//         prediction_game.Members[0].GetPredictionsToDo()[0].MatchID,
+//         2,
+//         3
+//     );
+// prediction_game
+//     .Members[1]
+//     .ConvertPredictionsDone(
+//         prediction_game.Members[1].GetPredictionsToDo()[0].MatchID,
+//         2,
+//         1
+//     );
+// prediction_game
+//     .Members[2]
+//     .ConvertPredictionsDone(
+//         prediction_game.Members[2].GetPredictionsToDo()[0].MatchID,
+//         1,
+//         1
+//     );
 
-        // foreach (var member in prediction_game.Members)
-        // {
-        //     member.CalculateScores();
-        // }
+// foreach (var member in prediction_game.Members)
+// {
+//     member.CalculateScores();
+// }
