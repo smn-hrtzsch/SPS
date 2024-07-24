@@ -58,150 +58,154 @@ public class Program
         }
 
         // Main menu loop
-        if(!login)
+        if (!login)
         {
-        while (true)
-        {
-            // Anmeldescreen anzeigen
-            Console.WriteLine("================================");
-            Console.WriteLine("          Login Screen          ");
-            Console.WriteLine("================================");
-            Console.WriteLine("");
-            Console.WriteLine("[1] Login");
-            Console.WriteLine("[2] Register");
-            Console.WriteLine("");
-            Console.Write("Please choose [1] or [2]: ");
-            string input = Console.ReadLine();
-            
-            if (input == "1")
+            while (true)
             {
-                while (true)
+                // Anmeldescreen anzeigen
+                Console.WriteLine("================================");
+                Console.WriteLine("          Login Screen          ");
+                Console.WriteLine("================================");
+                Console.WriteLine("");
+                Console.WriteLine("[1] Login");
+                Console.WriteLine("[2] Register");
+                Console.WriteLine("");
+                Console.Write("Please choose [1] or [2]: ");
+                string input = Console.ReadLine();
+
+                if (input == "1")
                 {
-                    // Benutzername abfragen
-                    Console.Write("Enter your [Email]: ");
-                    string email = Console.ReadLine();
+                    while (true)
+                    {
+                        // Benutzername abfragen
+                        Console.Write("Enter your [Email]: ");
+                        string email = Console.ReadLine();
+                        bool emailFound = false;
+
+                        foreach (var member in prediction_game.Members)
+                        {
+                            if (member.GetEmailAddress() == email)
+                            {
+                                emailFound = true;
+                                Console.WriteLine("");
+                                Console.Write("Now enter your password: ");
+                                string password = Console.ReadLine();
+
+                                if (member.GetPassword() == password)
+                                {
+                                    login = true;
+                                    Console.WriteLine("Login successful!");
+                                    // Weiter mit dem Programm nach erfolgreichem Login
+                                    return;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Incorrect password. Please try again.");
+                                    Thread.Sleep(1000);
+                                }
+                            }
+                        }
+
+                        if (!emailFound)
+                        {
+                            Console.WriteLine("Email not found. Please try again.");
+                            Thread.Sleep(1000);
+                        }
+                    }
+                }
+                else if (input == "2")
+                {
                     bool emailFound = false;
+                    Console.Write("Enter your new [Email]: ");
+                    string newEmail = Console.ReadLine();
 
                     foreach (var member in prediction_game.Members)
                     {
-                        if (member.GetEmailAddress() == email)
+                        if (member.GetEmailAddress() == newEmail)
                         {
                             emailFound = true;
                             Console.WriteLine("");
-                            Console.Write("Now enter your password: ");
-                            string password = Console.ReadLine();
-
-                            if (member.GetPassword() == password)
-                            {
-                                login = true;
-                                Console.WriteLine("Login successful!");
-                                // Weiter mit dem Programm nach erfolgreichem Login
-                                return;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Incorrect password. Please try again.");
-                                Thread.Sleep(1000);
-                            }
+                            Console.WriteLine("Entered Email is already existing, try to login.");
+                            Console.WriteLine("Press any key to return to the login screen...");
+                            Console.ReadKey();
                         }
                     }
 
                     if (!emailFound)
                     {
-                        Console.WriteLine("Email not found. Please try again.");
+                        Console.Write("Enter your new [Forename]: ");
+                        string newForename = Console.ReadLine();
+
+                        Console.Write("Enter your new [Surname]: ");
+                        string newSurname = Console.ReadLine();
+                        Console.Write("Enter your new [Password]: ");
+                        string newPassword = Console.ReadLine();
+
+                        prediction_game.Members.Add(
+                            new Member<Match, Prediction>(
+                                newForename,
+                                newSurname,
+                                newEmail,
+                                newPassword
+                            )
+                        );
+                        Console.WriteLine("Registration successful!");
                         Thread.Sleep(1000);
                     }
                 }
-            }
-            else if (input == "2")
-            {
-                bool emailFound = false;
-                Console.Write("Enter your new [Email]: ");
-                string newEmail = Console.ReadLine();
-
-                foreach(var member in prediction_game.Members)
+                else
                 {
-                    if(member.GetEmailAddress() == newEmail)
-                    {
-                        emailFound = true;
-                        Console.WriteLine("");
-                        Console.WriteLine("Entered Email is already existing, try to login.");
-                        Console.WriteLine("Press any key to return to the login screen...");
-                        Console.ReadKey();
-                        
-                        
-                    }
-                }
-
-                if(!emailFound)
-                {
-                    Console.Write("Enter your new [Forename]: ");
-                    string newForename = Console.ReadLine();
-
-                    Console.Write("Enter your new [Surname]: ");
-                    string newSurname = Console.ReadLine();
-                    Console.Write("Enter your new [Password]: ");
-                    string newPassword = Console.ReadLine();
-
-                    prediction_game.Members.Add(new Member<Match, Prediction>(newForename, newSurname, newEmail, newPassword));
-                    Console.WriteLine("Registration successful!");
+                    Console.WriteLine("");
+                    Console.WriteLine("That did not work. Please try again.");
+                    Console.WriteLine("");
                     Thread.Sleep(1000);
+                }
 
+                Console.Clear();
+            }
+        }
+        else
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("================================");
+                Console.WriteLine("              SPS              ");
+                Console.WriteLine("================================");
+                Console.WriteLine("[1] Display Members");
+                Console.WriteLine("[2] Display Scores");
+                Console.WriteLine("[3] Add Prediction");
+                Console.WriteLine("[4] Save and Exit");
+                Console.Write("Select an option (1-4): ");
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        DisplayMembers(prediction_game);
+                        break;
+                    case "2":
+                        DisplayScores(prediction_game);
+                        break;
+                    case "3":
+                        AddPrediction(prediction_game, em_2024);
+                        break;
+                    case "4":
+                        SaveAndExit(
+                            prediction_game,
+                            PathToMemberDataFile,
+                            PathToPredictionDataFile,
+                            PathToScoreDataFile
+                        );
+                        return;
+                    default:
+                        Console.WriteLine("Invalid option. Please try again.");
+                        Console.WriteLine("Press any key to return to the main menu...");
+                        Console.ReadKey();
+                        break;
                 }
             }
-            else
-            {
-                Console.WriteLine("");
-                Console.WriteLine("That did not work. Please try again.");
-                Console.WriteLine("");
-                Thread.Sleep(1000);
-            }
-
-            Console.Clear();
         }
-        }
-        else{
-
-        while (true)
-        {
-            Console.Clear();
-            Console.WriteLine("================================");
-            Console.WriteLine("              SPS              ");
-            Console.WriteLine("================================");
-            Console.WriteLine("[1] Display Members");
-            Console.WriteLine("[2] Display Scores");
-            Console.WriteLine("[3] Add Prediction");
-            Console.WriteLine("[4] Save and Exit");
-            Console.Write("Select an option (1-4): ");
-            string choice = Console.ReadLine();
-
-            switch (choice)
-            {
-                case "1":
-                    DisplayMembers(prediction_game);
-                    break;
-                case "2":
-                    DisplayScores(prediction_game);
-                    break;
-                case "3":
-                    AddPrediction(prediction_game, em_2024);
-                    break;
-                case "4":
-                    SaveAndExit(
-                        prediction_game,
-                        PathToMemberDataFile,
-                        PathToPredictionDataFile,
-                        PathToScoreDataFile
-                    );
-                    return;
-                default:
-                    Console.WriteLine("Invalid option. Please try again.");
-                    Console.WriteLine("Press any key to return to the main menu...");
-                    Console.ReadKey();
-                    break;
-            }
-        }
-    }
     }
 
     private static void DisplayMembers(PredictionGame prediction_game)

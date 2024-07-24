@@ -1,6 +1,6 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.CompilerServices;
 
 class Program
@@ -14,12 +14,12 @@ class Program
         );
         string PathToMemberDataFile = "../../csv-files/MemberData.csv";
 
-       if (File.Exists(PathToMemberDataFile))
-            {
-                prediction_game.Members = CSVReader<Match, Prediction>.GetMemberDataFromCsvFile(
-                    PathToMemberDataFile
-                );
-            }
+        if (File.Exists(PathToMemberDataFile))
+        {
+            prediction_game.Members = CSVReader<Match, Prediction>.GetMemberDataFromCsvFile(
+                PathToMemberDataFile
+            );
+        }
 
         //Email continuous Integration
 
