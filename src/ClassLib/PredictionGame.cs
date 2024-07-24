@@ -28,10 +28,8 @@ public class PredictionGame
         ScheduleTypesList = GetAllScheduleTypes();
     }
 
-    private List<ScheduleTypes> GetAllScheduleTypes()
-    {
-        return Enum.GetValues(typeof(ScheduleTypes)).Cast<ScheduleTypes>().ToList();
-    }
+    private List<ScheduleTypes> GetAllScheduleTypes() =>
+        Enum.GetValues(typeof(ScheduleTypes)).Cast<ScheduleTypes>().ToList();
 
     /// \brief Get a unique Hashcode -> PredictionGameIDCounter necassary for generation
     public override int GetHashCode()

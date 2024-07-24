@@ -89,7 +89,7 @@ public class CSVWriter<M, P>
                 member_ids[i] = $";{prediction_game.Members[i].MemberID}";
             }
             sw.WriteLine(
-                $"Predicted Match{string.Join("", member_ids)};CalculateScore() already DONE;MatchData;PredictionDate"
+                $"Predicted Match{string.Join("", member_ids)};CalculateScore() already DONE;MatchData;PredictionDate;PredictionID"
             );
 
             var predicted_matches = new HashSet<FootballMatch>();
@@ -104,9 +104,9 @@ public class CSVWriter<M, P>
                 }
                 foreach (var prediction in member.GetPredictionsDone())
                 {
-                    if (prediction.PredictedMatch is FootballMatch footballMatch)
+                    if (prediction.PredictedMatch is FootballMatch football_match)
                     {
-                        predicted_matches.Add(footballMatch);
+                        predicted_matches.Add(football_match);
                     }
                 }
             }
@@ -115,50 +115,54 @@ public class CSVWriter<M, P>
             {
                 var row = new List<string> { $"{match.HomeTeam} - {match.AwayTeam}" };
                 bool CalculateScoreAlreadyDone = false;
-                DateTime? prediction_date = null; // Nullable DateTime to ensure it's always assigned
+                DateTime? prediction_date = null;
+                uint? prediction_id = null;
 
                 foreach (var member in prediction_game.Members)
                 {
+                    FootballPrediction footballPrediction = null;
                     var prediction = member
                         .GetArchivedPredictions()
                         .FirstOrDefault(p => p.PredictedMatch == match);
-                    if (prediction != null && prediction is FootballPrediction footballPrediction)
+                    if (prediction is FootballPrediction archivedFootballPrediction)
                     {
                         CalculateScoreAlreadyDone = true;
-                        prediction_date = prediction.PredictionDate;
-                        row.Add(
-                            $"{footballPrediction.PredictionHome}:{footballPrediction.PredictionAway}"
-                        );
+                        prediction_date = archivedFootballPrediction.PredictionDate;
+                        prediction_id = archivedFootballPrediction.PredictionID;
+                        footballPrediction = archivedFootballPrediction;
                     }
                     else
                     {
                         prediction = member
                             .GetPredictionsDone()
                             .FirstOrDefault(p => p.PredictedMatch == match);
-                        if (
-                            prediction != null
-                            && prediction is FootballPrediction doneFootballPrediction
-                        )
+                        if (prediction is FootballPrediction doneFootballPrediction)
                         {
-                            prediction_date = prediction.PredictionDate;
-                            row.Add(
-                                $"{doneFootballPrediction.PredictionHome}:{doneFootballPrediction.PredictionAway}"
-                            );
+                            prediction_date = doneFootballPrediction.PredictionDate;
+                            prediction_id = doneFootballPrediction.PredictionID;
+                            footballPrediction = doneFootballPrediction;
                         }
-                        else
-                        {
-                            row.Add("");
-                        }
+                    }
+
+                    if (footballPrediction != null)
+                    {
+                        row.Add(
+                            $"{footballPrediction.PredictionHome}:{footballPrediction.PredictionAway}"
+                        );
+                    }
+                    else
+                    {
+                        row.Add("");
                     }
                 }
 
                 if (CalculateScoreAlreadyDone)
                 {
-                    row.Add($"1;{match};{prediction_date?.ToString() ?? "N/A"}"); // Use the prediction_date if available
+                    row.Add($"1;{match};{prediction_date?.ToString() ?? "N/A"};{prediction_id}");
                 }
                 else
                 {
-                    row.Add($"0;{match};{prediction_date?.ToString() ?? "N/A"}"); // Use the prediction_date if available
+                    row.Add($"0;{match};{prediction_date?.ToString() ?? "N/A"};{prediction_id}");
                 }
                 sw.WriteLine(string.Join(";", row));
             }

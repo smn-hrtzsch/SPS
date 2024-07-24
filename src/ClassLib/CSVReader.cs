@@ -57,7 +57,7 @@ public class CSVReader<M, P>
         return schedule;
     }
 
-    public List<Member<M, P>> GetMemberDataFromCsvFile(string PathToCsvFile)
+    public static List<Member<M, P>> GetMemberDataFromCsvFile(string PathToCsvFile)
     {
         List<Member<M, P>> members = new List<Member<M, P>>();
 
@@ -81,91 +81,159 @@ public class CSVReader<M, P>
         return members;
     }
 
-    public void GetScoresFromCsvFile(string PathToCsvFile, PredictionGame prediction_game)
+    public static void GetScoresFromCsvFile(string PathToCsvFile, PredictionGame prediction_game)
     {
-        List<Score> scores = new List<Score>();
-
         var all_lines = File.ReadLines(PathToCsvFile).ToList();
 
-        int AmountOfScheduleTypes = prediction_game.ScheduleTypesList.Count;
+        if (all_lines.Count <= 1)
+        {
+            // Wenn keine Datenzeilen vorhanden sind, gibt es keine Scores zu lesen.
+            return;
+        }
+
+        string header = all_lines[0];
+        string[] headerColumns = header.Split(';');
 
         for (int line_number = 1; line_number < all_lines.Count; line_number++)
         {
             string? needed_line = all_lines[line_number];
-            string[] score_data = needed_line.Split(";");
-            for (int score_number = 1; score_number < AmountOfScheduleTypes; score_number++)
+            string[] score_data = needed_line.Split(';');
+
+            if (score_data.Length < 2)
             {
-                ScheduleTypes schedule_type = (ScheduleTypes)
-                    Enum.Parse(typeof(ScheduleTypes), score_data[score_number]);
-                uint amount_of_points = uint.Parse(score_data[1]);
-                scores.Add(new Score(schedule_type, amount_of_points));
+                // Wenn nicht genügend Datenzeilen vorhanden sind, überspringen.
+                continue;
             }
 
-            prediction_game.Members[line_number - 1].SetScores(scores);
+            uint memberId;
+            if (!uint.TryParse(score_data[0], out memberId))
+            {
+                // Ungültige Member ID, überspringen
+                continue;
+            }
+
+            var member = prediction_game.Members.FirstOrDefault(m => m.MemberID == memberId);
+            if (member == null)
+            {
+                // Mitglied nicht gefunden, überspringen
+                continue;
+            }
+
+            List<Score> scores = new List<Score>();
+
+            for (int score_number = 1; score_number < score_data.Length; score_number++)
+            {
+                uint amount_of_points;
+                if (uint.TryParse(score_data[score_number], out amount_of_points))
+                {
+                    // Die Spalte entspricht dem indexbasierten ScheduleType in ScheduleTypesList
+                    if (score_number - 1 < prediction_game.ScheduleTypesList.Count)
+                    {
+                        ScheduleTypes schedule_type = prediction_game.ScheduleTypesList[
+                            score_number - 1
+                        ];
+                        scores.Add(new Score(schedule_type, amount_of_points));
+                    }
+                }
+            }
+
+            member.SetScores(scores);
         }
     }
 
-    public void GetFootballPredictionsFromCsvFile(
+    public static void GetFootballPredictionsFromCsvFile(
         string PathToCsvFile,
         PredictionGame prediction_game,
-        Schedule<FootballMatch> schedule
+        Schedule<M> schedule
     )
     {
-        List<Prediction> done_predictions = new List<Prediction>();
-        List<Prediction> archived_predictions = new List<Prediction>();
-
         var all_lines = File.ReadLines(PathToCsvFile).ToList();
 
-        int AmountOfScheduleTypes = prediction_game.ScheduleTypesList.Count;
+        // Erster Schritt: Kopfzeile einlesen, um die Member IDs zu extrahieren
+        string header = all_lines[0];
+        string[] headerColumns = header.Split(';');
+        int member_count = prediction_game.Members.Count; // 5 weitere Spalten: Predicted Match, CalculateScore, MatchData, PredictionDate
+
+        // Dictionary für jeden Member, um ihre jeweiligen Predictions zu speichern
+        Dictionary<uint, List<Prediction>> done_predictions_map =
+            new Dictionary<uint, List<Prediction>>();
+        Dictionary<uint, List<Prediction>> archived_predictions_map =
+            new Dictionary<uint, List<Prediction>>();
+
+        foreach (var member in prediction_game.Members)
+        {
+            done_predictions_map[member.MemberID] = new List<Prediction>();
+            archived_predictions_map[member.MemberID] = new List<Prediction>();
+        }
 
         for (int line_number = 1; line_number < all_lines.Count; line_number++)
         {
             string needed_line = all_lines[line_number];
             string[] prediction_data = needed_line.Split(';');
 
-            FootballMatch? football_match = schedule.Matches.FirstOrDefault(m =>
-                m.ToString() == prediction_data[prediction_game.Members.Count + 2]
-            );
+            // Finde das entsprechende Match in der Schedule
+            FootballMatch? football_match =
+                schedule.Matches.FirstOrDefault(m =>
+                    m.ToString() == prediction_data[member_count + 2]
+                ) as FootballMatch;
 
-            foreach (var member in prediction_game.Members)
+            if (football_match == null)
             {
-                int member_count = prediction_game.Members.Count;
-                string[] member_predictions = new string[member_count];
-
-                for (int i = 1; i < member_count; i++)
-                {
-                    member_predictions[i] = prediction_data[i];
-                    string[] prediction_bytes = member_predictions[i].Split(':');
-                    byte prediction_home = byte.Parse(prediction_bytes[0]);
-                    byte prediction_away = byte.Parse(prediction_bytes[1]);
-                    DateTime prediction_date = DateTime.ParseExact(
-                        prediction_data[prediction_game.Members.Count + 3],
-                        "dd/MM/yyyy HH:mm",
-                        CultureInfo.InvariantCulture
-                    );
-                    FootballPrediction football_prediction = new FootballPrediction(
-                        member.MemberID,
-                        football_match,
-                        DateTime.Now,
-                        prediction_home,
-                        prediction_away
-                    );
-                    byte CalculateScoreAlreadyDone = byte.Parse(
-                        prediction_data[prediction_game.Members.Count + 1]
-                    );
-
-                    if (CalculateScoreAlreadyDone == 1)
-                    {
-                        archived_predictions.Add(football_prediction);
-                    }
-                    else
-                    {
-                        done_predictions.Add(football_prediction);
-                    }
-                }
-                member.SetArchivedPredictions(archived_predictions);
-                member.SetPredictionsDone(done_predictions);
+                continue; // Wenn das Match nicht gefunden wurde, überspringe die Zeile
             }
+
+            for (int i = 1; i <= member_count; i++) // Start from 1 to skip "Predicted Match" column
+            {
+                string memberIdStr = headerColumns[i];
+                if (!uint.TryParse(memberIdStr, out uint memberId))
+                {
+                    continue; // Ungültige Member ID in der Kopfzeile
+                }
+
+                var member = prediction_game.Members.FirstOrDefault(m => m.MemberID == memberId);
+                if (member == null)
+                {
+                    continue; // Member nicht gefunden
+                }
+
+                string[] prediction_bytes = prediction_data[i].Split(':');
+                if (prediction_bytes.Length < 2)
+                {
+                    continue; // Ungültiges Vorhersagedatenformat
+                }
+
+                DateTime prediction_date = DateTime.Parse(prediction_data[member_count + 3]);
+                uint prediction_id = uint.Parse(prediction_data[member_count + 4]);
+                byte prediction_home = byte.Parse(prediction_bytes[0]);
+                byte prediction_away = byte.Parse(prediction_bytes[1]);
+
+                FootballPrediction football_prediction = new FootballPrediction(
+                    prediction_id,
+                    member.MemberID,
+                    football_match,
+                    prediction_date,
+                    prediction_home,
+                    prediction_away
+                );
+
+                byte CalculateScoreAlreadyDone = byte.Parse(prediction_data[member_count + 1]);
+
+                if (CalculateScoreAlreadyDone == 1)
+                {
+                    archived_predictions_map[memberId].Add(football_prediction);
+                }
+                else
+                {
+                    done_predictions_map[memberId].Add(football_prediction);
+                }
+            }
+        }
+
+        // Setze die gesammelten Predictions für jedes Mitglied
+        foreach (var member in prediction_game.Members)
+        {
+            member.SetArchivedPredictions(archived_predictions_map[member.MemberID]);
+            member.SetPredictionsDone(done_predictions_map[member.MemberID]);
         }
     }
 }

@@ -1,14 +1,17 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
 public interface IMemberData<M, P>
     where M : Match
-    where P : Prediction //for further implementation (e.g. premium membership etc.)
+    where P : Prediction
 {
-    public string GetForename();
+    public string? GetForename();
+    public string? GetSurname();
     public string GetEmailAddress();
+    public string GetPassword();
     public List<M> GetPredictionsToDo();
     public List<P> GetPredictionsDone();
     public void SetPredictionsDone(List<P> done_predictions);
@@ -47,10 +50,14 @@ public class Member<M, P> : IMemberData<M, P>
     protected List<Score> Scores;
 
     /// \brief Retrieves the forename of the member.
-    public string GetForename() => Forename;
+    public string? GetForename() => Forename;
+
+    public string? GetSurname() => Surname;
 
     /// \brief Retrieves the email address of the member.
     public string GetEmailAddress() => EmailAddress;
+
+    public string GetPassword() => Password;
 
     /// \brief Retrieves a copy of the list of matches that need to be predicted.
     public List<M> GetPredictionsToDo() => new List<M>(PredictionsToDo);
