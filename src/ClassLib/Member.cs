@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
@@ -7,7 +8,8 @@ public interface IMemberData<M, P>
     where M : Match
     where P : Prediction
 {
-    public string GetForename();
+    public string? GetForename();
+    public string? GetSurname();
     public string GetEmailAddress();
     public List<M> GetPredictionsToDo();
     public List<P> GetPredictionsDone();
@@ -47,7 +49,9 @@ public class Member<M, P> : IMemberData<M, P>
     protected List<Score> Scores;
 
     /// \brief Retrieves the forename of the member.
-    public string GetForename() => Forename;
+    public string? GetForename() => Forename;
+
+    public string? GetSurname() => Surname;
 
     /// \brief Retrieves the email address of the member.
     public string GetEmailAddress() => EmailAddress;
