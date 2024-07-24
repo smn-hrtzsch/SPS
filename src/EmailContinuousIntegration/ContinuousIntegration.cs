@@ -24,37 +24,33 @@ class Program
         Schedule<Match>? em_2024 = null;
         try
         {
-        if (File.Exists(PathToScheduleFile))
-        {
-            em_2024 = new Schedule<Match>(
-                PathToScheduleFile,
-                SportsTypes.Football,
-                ScheduleTypes.EM_2024
-            );
-            if (File.Exists(PathToMemberDataFile))
+            if (File.Exists(PathToScheduleFile))
             {
-                prediction_game.Members = CSVReader<Match, Prediction>.GetMemberDataFromCsvFile(
-                    PathToMemberDataFile
+                em_2024 = new Schedule<Match>(
+                    PathToScheduleFile,
+                    SportsTypes.Football,
+                    ScheduleTypes.EM_2024
                 );
+                if (File.Exists(PathToMemberDataFile))
+                {
+                    prediction_game.Members = CSVReader<Match, Prediction>.GetMemberDataFromCsvFile(
+                        PathToMemberDataFile
+                    );
+                }
             }
-        }
-        else
-        {
-            throw new InvalidOperationException("There is no file to read the schedule from.");
-        }
-
-        foreach (var member in prediction_game.Members)
-        {
-            member.AddParticipatingSchedule(em_2024, ScheduleTypes.EM_2024);
-            member.AddPredictionToDo();
-        }
-
-        prediction_game.SendDailyEmail();
-                        }
-        catch (FormatException ex)
+            else
             {
-            
+                throw new InvalidOperationException("There is no file to read the schedule from.");
             }
+
+            foreach (var member in prediction_game.Members)
+            {
+                member.AddParticipatingSchedule(em_2024, ScheduleTypes.EM_2024);
+                member.AddPredictionToDo();
+            }
+
+            prediction_game.SendDailyEmail();
+        }
+        catch (FormatException ex) { }
     }
 }
-
