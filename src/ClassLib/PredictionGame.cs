@@ -82,7 +82,7 @@ public class PredictionGame
             @"<html>
             <body style='font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;'>
                 <h1 style='color: #444;'>Hallo geehrter SPSMember,</h1>
-                <p style='font-size: 16px; color: #666;'>Bereit für ein aufregendes Spielabenteuer? Hier sind deine exklusiven Tipps für heute:</p>
+                <p style='font-size: 16px; color: #666;'>Bereit für ein aufregendes Spielabenteuer? Hier sind die Spiele die heute getippt werden können:</p>
                 <ul style='list-style-type: none; padding: 0;'>
                     {{matches}}
                 </ul>
