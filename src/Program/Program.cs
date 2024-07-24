@@ -215,13 +215,13 @@ public class Program
         Console.WriteLine("Members:\n");
 
         // Linie über Spaltenüberschriften
-        Console.WriteLine(new string('-', 54));
+        Console.WriteLine(new string('-', 55));
 
         // Spaltenüberschriften
         Console.WriteLine($"| {"MemberID", -15} | {"Forename", -15} | {"Surname", -15} |");
 
         // Trennlinie unter den Spaltenüberschriften
-        Console.WriteLine(new string('-', 54));
+        Console.WriteLine(new string('-', 55));
 
         // Informationen der Mitglieder
         foreach (var member in prediction_game.Members)
@@ -231,7 +231,7 @@ public class Program
             );
         }
 
-        Console.WriteLine(new string('-', 54));
+        Console.WriteLine(new string('-', 55));
         Console.WriteLine("Press any key to return to the main menu...");
         Console.ReadKey();
     }
@@ -242,43 +242,43 @@ public class Program
         Console.WriteLine("Scores:\n");
 
         // Bestimme die maximale Breite der ersten Spalte basierend auf MemberID und Forename
-        int maxMemberInfoLength = prediction_game
-            .Members.Select(m => $"{m.MemberID} ({m.GetForename()})")
-            .Max(s => s.Length);
+        int maxMemberInfoLength =
+            prediction_game
+                .Members.Select(m => $"{m.MemberID} ({m.GetForename()})")
+                .Max(s => s.Length) + 2; // +2 to add padding on both sides
 
         // Dynamische Spaltenüberschriften basierend auf ScheduleTypes
         string header = $"| {"MemberID (Forename)".PadRight(maxMemberInfoLength)} ";
         foreach (var scoreType in prediction_game.ScheduleTypesList)
         {
-            header += $"| {scoreType.ToString().PadLeft(10)} ";
+            header +=
+                $"| {scoreType.ToString().PadLeft((10 + scoreType.ToString().Length) / 2).PadRight(10)} ";
         }
-        header += $"| {"GesamtScore".PadLeft(11)} |";
+        header += $"| {"GesamtScore".PadLeft((10 + "GesamtScore".Length) / 2).PadRight(10)} |";
 
-        // Linie über den Spaltenüberschriften
+        // Ausgabe der Spaltenüberschriften und Trennlinien
         Console.WriteLine(new string('-', header.Length));
-
-        // Ausgabe der Spaltenüberschriften
         Console.WriteLine(header);
-
-        // Trennlinie unter den Spaltenüberschriften
         Console.WriteLine(new string('-', header.Length));
 
-        // Informationen der Scores
+        // Ausgabe der Member und Scores
         foreach (var member in prediction_game.Members)
         {
             string memberInfo = $"{member.MemberID} ({member.GetForename()})";
-            string row = $"| {memberInfo.PadRight(maxMemberInfoLength)} ";
+            string row = $"| {memberInfo.PadRight(maxMemberInfoLength+1)}";
             int totalScore = 0;
 
-            foreach (var scoreType in prediction_game.ScheduleTypesList)
+            foreach (var scheduleType in prediction_game.ScheduleTypesList)
             {
-                var score = member.GetScores().FirstOrDefault(s => s.ScoreID == scoreType);
+                var score = member.GetScores().FirstOrDefault(s => s.ScoreID == scheduleType);
                 int points = score != null ? (int)score.AmountOfPoints : 0;
                 totalScore += points;
-                row += $"| {points.ToString().PadLeft(10)} ";
+                string pointsStr = points.ToString();
+                row += $"| {pointsStr.PadLeft((10 + pointsStr.Length) / 2).PadRight(10)} ";
             }
 
-            row += $"| {totalScore.ToString().PadLeft(11)} |";
+            string totalScoreStr = totalScore.ToString();
+            row += $"| {totalScoreStr.PadLeft((11 + totalScoreStr.Length) / 2).PadRight(11)} |";
             Console.WriteLine(row);
         }
 
