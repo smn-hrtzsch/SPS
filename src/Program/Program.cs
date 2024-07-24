@@ -265,7 +265,7 @@ public class Program
         foreach (var member in prediction_game.Members)
         {
             string memberInfo = $"{member.MemberID} ({member.GetForename()})";
-            string row = $"| {memberInfo.PadRight(maxMemberInfoLength+1)}";
+            string row = $"| {memberInfo.PadRight(maxMemberInfoLength + 1)}";
             int totalScore = 0;
 
             foreach (var scheduleType in prediction_game.ScheduleTypesList)
