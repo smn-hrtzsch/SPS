@@ -2,7 +2,7 @@ name: Email Sender
 
 on:
   schedule:
-    - cron: '30 8 * * *' # Runs every day at 9:30 Berlin time
+    - cron: '27 14 * * *' # Runs every day at 9:30 Berlin time
   workflow_dispatch:
 
 jobs:
