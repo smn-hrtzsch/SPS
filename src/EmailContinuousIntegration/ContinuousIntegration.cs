@@ -69,7 +69,7 @@ class Program
         //     );
         // }
 
-        foreach(var member in prediction_game.Members)
+        foreach (var member in prediction_game.Members)
         {
             member.AddParticipatingSchedule(em_2024, ScheduleTypes.EM_2024);
             member.AddPredictionToDo();
