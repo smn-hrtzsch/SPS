@@ -56,6 +56,7 @@ public class Member<M, P> : IMemberData<M, P>
 
     /// \brief Retrieves the email address of the member.
     public string GetEmailAddress() => EmailAddress;
+
     public string GetPassword() => Password;
 
     /// \brief Retrieves a copy of the list of matches that need to be predicted.
