@@ -35,7 +35,7 @@ public class FootballMatch : Match
         SportsTypes sport_type
     )
     {
-        MatchArray = CSVReader<FootballMatch>.GetMatchDataFromCsvFile(
+        MatchArray = CSVReader<FootballMatch, FootballPrediction>.GetMatchDataFromCsvFile(
             PathToMatchDataCsvFile,
             line_number
         );
@@ -53,7 +53,6 @@ public class FootballMatch : Match
 
     public override string ToString()
     {
-        string mi = $"{MatchID}";
         string md = $"{MatchDate}";
         string ht = $"{HomeTeam}";
         string at = $"{AwayTeam}";
@@ -61,6 +60,6 @@ public class FootballMatch : Match
         string rt2 = $"{ResultTeam2}";
         string rhtp = $"{ResultHomeTeamPenalties}";
         string ratp = $"{ResultAwayTeamPenalties}";
-        return $"{mi};{md};{ht};{at};{rt1};{rt2};{rhtp};{ratp}";
+        return $"{md},{ht},{at},{rt1},{rt2},{rhtp},{ratp}";
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 class Program
 {
@@ -7,21 +9,21 @@ class Program
     {
         //Gerneral Programm variable declaration
         EmailService emailService = new EmailService();
-        PredictionGame predictionGame = new PredictionGame(
+        PredictionGame prediction_game = new PredictionGame(
             emailService /*,PathToCSVFile  <- zum Einlesen der Daten in den Member Konstruktor*/
         );
+        string PathToMemberDataFile = "../../csv-files/MemberData.csv";
 
-        Member<Prediction, Match> member = new Member<Prediction, Match>(
-            "SportsPrediction",
-            "System",
-            "sportspredictionsystem@gmail.com",
-            "1234"
-        );
-        predictionGame.Register(member);
+       if (File.Exists(PathToMemberDataFile))
+            {
+                prediction_game.Members = CSVReader<Match, Prediction>.GetMemberDataFromCsvFile(
+                    PathToMemberDataFile
+                );
+            }
 
         //Email continuous Integration
 
-        predictionGame.SendDailyEmail();
+        prediction_game.SendDailyEmail();
         //Email continous Integration end
     }
 }

@@ -6,7 +6,7 @@ public abstract class Prediction
     public uint PredictionID { get; }
     public uint MemberID { get; }
     public Match PredictedMatch { get; }
-    protected DateTime PredictionDate { get; set; }
+    public DateTime PredictionDate { get; protected set; }
 
     public Prediction(uint member_id, Match predicted_match, DateTime predictionDate)
     {
@@ -14,6 +14,19 @@ public abstract class Prediction
         PredictedMatch = predicted_match;
         PredictionDate = predictionDate;
         PredictionID = (uint)GetHashCode();
+    }
+
+    public Prediction(
+        uint prediction_id,
+        uint member_id,
+        Match predicted_match,
+        DateTime predictionDate
+    )
+    {
+        PredictionID = prediction_id;
+        MemberID = member_id;
+        PredictedMatch = predicted_match;
+        PredictionDate = predictionDate;
     }
 
     public DateTime GetPredictionDate() => PredictionDate;
@@ -25,7 +38,12 @@ public abstract class Prediction
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(PredictedMatch.GetHashCode(), PredictionDate);
+        return HashCode.Combine(
+            PredictedMatch.GetHashCode(),
+            PredictionDate,
+            MemberID,
+            PredictedMatch.ToString()
+        );
     }
 
     public override string ToString()
