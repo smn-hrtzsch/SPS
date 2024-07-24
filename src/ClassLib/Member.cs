@@ -9,6 +9,7 @@ public interface IMemberData<M, P>
 {
     public string GetForename();
     public string GetEmailAddress();
+    public string GetPassword();
     public List<M> GetPredictionsToDo();
     public List<P> GetPredictionsDone();
     public void SetPredictionsDone(List<P> done_predictions);
@@ -51,6 +52,7 @@ public class Member<M, P> : IMemberData<M, P>
 
     /// \brief Retrieves the email address of the member.
     public string GetEmailAddress() => EmailAddress;
+    public string GetPassword() => Password;
 
     /// \brief Retrieves a copy of the list of matches that need to be predicted.
     public List<M> GetPredictionsToDo() => new List<M>(PredictionsToDo);
