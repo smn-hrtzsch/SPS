@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 public interface IMemberData<M, P>
     where M : Match
-    where P : Prediction //for further implementation (e.g. premium membership etc.)
+    where P : Prediction
 {
     public string GetForename();
     public string GetEmailAddress();
