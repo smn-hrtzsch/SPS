@@ -3,7 +3,9 @@ name: Email Sender
 on:
   schedule:
     - cron: '*/5 * * * *' # Runs every 5 minutes
-    
+  push:
+    branches:
+      - '**'
   workflow_dispatch:
 
 jobs:
