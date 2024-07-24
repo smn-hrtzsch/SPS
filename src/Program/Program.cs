@@ -9,6 +9,7 @@ public class Program
         // Set up email service and initialize prediction game
         EmailService emailService = new EmailService();
         PredictionGame prediction_game = new PredictionGame(emailService);
+        bool login = false;
 
         // Set up match factory for the CSVReader
         IMatchFactory<FootballMatch> football_match_factory = new FootballMatchFactory();
@@ -57,7 +58,9 @@ public class Program
         }
 
         // Main menu loop
-         while (true)
+        if(!login)
+        {
+        while (true)
         {
             // Anmeldescreen anzeigen
             Console.WriteLine("================================");
@@ -90,6 +93,7 @@ public class Program
 
                             if (member.GetPassword() == password)
                             {
+                                login = true;
                                 Console.WriteLine("Login successful!");
                                 // Weiter mit dem Programm nach erfolgreichem Login
                                 return;
@@ -155,6 +159,9 @@ public class Program
 
             Console.Clear();
         }
+        }
+        else{
+
         while (true)
         {
             Console.Clear();
@@ -194,6 +201,7 @@ public class Program
                     break;
             }
         }
+    }
     }
 
     private static void DisplayMembers(PredictionGame prediction_game)
