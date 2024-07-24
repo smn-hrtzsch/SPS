@@ -89,7 +89,7 @@ public class CSVWriter<M, P>
                 member_ids[i] = $";{prediction_game.Members[i].MemberID}";
             }
             sw.WriteLine(
-                $"Predicted Match{string.Join("", member_ids)};CalculateScore() already DONE;MatchData;PredictionDate"
+                $"Predicted Match{string.Join("", member_ids)};CalculateScore() already DONE;MatchData;PredictionDate;PredictionID"
             );
 
             var predicted_matches = new HashSet<FootballMatch>();
@@ -116,6 +116,7 @@ public class CSVWriter<M, P>
                 var row = new List<string> { $"{match.HomeTeam} - {match.AwayTeam}" };
                 bool CalculateScoreAlreadyDone = false;
                 DateTime? prediction_date = null;
+                uint? prediction_id = null;
 
                 foreach (var member in prediction_game.Members)
                 {
@@ -127,6 +128,7 @@ public class CSVWriter<M, P>
                     {
                         CalculateScoreAlreadyDone = true;
                         prediction_date = archivedFootballPrediction.PredictionDate;
+                        prediction_id = archivedFootballPrediction.PredictionID;
                         footballPrediction = archivedFootballPrediction;
                     }
                     else
@@ -137,6 +139,7 @@ public class CSVWriter<M, P>
                         if (prediction is FootballPrediction doneFootballPrediction)
                         {
                             prediction_date = doneFootballPrediction.PredictionDate;
+                            prediction_id = doneFootballPrediction.PredictionID;
                             footballPrediction = doneFootballPrediction;
                         }
                     }
@@ -155,11 +158,11 @@ public class CSVWriter<M, P>
 
                 if (CalculateScoreAlreadyDone)
                 {
-                    row.Add($"1;{match};{prediction_date?.ToString() ?? "N/A"}");
+                    row.Add($"1;{match};{prediction_date?.ToString() ?? "N/A"};{prediction_id}");
                 }
                 else
                 {
-                    row.Add($"0;{match};{prediction_date?.ToString() ?? "N/A"}");
+                    row.Add($"0;{match};{prediction_date?.ToString() ?? "N/A"};{prediction_id}");
                 }
                 sw.WriteLine(string.Join(";", row));
             }

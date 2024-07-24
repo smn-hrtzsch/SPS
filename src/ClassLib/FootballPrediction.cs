@@ -8,13 +8,29 @@ public class FootballPrediction : Prediction
     public byte PredictionAway { get; protected set; }
 
     public FootballPrediction(
-        uint MemberID,
+        uint member_id,
         FootballMatch football_match,
         DateTime predictionDate,
         byte prediction_home,
         byte prediction_away
     )
-        : base(MemberID, football_match, predictionDate)
+        : base(member_id, football_match, predictionDate)
+    {
+        PredictionHome = prediction_home;
+        PredictionAway = prediction_away;
+        HomeTeam = football_match.HomeTeam;
+        AwayTeam = football_match.AwayTeam;
+    }
+
+    public FootballPrediction(
+        uint prediction_id,
+        uint member_id,
+        FootballMatch football_match,
+        DateTime predictionDate,
+        byte prediction_home,
+        byte prediction_away
+    )
+        : base(prediction_id, member_id, football_match, predictionDate)
     {
         PredictionHome = prediction_home;
         PredictionAway = prediction_away;

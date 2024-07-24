@@ -83,25 +83,61 @@ public class CSVReader<M, P>
 
     public static void GetScoresFromCsvFile(string PathToCsvFile, PredictionGame prediction_game)
     {
-        List<Score> scores = new List<Score>();
-
         var all_lines = File.ReadLines(PathToCsvFile).ToList();
 
-        int AmountOfScheduleTypes = prediction_game.ScheduleTypesList.Count;
+        if (all_lines.Count <= 1)
+        {
+            // Wenn keine Datenzeilen vorhanden sind, gibt es keine Scores zu lesen.
+            return;
+        }
+
+        string header = all_lines[0];
+        string[] headerColumns = header.Split(';');
 
         for (int line_number = 1; line_number < all_lines.Count; line_number++)
         {
             string? needed_line = all_lines[line_number];
-            string[] score_data = needed_line.Split(";");
-            for (int score_number = 1; score_number <= AmountOfScheduleTypes; score_number++)
+            string[] score_data = needed_line.Split(';');
+
+            if (score_data.Length < 2)
             {
-                ScheduleTypes schedule_type = (ScheduleTypes)
-                    Enum.Parse(typeof(ScheduleTypes), score_data[score_number]);
-                uint amount_of_points = uint.Parse(score_data[1]);
-                scores.Add(new Score(schedule_type, amount_of_points));
+                // Wenn nicht genügend Datenzeilen vorhanden sind, überspringen.
+                continue;
             }
 
-            prediction_game.Members[line_number - 1].SetScores(scores);
+            uint memberId;
+            if (!uint.TryParse(score_data[0], out memberId))
+            {
+                // Ungültige Member ID, überspringen
+                continue;
+            }
+
+            var member = prediction_game.Members.FirstOrDefault(m => m.MemberID == memberId);
+            if (member == null)
+            {
+                // Mitglied nicht gefunden, überspringen
+                continue;
+            }
+
+            List<Score> scores = new List<Score>();
+
+            for (int score_number = 1; score_number < score_data.Length; score_number++)
+            {
+                uint amount_of_points;
+                if (uint.TryParse(score_data[score_number], out amount_of_points))
+                {
+                    // Die Spalte entspricht dem indexbasierten ScheduleType in ScheduleTypesList
+                    if (score_number - 1 < prediction_game.ScheduleTypesList.Count)
+                    {
+                        ScheduleTypes schedule_type = prediction_game.ScheduleTypesList[
+                            score_number - 1
+                        ];
+                        scores.Add(new Score(schedule_type, amount_of_points));
+                    }
+                }
+            }
+
+            member.SetScores(scores);
         }
     }
 
@@ -146,12 +182,6 @@ public class CSVReader<M, P>
                 continue; // Wenn das Match nicht gefunden wurde, überspringe die Zeile
             }
 
-            DateTime prediction_date = DateTime.ParseExact(
-                prediction_data[member_count + 3],
-                "M/d/yyyy h:mm:ss tt",
-                CultureInfo.InvariantCulture
-            );
-
             for (int i = 1; i <= member_count; i++) // Start from 1 to skip "Predicted Match" column
             {
                 string memberIdStr = headerColumns[i];
@@ -172,10 +202,13 @@ public class CSVReader<M, P>
                     continue; // Ungültiges Vorhersagedatenformat
                 }
 
+                DateTime prediction_date = DateTime.Parse(prediction_data[member_count + 3]);
+                uint prediction_id = uint.Parse(prediction_data[member_count + 4]);
                 byte prediction_home = byte.Parse(prediction_bytes[0]);
                 byte prediction_away = byte.Parse(prediction_bytes[1]);
 
                 FootballPrediction football_prediction = new FootballPrediction(
+                    prediction_id,
                     member.MemberID,
                     football_match,
                     prediction_date,
