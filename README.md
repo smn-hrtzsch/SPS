@@ -16,8 +16,8 @@ What do you say?
 ## Installation
 - To get the last stable release of SPS, check out the "main" branch
 
-### Download
-For new and unexperienced users, we recommend cloning the repository onto your local machine.  
+### Clone repository
+For new and unexperienced users, we recommend cloning the repository onto your local machine.
 To do so, choose a place on your local maschine where you want to save the project in.  
 Now open the choosen directory in your file explorer and open with integrated terminal.  
 Paste the following command and press 'enter'.  
@@ -26,6 +26,10 @@ Paste the following command and press 'enter'.
 git clone https://github.com/smn-hrtzsch/SPS
 ```
 The repository should now be cloned onto you local maschine and you can now go on with the usage instructions.
+
+### Download release source code
+You can also download the release [source code](https://github.com/smn-hrtzsch/SPS/archive/refs/tags/v.1.0.0.zip) by clicking this link.  
+You can then direct into the download path and follow the instructions below.
 
 ## Useage
 Firstly, check out the download instructions above and choose the realease you would like to run on your machine.
