@@ -11,6 +11,7 @@ public class Program
     public static void Main(string[] args)
     {
         // Set up email service and initialize prediction game
+        // Set up email service and initialize prediction game
         EmailService emailService = new EmailService();
         PredictionGame prediction_game = new PredictionGame(emailService);
         bool login = false;
