@@ -152,7 +152,7 @@ public class CSVReader<M, P>
         // Erster Schritt: Kopfzeile einlesen, um die Member IDs zu extrahieren
         string header = all_lines[0];
         string[] headerColumns = header.Split(';');
-        int member_count = prediction_game.Members.Count; // 5 weitere Spalten: Predicted Match, CalculateScore, MatchData, PredictionDate
+        int member_count = prediction_game.Members.Count; // 3 weitere Spalten: Predicted Match, MatchData, PredictionDate
 
         // Dictionary für jeden Member, um ihre jeweiligen Predictions zu speichern
         Dictionary<uint, List<Prediction>> done_predictions_map =
@@ -174,7 +174,7 @@ public class CSVReader<M, P>
             // Finde das entsprechende Match in der Schedule
             FootballMatch? football_match =
                 schedule.Matches.FirstOrDefault(m =>
-                    m.ToString() == prediction_data[member_count + 2]
+                    m.ToString() == prediction_data[member_count + 1]
                 ) as FootballMatch;
 
             if (football_match == null)
@@ -197,13 +197,13 @@ public class CSVReader<M, P>
                 }
 
                 string[] prediction_bytes = prediction_data[i].Split(':');
-                if (prediction_bytes.Length < 2)
+                if (prediction_bytes.Length < 3)
                 {
                     continue; // Ungültiges Vorhersagedatenformat
                 }
 
-                DateTime prediction_date = DateTime.Parse(prediction_data[member_count + 3]);
-                uint prediction_id = uint.Parse(prediction_data[member_count + 4]);
+                DateTime prediction_date = DateTime.Parse(prediction_data[member_count + 2]);
+                uint prediction_id = uint.Parse(prediction_data[member_count + 3]);
                 byte prediction_home = byte.Parse(prediction_bytes[0]);
                 byte prediction_away = byte.Parse(prediction_bytes[1]);
 
@@ -216,7 +216,7 @@ public class CSVReader<M, P>
                     prediction_away
                 );
 
-                byte CalculateScoreAlreadyDone = byte.Parse(prediction_data[member_count + 1]);
+                byte CalculateScoreAlreadyDone = byte.Parse(prediction_bytes[2]);
 
                 if (CalculateScoreAlreadyDone == 1)
                 {

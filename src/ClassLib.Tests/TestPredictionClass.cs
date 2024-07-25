@@ -44,6 +44,11 @@ public class TestPredictionClass
         );
         FootballPrediction prediction2 = new FootballPrediction(1, match2, DateTime.Now, 1, 3);
 
-        Assert.False(prediction2.ValidatePrediction());
+        Assert.False(
+            Prediction.ValidatePredictionDate(
+                prediction2.PredictionDate,
+                prediction2.PredictedMatch.MatchDate
+            )
+        );
     }
 }

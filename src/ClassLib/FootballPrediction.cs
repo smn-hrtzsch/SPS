@@ -38,18 +38,22 @@ public class FootballPrediction : Prediction
         AwayTeam = football_match.AwayTeam;
     }
 
-    public void ChangePrediction(byte? NewPredictionHome, byte? NewPredictionAway)
+    public static void ChangePrediction(
+        byte? NewPredictionHome,
+        byte? NewPredictionAway,
+        FootballPrediction prediction
+    )
     {
-        PredictionDate = DateTime.Now;
-        if (ValidatePrediction())
+        prediction.PredictionDate = DateTime.Now;
+        if (ValidatePredictionDate(prediction.PredictionDate, prediction.PredictedMatch.MatchDate))
         {
             if (NewPredictionHome != null)
             {
-                PredictionHome = (byte)NewPredictionHome;
+                prediction.PredictionHome = (byte)NewPredictionHome;
             }
             if (NewPredictionAway != null)
             {
-                PredictionAway = (byte)NewPredictionAway;
+                prediction.PredictionAway = (byte)NewPredictionAway;
             }
         }
     }

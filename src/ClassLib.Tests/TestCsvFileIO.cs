@@ -203,18 +203,10 @@ public class TestCsvFileIO
         List<Match> predictionsToDoMember1 = test_prediction_game.Members[0].GetPredictionsToDo();
         List<Match> predictionsToDoMember2 = test_prediction_game.Members[1].GetPredictionsToDo();
 
-        test_prediction_game
-            .Members[0]
-            .ConvertPredictionsDone(predictionsToDoMember1[0].MatchID, 1, 2);
-        test_prediction_game
-            .Members[0]
-            .ConvertPredictionsDone(predictionsToDoMember1[1].MatchID, 2, 3);
-        test_prediction_game
-            .Members[1]
-            .ConvertPredictionsDone(predictionsToDoMember2[0].MatchID, 3, 0);
-        test_prediction_game
-            .Members[1]
-            .ConvertPredictionsDone(predictionsToDoMember2[1].MatchID, 4, 2);
+        test_prediction_game.Members[0].ConvertPredictionsDone(predictionsToDoMember1[0], 1, 2);
+        test_prediction_game.Members[0].ConvertPredictionsDone(predictionsToDoMember1[1], 2, 3);
+        test_prediction_game.Members[1].ConvertPredictionsDone(predictionsToDoMember2[0], 3, 0);
+        test_prediction_game.Members[1].ConvertPredictionsDone(predictionsToDoMember2[1], 4, 2);
 
         test_prediction_game.Members[0].CalculateScores();
         test_prediction_game.Members[1].CalculateScores();
