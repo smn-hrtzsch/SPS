@@ -31,9 +31,9 @@ public abstract class Prediction
 
     public DateTime GetPredictionDate() => PredictionDate;
 
-    public bool ValidatePrediction()
+    public static bool ValidatePredictionDate(DateTime prediction_date, DateTime match_date)
     {
-        return PredictionDate < PredictedMatch.MatchDate;
+        return prediction_date < match_date;
     }
 
     public override int GetHashCode()

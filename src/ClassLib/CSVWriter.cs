@@ -89,7 +89,7 @@ public class CSVWriter<M, P>
                 member_ids[i] = $";{prediction_game.Members[i].MemberID}";
             }
             sw.WriteLine(
-                $"Predicted Match{string.Join("", member_ids)};CalculateScore() already DONE;MatchData;PredictionDate;PredictionID"
+                $"Predicted Match{string.Join("", member_ids)};MatchData;PredictionDate;PredictionID"
             );
 
             var predicted_matches = new HashSet<FootballMatch>();
@@ -146,24 +146,25 @@ public class CSVWriter<M, P>
 
                     if (footballPrediction != null)
                     {
-                        row.Add(
-                            $"{footballPrediction.PredictionHome}:{footballPrediction.PredictionAway}"
-                        );
+                        if (CalculateScoreAlreadyDone)
+                        {
+                            row.Add(
+                                $"{footballPrediction.PredictionHome}:{footballPrediction.PredictionAway}:1"
+                            );
+                        }
+                        else
+                        {
+                            row.Add(
+                                $"{footballPrediction.PredictionHome}:{footballPrediction.PredictionAway}:0"
+                            );
+                        }
                     }
                     else
                     {
                         row.Add("");
                     }
                 }
-
-                if (CalculateScoreAlreadyDone)
-                {
-                    row.Add($"1;{match};{prediction_date?.ToString() ?? "N/A"};{prediction_id}");
-                }
-                else
-                {
-                    row.Add($"0;{match};{prediction_date?.ToString() ?? "N/A"};{prediction_id}");
-                }
+                row.Add($"{match};{prediction_date?.ToString() ?? "N/A"};{prediction_id}");
                 sw.WriteLine(string.Join(";", row));
             }
         }

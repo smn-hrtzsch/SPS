@@ -154,19 +154,38 @@ public class Member<M, P> : IMemberData<M, P>
     /// \brief Adds a prediction to the member's list of predictions to do.
     public void AddPredictionToDo()
     {
+        PredictionsToDo.Clear();
         foreach (Schedule<M> schedule in ParticipatingSchedules)
         {
             List<M> MatchesOnDay = schedule.GetMatchesOnDay();
 
+            List<M?> AlreadyPredictedMatches = new List<M?>();
+
+            foreach (var prediction in PredictionsDone)
+            {
+                AlreadyPredictedMatches.Add(prediction.PredictedMatch as M);
+                // Console.WriteLine($"In PredictionsDone gefunden: {prediction.PredictedMatch.MatchID} {prediction.PredictedMatch}");
+            }
+            foreach (var prediction in ArchivedPredictions)
+            {
+                AlreadyPredictedMatches.Add(prediction.PredictedMatch as M);
+                // Console.WriteLine($"In ArchivedPredictions gefunden: {prediction.PredictedMatch.MatchID} {prediction.PredictedMatch}");
+            }
+            //Console.WriteLine($"Anzahl der bereits getippten Spiele: {AlreadyPredictedMatches.Count}");
+
             foreach (M match in MatchesOnDay)
             {
-                PredictionsToDo.Add(match);
+                if (!AlreadyPredictedMatches.Contains(match))
+                {
+                    //Console.WriteLine($"Zu PredictionsToDo hinzugefügt: {match.MatchID} {match}");
+                    PredictionsToDo.Add(match);
+                }
             }
         }
     }
 
     /// \brief Removes a match from the member's list of PredictionsToDo.
-    public void RemovePredictionToDo(uint MatchID) // remove specific match (if needed, for example for debugging and testing)
+    public void RemovePredictionToDo(uint MatchID) // remove specific match via MatchID
     {
         M? matchToRemove = null;
         foreach (var match in PredictionsToDo)
@@ -189,25 +208,44 @@ public class Member<M, P> : IMemberData<M, P>
     }
 
     /// \brief If user has predicted a certain match (specified by MatchID), a new prediction will be created (Prediction ctor call) and will be added to the PredictionsDone-list
-    public void ConvertPredictionsDone(uint MatchID, byte prediction_home, byte prediction_away)
+    public void ConvertPredictionsDone(
+        M predicted_match,
+        byte prediction_home,
+        byte prediction_away
+    )
     {
-        M? predictedMatch = null;
-        foreach (var match in PredictionsToDo)
+        // M? match_to_predict = null;
+        // Console.WriteLine($"Anzahl in PredictionsToDo: {PredictionsToDo.Count}");
+        // Console.WriteLine("PredictionsToDo:");
+        // foreach (var match in PredictionsToDo) {
+        //     Console.WriteLine($"{match.MatchID} {match}");
+        // }
+        // Console.WriteLine($"Match nach dem gesucht wird: {predicted_match.MatchID} {predicted_match}");
+        // foreach (var match in PredictionsToDo)
+        // {
+        //     if (match == predicted_match)
+        //     {
+        //         match_to_predict = predicted_match;
+        //         break;
+        //     }
+        //     else
+        //     {
+        //         throw new InvalidOperationException(
+        //             "Match was not found in PredictionsToDo. (ConvertPredictionDone())"
+        //         );
+        //     }
+        // }
+        if (
+            predicted_match != null
+            && Prediction.ValidatePredictionDate(DateTime.Now, predicted_match.MatchDate)
+        )
         {
-            if (match.MatchID == MatchID)
-            {
-                predictedMatch = match;
-                break;
-            }
-        }
-        if (predictedMatch != null)
-        {
-            switch (predictedMatch.SportsType) //switch case for ctor calls
+            switch (predicted_match.SportsType) //switch case for ctor calls
             {
                 case SportsTypes.Football:
                     FootballPrediction predictionDone = new FootballPrediction(
                         MemberID,
-                        predictedMatch as FootballMatch,
+                        predicted_match as FootballMatch,
                         DateTime.Now,
                         prediction_home,
                         prediction_away
@@ -215,11 +253,13 @@ public class Member<M, P> : IMemberData<M, P>
                     PredictionsDone.Add(predictionDone as P);
                     break;
             }
-            PredictionsToDo.Remove(predictedMatch);
+            PredictionsToDo.Remove(predicted_match);
         }
         else
         {
-            throw new InvalidOperationException("Match is not included in 'PredictionsToDo'-List");
+            Console.WriteLine(
+                "Your Prediction is not valid, because you wanted to predict a match, which has already started."
+            );
         }
     }
 
@@ -269,8 +309,6 @@ public class Member<M, P> : IMemberData<M, P>
 
     public void CalculateScores()
     {
-        List<P> predictionsToArchive = new List<P>();
-
         foreach (var score in Scores)
         {
             switch (score.ScoreID)
@@ -279,13 +317,21 @@ public class Member<M, P> : IMemberData<M, P>
                     List<P> predictionsToRemove = new List<P>();
                     foreach (P prediction in PredictionsDone)
                     {
-                        if (prediction.PredictedMatch.SportsType == SportsTypes.Football)
+                        if (
+                            prediction.PredictedMatch.SportsType == SportsTypes.Football
+                            && prediction.PredictedMatch.ResultTeam1 != null
+                            && prediction.PredictedMatch.ResultTeam2 != null
+                        )
                         {
                             uint ScoreForPrediction = score.CalculateFootballScore(
                                 prediction as FootballPrediction
                             );
                             score.IncrementAmountOfPoints(ScoreForPrediction);
                             predictionsToRemove.Add(prediction);
+                        }
+                        else
+                        {
+                            break;
                         }
                     }
                     foreach (P prediction in predictionsToRemove)

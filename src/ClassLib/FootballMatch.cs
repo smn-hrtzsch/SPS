@@ -45,8 +45,16 @@ public class FootballMatch : Match
             "dd/MM/yyyy HH:mm",
             CultureInfo.InvariantCulture
         );
-        ResultTeam1 = byte.Parse(MatchArray[3]);
-        ResultTeam2 = byte.Parse(MatchArray[4]);
+        try
+        {
+            ResultTeam1 = byte.Parse(MatchArray[3]);
+            ResultTeam2 = byte.Parse(MatchArray[4]);
+        }
+        catch (FormatException)
+        {
+            ResultTeam1 = null;
+            ResultTeam2 = null;
+        }
         SportsType = sport_type;
         MatchID = (uint)GetHashCode();
     }

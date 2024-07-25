@@ -44,8 +44,8 @@ public class PredictionGameTest
         member1.PredictionsToDoTest.Add(match1);
         member1.PredictionsToDoTest.Add(match2);
         //member1.ConvertPredictionsDone(member1.GetPredictionsToDo()[0].MatchID, 3, 1);
-        member1.ConvertPredictionsDone(match1.MatchID, 5, 1);
-        member1.ConvertPredictionsDone(match2.MatchID, 2, 1);
+        member1.ConvertPredictionsDone(match1, 5, 1);
+        member1.ConvertPredictionsDone(match2, 2, 1);
         Assert.Equal(2, member1.PredictionsDoneTest.Count);
 
         member1.CalculateScores();
