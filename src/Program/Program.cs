@@ -292,7 +292,7 @@ public class Program
         foreach (var member in prediction_game.Members)
         {
             member.AddParticipatingSchedule(em_2024, ScheduleTypes.EM_2024);
-            member.CalculateScores();
+            // member.CalculateScores();
         }
 
         while (true)
@@ -382,6 +382,9 @@ public class Program
 
     private static void DisplayScores(PredictionGame prediction_game)
     {
+        foreach (var member in prediction_game.Members) {
+            member.CalculateScores();
+        }
         Console.Clear();
         Console.WriteLine("Scores:\n");
 
