@@ -382,7 +382,8 @@ public class Program
 
     private static void DisplayScores(PredictionGame prediction_game)
     {
-        foreach (var member in prediction_game.Members) {
+        foreach (var member in prediction_game.Members)
+        {
             member.CalculateScores();
         }
         Console.Clear();
