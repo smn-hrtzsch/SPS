@@ -114,13 +114,14 @@ public class CSVWriter<M, P>
             foreach (var match in predicted_matches)
             {
                 var row = new List<string> { $"{match.HomeTeam} - {match.AwayTeam}" };
-                bool CalculateScoreAlreadyDone = false;
                 DateTime? prediction_date = null;
                 uint? prediction_id = null;
 
                 foreach (var member in prediction_game.Members)
                 {
+                    bool CalculateScoreAlreadyDone = false; // Reset for each member
                     FootballPrediction footballPrediction = null;
+
                     var prediction = member
                         .GetArchivedPredictions()
                         .FirstOrDefault(p => p.PredictedMatch == match);
@@ -146,18 +147,9 @@ public class CSVWriter<M, P>
 
                     if (footballPrediction != null)
                     {
-                        if (CalculateScoreAlreadyDone)
-                        {
-                            row.Add(
-                                $"{footballPrediction.PredictionHome}:{footballPrediction.PredictionAway}:1"
-                            );
-                        }
-                        else
-                        {
-                            row.Add(
-                                $"{footballPrediction.PredictionHome}:{footballPrediction.PredictionAway}:0"
-                            );
-                        }
+                        row.Add(
+                            $"{footballPrediction.PredictionHome}:{footballPrediction.PredictionAway}:{(CalculateScoreAlreadyDone ? 1 : 0)}"
+                        );
                     }
                     else
                     {
