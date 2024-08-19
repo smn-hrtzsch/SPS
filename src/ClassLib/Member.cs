@@ -12,6 +12,7 @@ public interface IMemberData<M, P>
     public string? GetSurname();
     public string GetEmailAddress();
     public string GetPassword();
+    public List<Schedule<M>> GetParticipatingSchedules();
     public List<M> GetPredictionsToDo();
     public List<P> GetPredictionsDone();
     public void SetPredictionsDone(List<P> done_predictions);
@@ -58,6 +59,8 @@ public class Member<M, P> : IMemberData<M, P>
     public string GetEmailAddress() => EmailAddress;
 
     public string GetPassword() => Password;
+
+    public List<Schedule<M>> GetParticipatingSchedules() => ParticipatingSchedules;
 
     /// \brief Retrieves a copy of the list of matches that need to be predicted.
     public List<M> GetPredictionsToDo() => new List<M>(PredictionsToDo);
@@ -122,8 +125,12 @@ public class Member<M, P> : IMemberData<M, P>
     public void AddParticipatingSchedule(Schedule<M> schedule, ScheduleTypes schedule_type)
     {
         ParticipatingSchedules.Add(schedule);
-        Score score = new Score(schedule_type);
-        Scores.Add(score);
+        Score? score = Scores.Find(s => s.ScoreID == schedule_type);
+        if (score == null)
+        {
+            score = new Score(schedule_type);
+            Scores.Add(score);
+        }
     }
 
     /// \brief Removes a schedule from the member's list of participating schedules.
@@ -214,27 +221,6 @@ public class Member<M, P> : IMemberData<M, P>
         byte prediction_away
     )
     {
-        // M? match_to_predict = null;
-        // Console.WriteLine($"Anzahl in PredictionsToDo: {PredictionsToDo.Count}");
-        // Console.WriteLine("PredictionsToDo:");
-        // foreach (var match in PredictionsToDo) {
-        //     Console.WriteLine($"{match.MatchID} {match}");
-        // }
-        // Console.WriteLine($"Match nach dem gesucht wird: {predicted_match.MatchID} {predicted_match}");
-        // foreach (var match in PredictionsToDo)
-        // {
-        //     if (match == predicted_match)
-        //     {
-        //         match_to_predict = predicted_match;
-        //         break;
-        //     }
-        //     else
-        //     {
-        //         throw new InvalidOperationException(
-        //             "Match was not found in PredictionsToDo. (ConvertPredictionDone())"
-        //         );
-        //     }
-        // }
         if (
             predicted_match != null
             && Prediction.ValidatePredictionDate(DateTime.Now, predicted_match.MatchDate)
@@ -317,21 +303,24 @@ public class Member<M, P> : IMemberData<M, P>
                     List<P> predictionsToRemove = new List<P>();
                     foreach (P prediction in PredictionsDone)
                     {
-                        if (
-                            prediction.PredictedMatch.SportsType == SportsTypes.Football
-                            && prediction.PredictedMatch.ResultTeam1 != null
-                            && prediction.PredictedMatch.ResultTeam2 != null
-                        )
+                        if (prediction.PredictedMatch.MatchDate <= DateTime.Now)
                         {
-                            uint ScoreForPrediction = score.CalculateFootballScore(
-                                prediction as FootballPrediction
-                            );
-                            score.IncrementAmountOfPoints(ScoreForPrediction);
-                            predictionsToRemove.Add(prediction);
-                        }
-                        else
-                        {
-                            break;
+                            if (
+                                prediction.PredictedMatch.SportsType == SportsTypes.Football
+                                && prediction.PredictedMatch.ResultTeam1 != null
+                                && prediction.PredictedMatch.ResultTeam2 != null
+                            )
+                            {
+                                uint ScoreForPrediction = score.CalculateFootballScore(
+                                    prediction as FootballPrediction
+                                );
+                                score.IncrementAmountOfPoints(ScoreForPrediction);
+                                predictionsToRemove.Add(prediction);
+                            }
+                            else
+                            {
+                                break;
+                            }
                         }
                     }
                     foreach (P prediction in predictionsToRemove)
