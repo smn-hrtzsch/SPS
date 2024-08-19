@@ -3,17 +3,17 @@ using System;
 public enum EmailTypes
 {
     TippTemplate,
-    ResultTemplate
+    ResultTemplate,
 }
 
 public enum SportsTypes
 {
-    Football
+    Football,
 }
 
 public enum ScheduleTypes
 {
-    EM_2024
+    EM_2024,
 }
 
 public enum MatchTypes
@@ -23,5 +23,5 @@ public enum MatchTypes
     KO_first_leg,
     KO_second_leg,
     Semifinal,
-    Final
+    Final,
 }
