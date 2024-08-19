@@ -11,7 +11,6 @@ public class Program
     public static void Main(string[] args)
     {
         // Set up email service and initialize prediction game
-        // Set up email service and initialize prediction game
         EmailService emailService = new EmailService();
         PredictionGame prediction_game = new PredictionGame(emailService);
         bool login = false;
@@ -49,16 +48,6 @@ public class Program
                     prediction_game,
                     em_2024
                 );
-                // Console.WriteLine("PredictionDone für Member w:");
-                // foreach (var predicition in prediction_game.Members[3].GetPredictionsDone())
-                // {
-                //     Console.WriteLine(predicition);
-                // }
-                // Console.WriteLine("ArchivedPredictions für Member w:");
-                // foreach (var predicition in prediction_game.Members[3].GetArchivedPredictions())
-                // {
-                //     Console.WriteLine(predicition);
-                // }
             }
             if (File.Exists(PathToScoreDataFile))
             {
@@ -103,34 +92,34 @@ public class Program
                     while (true)
                     {
                         // Ask user for email
-                        Console.Write("Enter your [Email] or press [esc] to return: ");
+                        Console.Write("\nEnter your [Email] or press [esc] to return: ");
                         string email = string.Empty;
 
                         while (true)
                         {
-                            var emailInput = Console.ReadKey(true);
+                            var predictionInput = Console.ReadKey(true);
 
-                            if (emailInput.Key == ConsoleKey.Escape)
+                            if (predictionInput.Key == ConsoleKey.Escape)
                             {
                                 email = string.Empty;
                                 break; // Return to the start screen
                             }
 
-                            if (emailInput.Key == ConsoleKey.Enter)
+                            if (predictionInput.Key == ConsoleKey.Enter)
                             {
                                 Console.WriteLine();
                                 break; // End input
                             }
 
-                            if (emailInput.Key == ConsoleKey.Backspace && email.Length > 0)
+                            if (predictionInput.Key == ConsoleKey.Backspace && email.Length > 0)
                             {
                                 email = email.Substring(0, email.Length - 1);
                                 Console.Write("\b \b"); // Erase the last character in the console
                             }
-                            else if (!char.IsControl(emailInput.KeyChar))
+                            else if (!char.IsControl(predictionInput.KeyChar))
                             {
-                                email += emailInput.KeyChar;
-                                Console.Write(emailInput.KeyChar);
+                                email += predictionInput.KeyChar;
+                                Console.Write(predictionInput.KeyChar);
                             }
                         }
 
@@ -148,7 +137,7 @@ public class Program
                                 emailFound = true;
                                 string password = string.Empty;
                                 Console.Write(
-                                    "\nNow enter your [password] or press [esc] to return: "
+                                    "Now enter your [password] or press [esc] to return: "
                                 );
 
                                 while (true)
@@ -292,7 +281,6 @@ public class Program
         foreach (var member in prediction_game.Members)
         {
             member.AddParticipatingSchedule(em_2024, ScheduleTypes.EM_2024);
-            // member.CalculateScores();
         }
 
         while (true)
@@ -446,8 +434,6 @@ public class Program
 
     private static void AddPrediction(PredictionGame prediction_game, Schedule<Match> em_2024)
     {
-        Console.Clear();
-
         var member = prediction_game.Members.Find(m => m.MemberID == member_id);
         if (member == null)
         {
@@ -456,219 +442,374 @@ public class Program
             return;
         }
 
-        // Console.WriteLine("PredictionsToDo:");
-        // foreach (var match in member.GetPredictionsToDo())
-        // {
-        //     Console.WriteLine($"{match.MatchID} {match}");
-        // }
-        // Console.WriteLine("PredictionsDone:");
-        // foreach (var prediction in member.GetPredictionsDone()) {
-        //     Console.WriteLine(prediction);
-        // }
         member.AddPredictionToDo();
-        // Console.WriteLine("Anzahl Spiele in PredictionsToDo: " + member.GetPredictionsToDo().Count);
-        // Console.WriteLine("Anzahl Spiele in PredictionsDone: "+ member.GetPredictionsDone().Count);
-        List<FootballMatch?> predicted_matches_on_day = new List<FootballMatch?>();
-        foreach (var predicition in member.GetPredictionsDone())
-        {
-            if (predicition.PredictedMatch.MatchDate.Date == DateTime.Now.Date)
-            {
-                predicted_matches_on_day.Add(predicition.PredictedMatch as FootballMatch);
-            }
-        }
-        foreach (var predicition in member.GetArchivedPredictions())
-        {
-            if (predicition.PredictedMatch.MatchDate.Date == DateTime.Now.Date)
-            {
-                predicted_matches_on_day.Add(predicition.PredictedMatch as FootballMatch);
-            }
-        }
 
-        List<FootballPrediction> football_predictions_on_day = new List<FootballPrediction>();
-        foreach (var match in predicted_matches_on_day)
+        while (true) // Hauptschleife für die Vorhersagen
         {
-            FootballPrediction? prediction = (FootballPrediction?)
-                member.GetPredictionsDone().Find(p => p.PredictedMatch.MatchID == match.MatchID);
-            if (prediction != null)
+            List<FootballMatch?> predicted_matches_on_day = new List<FootballMatch?>();
+            foreach (var prediction in member.GetPredictionsDone())
             {
-                football_predictions_on_day.Add(prediction);
-            }
-        }
-        foreach (var match in predicted_matches_on_day)
-        {
-            FootballPrediction? prediction = (FootballPrediction?)
-                member
-                    .GetArchivedPredictions()
-                    .Find(p => p.PredictedMatch.MatchID == match.MatchID);
-            if (prediction != null)
-            {
-                football_predictions_on_day.Add(prediction);
-            }
-        }
-
-        string? member_forename = member.GetForename();
-        int predictions_to_do_count = member.GetPredictionsToDo().Count;
-
-        if (predictions_to_do_count == 0)
-        {
-            Console.WriteLine(
-                $"Hello {member_forename}, there are no matches left to predict today!"
-            );
-            if (predicted_matches_on_day.Count > 0)
-            {
-                Console.WriteLine("Here is a list of the Predictions you already did:\n");
-                foreach (var match in predicted_matches_on_day)
+                if (prediction.PredictedMatch.MatchDate.Date == DateTime.Now.Date)
                 {
-                    FootballPrediction? prediction = football_predictions_on_day.Find(m =>
-                        m.PredictedMatch.MatchID == match.MatchID
-                    );
-
-                    if (match != null)
-                    {
-                        Console.WriteLine(
-                            $"{match.MatchDate:dd.MM.yyyy HH:mm} {match.HomeTeam} - {match.AwayTeam} | {prediction.PredictionHome}:{prediction.PredictionAway}"
-                        );
-                    }
-                    else
-                    {
-                        Console.WriteLine(
-                            $"{match.MatchDate:dd.MM.yyyy HH:mm} {match.HomeTeam} - {match.AwayTeam} | No prediction found"
-                        );
-                    }
+                    predicted_matches_on_day.Add(prediction.PredictedMatch as FootballMatch);
                 }
             }
-        }
-        else
-        {
-            Console.WriteLine(
-                $"Hello {member_forename}, here are your matches you can predict today:\n"
-            );
-
-            var predictable_matches = new List<FootballMatch>();
-            foreach (var match_to_predict in member.GetPredictionsToDo())
+            foreach (var prediction in member.GetArchivedPredictions())
             {
-                predictable_matches.Add(match_to_predict as FootballMatch);
+                if (prediction.PredictedMatch.MatchDate.Date == DateTime.Now.Date)
+                {
+                    predicted_matches_on_day.Add(prediction.PredictedMatch as FootballMatch);
+                }
             }
 
-            for (
-                int prediction_number = 0;
-                prediction_number < predictions_to_do_count;
-                prediction_number++
-            )
+            List<FootballPrediction> football_predictions_on_day = new List<FootballPrediction>();
+            foreach (var match in predicted_matches_on_day)
             {
-                string match_date = predictable_matches[prediction_number]
-                    .MatchDate.ToString("HH:mm");
+                FootballPrediction? prediction =
+                    member
+                        .GetPredictionsDone()
+                        .FirstOrDefault(p => p.PredictedMatch.MatchID == match?.MatchID)
+                    as FootballPrediction;
+                if (prediction != null)
+                {
+                    football_predictions_on_day.Add(prediction);
+                }
+            }
+            foreach (var match in predicted_matches_on_day)
+            {
+                FootballPrediction? prediction =
+                    member
+                        .GetArchivedPredictions()
+                        .FirstOrDefault(p => p.PredictedMatch.MatchID == match?.MatchID)
+                    as FootballPrediction;
+                if (prediction != null)
+                {
+                    football_predictions_on_day.Add(prediction);
+                }
+            }
+
+            string? member_forename = member.GetForename();
+
+            int predictions_to_do_count = member.GetPredictionsToDo().Count;
+            int football_predictions_on_day_count = football_predictions_on_day.Count;
+            int predicted_matches_on_day_count = predicted_matches_on_day.Count;
+
+            Console.Clear();
+            if (predictions_to_do_count == 0 && member.GetPredictionsDone().Count == 0)
+            {
                 Console.WriteLine(
-                    $"{prediction_number + 1}: {predictable_matches[prediction_number].HomeTeam} - {predictable_matches[prediction_number].AwayTeam}, {match_date}"
+                    $"Hello {member_forename}, there are no matches left to predict today!"
                 );
-            }
-
-            int match_number;
-            while (true)
-            {
-                Console.Write(
-                    "\nEnter the number of the match you want to predict or press [esc] to return to the main menu: "
-                );
-                var keyInfo = Console.ReadKey(true); // Read a key without displaying it
-
-                if (keyInfo.Key == ConsoleKey.Escape)
+                if (predicted_matches_on_day.Count > 0)
                 {
-                    return; // Exit the method to return to the main menu
-                }
-
-                if (char.IsDigit(keyInfo.KeyChar))
-                {
-                    Console.Write(keyInfo.KeyChar);
-                    string input = keyInfo.KeyChar.ToString();
-
-                    // Read additional digits if any
-                    while (true)
+                    Console.WriteLine("Here is a list of the predictions you already did:\n");
+                    foreach (var match in predicted_matches_on_day)
                     {
-                        keyInfo = Console.ReadKey(true);
-                        if (char.IsDigit(keyInfo.KeyChar))
+                        FootballPrediction? prediction = football_predictions_on_day.FirstOrDefault(
+                            m => m.PredictedMatch.MatchID == match?.MatchID
+                        );
+
+                        if (match != null)
                         {
-                            Console.Write(keyInfo.KeyChar);
-                            input += keyInfo.KeyChar;
+                            Console.WriteLine(
+                                $"{match.MatchDate:dd.MM.yyyy HH:mm} {match.HomeTeam} - {match.AwayTeam} | {prediction?.PredictionHome}:{prediction?.PredictionAway}"
+                            );
                         }
                         else
                         {
-                            break;
+                            Console.WriteLine(
+                                $"{match.MatchDate:dd.MM.yyyy HH:mm} {match.HomeTeam} - {match.AwayTeam} | No prediction found"
+                            );
                         }
                     }
-
-                    if (
-                        int.TryParse(input, out match_number)
-                        && match_number > 0
-                        && match_number <= predictable_matches.Count
-                    )
-                    {
-                        break; // Valid match number entered, exit loop
-                    }
-                    else
-                    {
-                        Console.WriteLine(
-                            "\nInvalid input. Please enter a valid match number or press [esc] to return to the main menu."
-                        );
-                    }
                 }
-                else
-                {
-                    Console.WriteLine("\nInvalid input. Please enter a valid match number.");
-                }
-            }
-
-            FootballMatch? match =
-                em_2024.Matches.Find(m =>
-                    m.MatchID == predictable_matches[match_number - 1].MatchID
-                ) as FootballMatch;
-            if (match == null)
-            {
-                Console.WriteLine(
-                    "Match not found in schedule.\nPress any button to return to the menu..."
-                );
+                Console.WriteLine("\nPress any key to return to the main menu...");
                 Console.ReadKey();
                 return;
             }
-            Console.WriteLine();
-            byte PredictionHome = GetPrediction($"{match.HomeTeam}");
-            byte PredictionAway = GetPrediction($"{match.AwayTeam}");
+            else
+            {
+                if (predictions_to_do_count > 0)
+                {
+                    Console.WriteLine(
+                        $"Hello {member_forename}, here are the matches you can predict today:\n"
+                    );
+                }
 
-            // Console.WriteLine(match.MatchID);
-            // foreach (var match_to_find in member.GetPredictionsToDo())
-            // {
-            //     if (match_to_find.MatchID == match.MatchID)
-            //     {
-            //         Console.WriteLine("Match gefunden!");
-            //         Console.WriteLine($"{match.MatchID} + {match}");
-            //     }
-            //     else
-            //     {
-            //         Console.WriteLine("Match nicht in der PredictionsToDo gefunden");
-            //         Console.WriteLine($"{match.MatchID} + {match}");
-            //     }
-            // }
+                var predictable_matches = new List<FootballMatch>();
+                foreach (var match_to_predict in member.GetPredictionsToDo())
+                {
+                    if (match_to_predict is FootballMatch footballMatch)
+                    {
+                        predictable_matches.Add(footballMatch);
+                    }
+                }
 
-            // Console.WriteLine($"Übergebene MatchID: {match.MatchID}");
-            member.ConvertPredictionsDone(match, PredictionHome, PredictionAway);
-            Console.WriteLine("Prediction added successfully!");
+                for (
+                    int prediction_number = 0;
+                    prediction_number < predictions_to_do_count;
+                    prediction_number++
+                )
+                {
+                    string match_date = predictable_matches[prediction_number]
+                        .MatchDate.ToString("HH:mm");
+                    Console.WriteLine(
+                        $"{prediction_number + 1}: {predictable_matches[prediction_number].HomeTeam} - {predictable_matches[prediction_number].AwayTeam}, {match_date}"
+                    );
+                }
+                if (predicted_matches_on_day.Count > 0 && predictions_to_do_count > 0)
+                {
+                    Console.WriteLine("\nAnd here are the matches you already predicted:\n");
+                    for (
+                        int prediction_number = 0;
+                        prediction_number < predicted_matches_on_day_count;
+                        prediction_number++
+                    )
+                    {
+                        FootballPrediction? prediction = football_predictions_on_day.FirstOrDefault(
+                            m =>
+                                m.PredictedMatch.MatchID
+                                == predicted_matches_on_day[prediction_number]?.MatchID
+                        );
+                        FootballMatch? predicted_match = predicted_matches_on_day[
+                            prediction_number
+                        ];
+
+                        if (prediction != null && predicted_match != null)
+                        {
+                            Console.WriteLine(
+                                $"{prediction_number + predictions_to_do_count + 1}: {predicted_match.MatchDate:dd.MM.yyyy HH:mm} {predicted_match.HomeTeam} - {predicted_match.AwayTeam} | {prediction.PredictionHome}:{prediction.PredictionAway}"
+                            );
+                        }
+                        else if (predicted_match != null)
+                        {
+                            Console.WriteLine(
+                                $"{prediction_number + predictions_to_do_count + 1}: {predicted_match.MatchDate:dd.MM.yyyy HH:mm} {predicted_match.HomeTeam} - {predicted_match.AwayTeam} | No prediction found"
+                            );
+                        }
+                    }
+                }
+                else if (predicted_matches_on_day_count > 0 && predictions_to_do_count == 0)
+                {
+                    Console.WriteLine(
+                        $"Hello {member_forename}, here are the matches you already predicted:\n"
+                    );
+                    for (
+                        int prediction_number = 0;
+                        prediction_number < predicted_matches_on_day_count;
+                        prediction_number++
+                    )
+                    {
+                        FootballPrediction? prediction = football_predictions_on_day.FirstOrDefault(
+                            m =>
+                                m.PredictedMatch.MatchID
+                                == predicted_matches_on_day[prediction_number]?.MatchID
+                        );
+                        FootballMatch? predicted_match = predicted_matches_on_day[
+                            prediction_number
+                        ];
+
+                        if (prediction != null && predicted_match != null)
+                        {
+                            Console.WriteLine(
+                                $"{prediction_number + predictions_to_do_count + 1}: {predicted_match.MatchDate:dd.MM.yyyy HH:mm} {predicted_match.HomeTeam} - {predicted_match.AwayTeam} | {prediction.PredictionHome}:{prediction.PredictionAway}"
+                            );
+                        }
+                        else if (predicted_match != null)
+                        {
+                            Console.WriteLine(
+                                $"{prediction_number + predictions_to_do_count + 1}: {predicted_match.MatchDate:dd.MM.yyyy HH:mm} {predicted_match.HomeTeam} - {predicted_match.AwayTeam} | No prediction found"
+                            );
+                        }
+                    }
+                }
+
+                int match_number = -1;
+                while (true)
+                {
+                    Console.WriteLine(
+                        "\nEnter the number of the match you want to predict or change your already predicted matches."
+                    );
+                    Console.Write("If you want to cancel the prediction, press [esc]: ");
+                    var keyInfo = Console.ReadKey(true); // Read a key without displaying it
+
+                    if (keyInfo.Key == ConsoleKey.Escape)
+                    {
+                        match_number = -1;
+                        break; // Abbruch der aktuellen Vorhersage, aber in der Schleife bleiben
+                    }
+
+                    if (char.IsDigit(keyInfo.KeyChar))
+                    {
+                        Console.Write(keyInfo.KeyChar);
+                        string input = keyInfo.KeyChar.ToString();
+
+                        // Read additional digits if any
+                        while (true)
+                        {
+                            keyInfo = Console.ReadKey(true);
+                            if (char.IsDigit(keyInfo.KeyChar))
+                            {
+                                Console.Write(keyInfo.KeyChar);
+                                input += keyInfo.KeyChar;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+
+                        if (
+                            int.TryParse(input, out match_number)
+                            && match_number > 0
+                            && match_number
+                                <= predicted_matches_on_day_count + predictions_to_do_count
+                        )
+                        {
+                            break; // Valid match number entered, exit loop
+                        }
+                        else
+                        {
+                            Console.WriteLine(
+                                "\nInvalid input. Please enter a valid match number or press [esc] to cancel."
+                            );
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nInvalid input. Please enter a valid match number.");
+                    }
+                }
+
+                if (match_number == -1)
+                    return; // Zurück zur Hauptschleife, wenn die Vorhersage abgebrochen wurde
+
+                if (match_number <= predictions_to_do_count)
+                {
+                    FootballMatch? match =
+                        em_2024.Matches.FirstOrDefault(m =>
+                            m.MatchID == predictable_matches[match_number - 1].MatchID
+                        ) as FootballMatch;
+                    if (match == null)
+                    {
+                        Console.WriteLine(
+                            "Match not found in schedule.\nPress any button to continue..."
+                        );
+                        Console.ReadKey();
+                        continue; // Zurück zur Schleife, um erneut eine Vorhersage auszuwählen
+                    }
+                    Console.WriteLine();
+
+                    byte PredictionHome = GetPrediction($"{match.HomeTeam}");
+                    if (PredictionHome == 255)
+                    {
+                        continue; // Abbruch der Vorhersage und Zurückkehren zur Schleife
+                    }
+                    byte PredictionAway = GetPrediction($"{match.AwayTeam}");
+                    if (PredictionAway == 255)
+                    {
+                        continue; // Abbruch der Vorhersage und Zurückkehren zur Schleife
+                    }
+
+                    member.ConvertPredictionsDone(match, PredictionHome, PredictionAway);
+                    Console.WriteLine("Prediction added successfully!");
+                }
+                else
+                {
+                    int index = match_number - predictions_to_do_count - 1;
+
+                    if (index < 0 || index >= predicted_matches_on_day_count) // Sicherheitshalber Überprüfung
+                    {
+                        Console.WriteLine(
+                            "Invalid match selected. Returning to the prediction menu..."
+                        );
+                        continue;
+                    }
+
+                    FootballPrediction? prediction =
+                        member
+                            .GetPredictionsDone()
+                            .FirstOrDefault(p =>
+                                p.PredictedMatch.MatchID == predicted_matches_on_day[index]?.MatchID
+                            ) as FootballPrediction;
+                    FootballMatch? match = predicted_matches_on_day[index];
+
+                    if (prediction != null && member.GetArchivedPredictions().Contains(prediction))
+                    {
+                        Console.WriteLine(
+                            "Your Prediction cannot be changed, because the match has already started or taken place."
+                        );
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
+                        continue; // Zurück zur Schleife, um erneut eine Vorhersage auszuwählen
+                    }
+                    else if (prediction != null && match != null)
+                    {
+                        Console.WriteLine();
+                        byte NewPredictionHome = GetPrediction(match.HomeTeam);
+                        if (NewPredictionHome == 255)
+                        {
+                            continue; // Abbruch der Vorhersage und Zurückkehren zur Schleife
+                        }
+                        byte NewPredictionAway = GetPrediction(match.AwayTeam);
+                        if (NewPredictionAway == 255)
+                        {
+                            continue; // Abbruch der Vorhersage und Zurückkehren zur Schleife
+                        }
+
+                        FootballPrediction.ChangePrediction(
+                            NewPredictionHome,
+                            NewPredictionAway,
+                            prediction
+                        );
+                        Console.WriteLine("Prediction was successfully changed");
+                    }
+                }
+            }
         }
-
-        Console.WriteLine("\nPress any key to return to the main menu...");
-        Console.ReadKey();
     }
 
-    private static byte GetPrediction(string team)
+    private static byte GetPrediction(string? team)
     {
         byte prediction;
+        string predictionstr = string.Empty;
         while (true)
         {
-            Console.Write($"Enter Prediction for {team}: ");
-            if (byte.TryParse(Console.ReadLine(), out prediction))
+            Console.Write($"\nEnter Prediction for {team} or press [esc] to cancel: ");
+
+            while (true)
+            {
+                var predictionInput = Console.ReadKey(true);
+
+                if (predictionInput.Key == ConsoleKey.Escape)
+                {
+                    return 255; // Use 255 as a special code indicating the user wants to cancel
+                }
+
+                if (predictionInput.Key == ConsoleKey.Enter)
+                {
+                    Console.WriteLine();
+                    break; // End input
+                }
+
+                if (predictionInput.Key == ConsoleKey.Backspace && predictionstr.Length > 0)
+                {
+                    predictionstr = predictionstr.Substring(0, predictionstr.Length - 1);
+                    Console.Write("\b \b"); // Erase the last character in the console
+                }
+                else if (!char.IsControl(predictionInput.KeyChar))
+                {
+                    predictionstr += predictionInput.KeyChar;
+                    Console.Write(predictionInput.KeyChar);
+                }
+            }
+
+            if (byte.TryParse(predictionstr, out prediction))
             {
                 if (prediction > 9)
                 {
                     Console.WriteLine(
-                        $"You entered a high score for the {team} ({prediction}).\nAre you sure you want to continue?"
+                        $"You entered a high score for {team} ({prediction}).\nAre you sure you want to continue?"
                     );
                     Console.WriteLine(
                         "Press any key to continue or [esc] to set a new prediction..."
@@ -687,7 +828,7 @@ public class Program
             else
             {
                 Console.WriteLine(
-                    "Invalid input. Please enter a valid score (number from 0 to 255)."
+                    "Invalid input. Please enter a valid score (number from 0 to 254)."
                 );
             }
         }
@@ -729,111 +870,3 @@ public class Program
         }
     }
 }
-
-
-// // Member<Match, Prediction> simon = new Member<Match, Prediction>(
-// //     "Simon",
-// //     "Hörtzsch",
-// //     "Simon.Hoertzsch@student.tu-freiberg.de",
-// //     "MeinCoolesPasswort"
-// // );
-// // Member<Match, Prediction> artim = new Member<Match, Prediction>(
-// //     "Artim",
-// //     "Meyer",
-// //     "Artim.Meyer@student.tu-freiberg.de",
-// //     "MeinPasswortIstCooler"
-// // );
-// // Member<Match, Prediction> zug = new Member<Match, Prediction>(
-// //     "Sebastian",
-// //     "Zug",
-// //     "Sebastian.Zug@informatik.tu-freiberg.de",
-// //     "Ich bin Prof"
-// // );
-
-// foreach (var member in prediction_game.Members)
-// {
-//     Console.WriteLine($"{member}");
-//     Console.WriteLine($"Liste ArchivedPredicitons for {member.GetForename()}:");
-//     foreach (var prediction in member.GetArchivedPredictions())
-//     {
-//         Console.WriteLine($"\t{prediction}");
-//     }
-//     Console.WriteLine($"Liste PredictionsDone for {member.GetForename()}:");
-//     foreach (var prediction in member.GetPredictionsDone())
-//     {
-//         Console.WriteLine($"\t{prediction}");
-//     }
-//     Console.WriteLine($"Liste Scores for {member.GetForename()}:");
-//     foreach (var score in member.GetScores())
-//     {
-//         Console.WriteLine($"\t{score}");
-//     }
-// }
-
-// // prediction_game.Register(simon);
-// // prediction_game.Register(artim);
-// // prediction_game.Register(zug);
-
-// foreach (var member in prediction_game.Members)
-// {
-//     member.AddParticipatingSchedule(em_2024, ScheduleTypes.EM_2024);
-//     member.AddPredictionToDo();
-// }
-
-// // simon.AddParticipatingSchedule(em_2024, ScheduleTypes.EM_2024);
-// // artim.AddParticipatingSchedule(em_2024, ScheduleTypes.EM_2024);
-
-// // simon.AddPredictionToDo();
-// // artim.AddPredictionToDo();
-
-// prediction_game
-//     .Members[0]
-//     .ConvertPredictionsDone(
-//         prediction_game.Members[0].GetPredictionsToDo()[0].MatchID,
-//         3,
-//         2
-//     );
-// prediction_game
-//     .Members[1]
-//     .ConvertPredictionsDone(
-//         prediction_game.Members[1].GetPredictionsToDo()[0].MatchID,
-//         1,
-//         2
-//     );
-// prediction_game
-//     .Members[2]
-//     .ConvertPredictionsDone(
-//         prediction_game.Members[2].GetPredictionsToDo()[0].MatchID,
-//         1,
-//         1
-//     );
-
-// // simon.CalculateScores();
-// // artim.CalculateScores();
-
-// prediction_game
-//     .Members[0]
-//     .ConvertPredictionsDone(
-//         prediction_game.Members[0].GetPredictionsToDo()[0].MatchID,
-//         2,
-//         3
-//     );
-// prediction_game
-//     .Members[1]
-//     .ConvertPredictionsDone(
-//         prediction_game.Members[1].GetPredictionsToDo()[0].MatchID,
-//         2,
-//         1
-//     );
-// prediction_game
-//     .Members[2]
-//     .ConvertPredictionsDone(
-//         prediction_game.Members[2].GetPredictionsToDo()[0].MatchID,
-//         1,
-//         1
-//     );
-
-// foreach (var member in prediction_game.Members)
-// {
-//     member.CalculateScores();
-// }
