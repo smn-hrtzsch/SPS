@@ -51,9 +51,9 @@ public class CSVWriter<M, P>
             string[] PredictableSchedules = new string[AmountOfScheduleTypes];
             for (int i = 0; i < AmountOfScheduleTypes; i++)
             {
-                PredictableSchedules[i] = $";{prediction_game.ScheduleTypesList[i]}";
+                PredictableSchedules[i] = $"{prediction_game.ScheduleTypesList[i]}";
             }
-            sw.WriteLine($"MemberID{string.Join("", PredictableSchedules)}");
+            sw.WriteLine($"MemberID;{string.Join(";", PredictableSchedules)}");
 
             foreach (var member in prediction_game.Members)
             {
@@ -61,9 +61,9 @@ public class CSVWriter<M, P>
                 string[] Scores = new string[AmountOfScores];
                 for (int i = 0; i < AmountOfScores; i++)
                 {
-                    Scores[i] = $";{member.GetScores()[i].ToString()}";
+                    Scores[i] = member.GetScores()[i].ToString();
                 }
-                sw.WriteLine($"{member.MemberID}{string.Join("", Scores)}");
+                sw.WriteLine($"{member.MemberID};{string.Join(";", Scores)}");
             }
         }
     }
