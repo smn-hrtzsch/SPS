@@ -556,17 +556,18 @@ public class Program
                 }
 
                 // Ausgabe der bereits vorhergesagten Spiele nach Wettbewerb
-                DisplayPredictions(
+                int next_prediction_number = predictions_to_do_count;
+                next_prediction_number = DisplayPredictions(
                     "Here are your already predicted Matches for the schedule EM 2024:",
                     em2024_matches,
                     football_predictions_on_day,
-                    predictions_to_do_count
+                    next_prediction_number
                 );
-                DisplayPredictions(
+                next_prediction_number = DisplayPredictions(
                     "Here are your already predicted Matches for the schedule LaLiga:",
                     laliga_matches,
                     football_predictions_on_day,
-                    predictions_to_do_count
+                    next_prediction_number
                 );
 
                 int match_number = GetMatchNumberFromUser(
@@ -656,11 +657,11 @@ public class Program
     }
 
     // Hilfsmethode zur Ausgabe der Vorhersagen
-    private static void DisplayPredictions(
+    private static int DisplayPredictions(
         string header,
         List<FootballMatch?> matches,
         List<FootballPrediction> football_predictions_on_day,
-        int predictions_to_do_count
+        int prediction_start_number
     )
     {
         if (matches.Count > 0)
@@ -676,17 +677,19 @@ public class Program
                 if (prediction != null && match != null)
                 {
                     Console.WriteLine(
-                        $"{i + predictions_to_do_count + 1}: {match.MatchDate:dd.MM.yyyy HH:mm} {match.HomeTeam} - {match.AwayTeam} | {prediction.PredictionHome}:{prediction.PredictionAway}"
+                        $"{prediction_start_number + i + 1}: {match.MatchDate:dd.MM.yyyy HH:mm} {match.HomeTeam} - {match.AwayTeam} | {prediction.PredictionHome}:{prediction.PredictionAway}"
                     );
                 }
                 else if (match != null)
                 {
                     Console.WriteLine(
-                        $"{i + predictions_to_do_count + 1}: {match.MatchDate:dd.MM.yyyy HH:mm} {match.HomeTeam} - {match.AwayTeam} | No prediction found"
+                        $"{prediction_start_number + i + 1}: {match.MatchDate:dd.MM.yyyy HH:mm} {match.HomeTeam} - {match.AwayTeam} | No prediction found"
                     );
                 }
             }
+            return prediction_start_number + matches.Count;
         }
+        return prediction_start_number;
     }
 
     // Hilfsmethode zum Füllen der Vorhersagen für die Spiele des Tages
