@@ -18,6 +18,8 @@ public abstract class Match
 
     public SportsTypes SportsType { get; protected set; }
 
+    public ScheduleTypes schedule_type { get; set; }
+
     public string[] MatchArray { get; protected set; }
 
     public override int GetHashCode()
