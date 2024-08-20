@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Xml.Xsl;
 
 public class CSVReader<M, P>
     where M : Match
@@ -144,7 +145,7 @@ public class CSVReader<M, P>
     public static void GetFootballPredictionsFromCsvFile(
         string PathToCsvFile,
         PredictionGame prediction_game,
-        Schedule<M> schedule
+        List<Schedule<Match>> schedules
     )
     {
         var all_lines = File.ReadLines(PathToCsvFile).ToList();
@@ -171,15 +172,24 @@ public class CSVReader<M, P>
             string needed_line = all_lines[line_number];
             string[] prediction_data = needed_line.Split(';');
 
-            // Finde das entsprechende Match in der Schedule
-            FootballMatch? football_match =
-                schedule.Matches.FirstOrDefault(m =>
-                    m.ToString() == prediction_data[member_count + 1]
-                ) as FootballMatch;
+            List<FootballMatch?>? all_football_matches = new List<FootballMatch?>();
+
+            foreach (var schedule in schedules)
+            {
+                foreach (var match in schedule.Matches)
+                {
+                    all_football_matches.Add(match as FootballMatch);
+                }
+            }
+
+            // Finde das entsprechende Match in der Schedule Liste
+            FootballMatch? football_match = all_football_matches.FirstOrDefault(m =>
+                m.ToString() == prediction_data[member_count + 1]
+            );
 
             if (football_match == null)
             {
-                continue; // Wenn das Match nicht gefunden wurde, überspringe die Zeile
+                continue;
             }
 
             for (int i = 1; i <= member_count; i++) // Start from 1 to skip "Predicted Match" column
