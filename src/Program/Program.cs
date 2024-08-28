@@ -979,7 +979,7 @@ public class Program
 
             for (int i = 0; i < MemberScheduleTypes.Count; i++)
             {
-                    Console.WriteLine($"\t{MemberScheduleTypes[i]}");
+                Console.WriteLine($"\t{MemberScheduleTypes[i]}");
             }
         }
 
