@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -17,7 +18,7 @@ public class Program
         DateTime yesterday = DateTime.Now.AddDays(-1);
 
         // Set up match factory for the CSVReader
-        IMatchFactory<FootballMatch> football_match_factory = new FootballMatchFactory();
+        IMatchFactory<FootballMatch?> football_match_factory = new FootballMatchFactory();
         CSVReader<FootballMatch, FootballPrediction>.SetMatchFactory(football_match_factory);
 
         // File paths
@@ -28,24 +29,43 @@ public class Program
         string PathToScoreDataFile = "../../csv-files/ScoreData.csv";
 
         // Load schedule, members, predictions, and scores
-        Schedule<Match> em_2024;
-        Schedule<Match> laliga_24_25;
+        Schedule<Match?> em_2024;
+        Schedule<Match?> laliga_24_25;
         if (File.Exists(PathToEM_2024File) && File.Exists(PathToLaLiga_24_25File))
         {
-            em_2024 = new Schedule<Match>(
+            em_2024 = new Schedule<Match?>(
                 PathToEM_2024File,
                 SportsTypes.Football,
                 ScheduleTypes.EM_2024
             );
-            laliga_24_25 = new Schedule<Match>(
+            laliga_24_25 = new Schedule<Match?>(
                 PathToLaLiga_24_25File,
                 SportsTypes.Football,
                 ScheduleTypes.La_Liga_24_25
             );
+            // set schedule type for every match in every Schedule
+            if (em_2024.Matches != null && laliga_24_25.Matches != null)
+            {
+                foreach (var match in em_2024.Matches)
+                {
+                    if (match != null)
+                    {
+                        match.ScheduleType = ScheduleTypes.EM_2024;
+                    }
+                }
+                foreach (var match in laliga_24_25.Matches)
+                {
+                    if (match != null)
+                    {
+                        match.ScheduleType = ScheduleTypes.La_Liga_24_25;
+                    }
+                }
+            }
             if (File.Exists(PathToMemberDataFile))
             {
-                prediction_game.Members = CSVReader<Match, Prediction>.GetMemberDataFromCsvFile(
-                    PathToMemberDataFile
+                prediction_game.Members = CSVReader<Match?, Prediction?>.GetMemberDataFromCsvFile(
+                    PathToMemberDataFile,
+                    new List<Schedule<Match?>?> { em_2024, laliga_24_25 }
                 );
             }
             if (File.Exists(PathToPredictionDataFile))
@@ -53,7 +73,7 @@ public class Program
                 CSVReader<Match, Prediction>.GetFootballPredictionsFromCsvFile(
                     PathToPredictionDataFile,
                     prediction_game,
-                    new List<Schedule<Match>> { em_2024, laliga_24_25 }
+                    new List<Schedule<Match?>?> { em_2024, laliga_24_25 }
                 );
             }
             if (File.Exists(PathToScoreDataFile))
@@ -69,16 +89,6 @@ public class Program
             throw new InvalidOperationException("There is no file to read the schedule from.");
         }
 
-        // set schedule type for every match in every Schedule
-        foreach (var match in em_2024.Matches)
-        {
-            match.schedule_type = ScheduleTypes.EM_2024;
-        }
-        foreach (var match in laliga_24_25.Matches)
-        {
-            match.schedule_type = ScheduleTypes.La_Liga_24_25;
-        }
-
         // Begin login loop / Main menu loop
         while (!login)
         {
@@ -92,7 +102,7 @@ public class Program
             Console.WriteLine("[2] Register");
             Console.WriteLine("");
             Console.Write("Please choose [1] or [2]: ");
-            string input = Console.ReadLine();
+            string? input = Console.ReadLine();
 
             if (input == "1")
             {
@@ -231,8 +241,13 @@ public class Program
             else if (input == "2")
             {
                 bool emailFound = false;
-                Console.Write("Enter your new [Email]: ");
-                string newEmail = Console.ReadLine();
+                Console.Write("\nEnter your email address or press [esc] to return: ");
+                var newEmailResult = ReadInputWithEscape();
+                string newEmail = newEmailResult.input;
+                if (string.IsNullOrEmpty(newEmail))
+                {
+                    continue; // Return to the start screen
+                }
 
                 foreach (var member in prediction_game.Members)
                 {
@@ -248,31 +263,51 @@ public class Program
 
                 if (!emailFound)
                 {
-                    Console.Write("Enter your new [Forename]: ");
-                    string newForename = Console.ReadLine();
+                    Console.Write("\nEnter your forename or press [esc] to return: ");
+                    var forenameResult = ReadInputWithEscape(true); // Allow empty input for forename
+                    if (forenameResult.isEscape)
+                    {
+                        continue; // If escape is pressed, return to the start screen
+                    }
+                    string newForename = forenameResult.input;
 
-                    Console.Write("Enter your new [Surname]: ");
-                    string newSurname = Console.ReadLine();
+                    Console.Write("\nEnter your surname or press [esc] to return: ");
+                    var surnameResult = ReadInputWithEscape(true); // Allow empty input for surname
+                    if (surnameResult.isEscape)
+                    {
+                        continue; // If escape is pressed, return to the start screen
+                    }
+                    string newSurname = surnameResult.input;
 
                     while (true)
                     {
-                        Console.Write("Enter your new [Password]: ");
-                        string newPassword = Console.ReadLine();
+                        string newPassword = string.Empty;
+                        Console.Write("\nEnter a password or press [esc] to return: ");
+                        newPassword = ReadPasswordWithEscape();
+                        if (string.IsNullOrEmpty(newPassword))
+                        {
+                            continue; // Return to the start screen
+                        }
 
-                        Console.Write("Verify your password: ");
-                        string verifiedPassword = Console.ReadLine();
+                        string verifiedPassword = string.Empty;
+                        Console.Write("Verify your password or press [esc] to return: ");
+                        verifiedPassword = ReadPasswordWithEscape();
+                        if (string.IsNullOrEmpty(verifiedPassword))
+                        {
+                            continue; // Return to the start screen
+                        }
 
                         if (newPassword == verifiedPassword)
                         {
                             prediction_game.Members.Add(
-                                new Member<Match, Prediction>(
+                                new Member<Match?, Prediction?>(
                                     newForename,
                                     newSurname,
                                     newEmail,
                                     newPassword
                                 )
                             );
-                            Console.WriteLine("Registration successful!");
+                            Console.WriteLine("\nRegistration successful!");
                             Console.WriteLine(
                                 "Press any key to return to the login screen, you can now login with your provided data."
                             );
@@ -288,22 +323,13 @@ public class Program
             }
             else
             {
-                Console.WriteLine("");
-                Console.WriteLine("That did not work. Please try again.");
-                Console.WriteLine("");
+                Console.WriteLine("\nThat did not work. Please try again.\n");
                 Thread.Sleep(1000);
             }
         }
 
-        foreach (var member in prediction_game.Members)
-        {
-            member.AddParticipatingSchedule(em_2024, ScheduleTypes.EM_2024);
-            member.AddParticipatingSchedule(laliga_24_25, ScheduleTypes.La_Liga_24_25);
-        }
-
         while (true)
         {
-            //Console.Clear();
             Console.Clear();
             Console.WriteLine("================================");
             Console.WriteLine("              SPS              ");
@@ -311,9 +337,10 @@ public class Program
             Console.WriteLine("[1] Display Members");
             Console.WriteLine("[2] Display Scores");
             Console.WriteLine("[3] Add Prediction");
-            Console.WriteLine("[4] Save and Exit");
-            Console.Write("Select an option (1-4): ");
-            string choice = Console.ReadLine();
+            Console.WriteLine("[4] Manage Schedules");
+            Console.WriteLine("[5] Save and Exit");
+            Console.Write("Select an option (1-5): ");
+            string? choice = Console.ReadLine();
 
             switch (choice)
             {
@@ -324,12 +351,15 @@ public class Program
                     DisplayScores(prediction_game);
                     break;
                 case "3":
-                    AddPrediction(
-                        prediction_game,
-                        new List<Schedule<Match>> { em_2024, laliga_24_25 }
-                    );
+                    AddPrediction(prediction_game);
                     break;
                 case "4":
+                    ManageSchedules(
+                        prediction_game,
+                        new List<Schedule<Match?>> { em_2024, laliga_24_25 }
+                    );
+                    break;
+                case "5":
                     SaveAndExit(
                         prediction_game,
                         PathToMemberDataFile,
@@ -354,7 +384,7 @@ public class Program
         List<Prediction> predictions = new List<Prediction>();
         foreach (var prediction in member.GetPredictionsDone())
         {
-            if (prediction.PredictionDate.Day == date.Day)
+            if (prediction?.PredictionDate.Day == date.Day)
             {
                 predictions.Add(prediction);
             }
@@ -398,65 +428,94 @@ public class Program
         Console.Clear();
         Console.WriteLine("Scores:\n");
 
-        // Bestimme die maximale Breite der ersten Spalte basierend auf MemberID und Forename
+        // Determine the maximum width for the MemberID (Forename) column
         int maxMemberInfoLength =
             prediction_game
                 .Members.Select(m => $"{m.MemberID} ({m.GetForename()})")
-                .Max(s => s.Length) + 2; // +2 to add padding on both sides
+                .Max(s => s.Length) + 2; // +2 for padding
 
-        // Dynamische Spaltenüberschriften basierend auf ScheduleTypes
-        string header = $"| {"MemberID (Forename)".PadRight(maxMemberInfoLength)} ";
-        int headerLength = header.Length;
+        // Calculate column widths based on the longest text in each column (header or data)
+        List<int> columnWidths = new List<int>();
+
         foreach (var scoreType in prediction_game.ScheduleTypesList)
         {
-            header +=
-                $"| {scoreType.ToString().PadLeft((10 + scoreType.ToString().Length) / 2).PadRight(10)} ";
-        }
-        header += $"| {"GesamtScore".PadLeft((10 + "GesamtScore".Length) / 2).PadRight(10)} |";
+            int maxScoreWidth = prediction_game
+                .Members.Select(m =>
+                    m.GetScores()
+                        .FirstOrDefault(s => s.ScoreID == scoreType)
+                        ?.AmountOfPoints.ToString()
+                        .Length ?? 1
+                )
+                .Max();
 
-        // Ausgabe der Spaltenüberschriften und Trennlinien
+            int columnWidth = Math.Max(
+                10,
+                Math.Max(scoreType.ToString().Length + 2, maxScoreWidth)
+            );
+            columnWidths.Add(columnWidth);
+        }
+
+        // Add column width for GesamtScore
+        int totalColumnWidth = Math.Max(10, "GesamtScore".Length + 2);
+        columnWidths.Add(totalColumnWidth);
+
+        // Build the header row
+        string header = $"| {"MemberID (Forename)".PadRight(maxMemberInfoLength)} ";
+        int first_column_length = header.Length;
+        for (int i = 0; i < prediction_game.ScheduleTypesList.Count; i++)
+        {
+            string scoreType = prediction_game.ScheduleTypesList[i].ToString();
+            header +=
+                $"| {scoreType.PadLeft((columnWidths[i] + scoreType.Length) / 2).PadRight(columnWidths[i])} ";
+        }
+        header +=
+            $"| {"GesamtScore".PadLeft((totalColumnWidth + "GesamtScore".Length) / 2).PadRight(totalColumnWidth)} |";
+
+        // Output the header and separator line
         Console.WriteLine(new string('-', header.Length));
         Console.WriteLine(header);
         Console.WriteLine(new string('-', header.Length));
 
-        // Ausgabe der Member und Scores
+        // Output each member's score row
         foreach (var member in prediction_game.Members)
         {
-            string row = null;
+            // Add padding to the MemberID (Forename) field
+            string row = string.Empty;
             string memberInfo = $"{member.MemberID} ({member.GetForename()})";
-            if (maxMemberInfoLength < headerLength)
+            if (maxMemberInfoLength < first_column_length)
             {
-                row = $"| {memberInfo.PadRight(headerLength - 2)}";
+                row = $"| {memberInfo.PadRight(first_column_length - 3)} ";
             }
             else
             {
-                row = $"| {memberInfo.PadRight(maxMemberInfoLength + 1)}";
+                row = $"| {memberInfo.PadRight(maxMemberInfoLength)} ";
             }
             int totalScore = 0;
 
-            foreach (var scheduleType in prediction_game.ScheduleTypesList)
+            for (int i = 0; i < prediction_game.ScheduleTypesList.Count; i++)
             {
+                var scheduleType = prediction_game.ScheduleTypesList[i];
                 var score = member.GetScores().FirstOrDefault(s => s.ScoreID == scheduleType);
                 int points = score != null ? (int)score.AmountOfPoints : 0;
                 totalScore += points;
                 string pointsStr = points.ToString();
-                row += $"| {pointsStr.PadLeft((10 + pointsStr.Length) / 2).PadRight(10)} ";
+                row +=
+                    $"| {pointsStr.PadLeft((columnWidths[i] + pointsStr.Length) / 2).PadRight(columnWidths[i])} ";
             }
 
             string totalScoreStr = totalScore.ToString();
-            row += $"| {totalScoreStr.PadLeft((11 + totalScoreStr.Length) / 2).PadRight(11)} |";
+            row +=
+                $"| {totalScoreStr.PadLeft((totalColumnWidth + totalScoreStr.Length) / 2).PadRight(totalColumnWidth)} |";
             Console.WriteLine(row);
         }
 
+        // Output the final separator line
         Console.WriteLine(new string('-', header.Length));
         Console.WriteLine("Press any key to return to the main menu...");
         Console.ReadKey();
     }
 
-    private static void AddPrediction(
-        PredictionGame prediction_game,
-        List<Schedule<Match>> schedules
-    )
+    private static void AddPrediction(PredictionGame prediction_game)
     {
         var member = prediction_game.Members.Find(m => m.MemberID == member_id);
         if (member == null)
@@ -477,9 +536,9 @@ public class Program
             // Sammle die Spiele, die heute vorhergesagt wurden
             foreach (var prediction in member.GetPredictionsDone())
             {
-                if (prediction.PredictedMatch.MatchDate.Date == DateTime.Now.Date)
+                if (prediction?.PredictedMatch?.MatchDate.Date == DateTime.Now.Date)
                 {
-                    if (IsEM2024Match(prediction.PredictedMatch, em2024_matches))
+                    if (IsEM2024Match(prediction.PredictedMatch))
                     {
                         em2024_matches.Add(prediction.PredictedMatch as FootballMatch);
                     }
@@ -492,9 +551,9 @@ public class Program
 
             foreach (var prediction in member.GetArchivedPredictions())
             {
-                if (prediction.PredictedMatch.MatchDate.Date == DateTime.Now.Date)
+                if (prediction?.PredictedMatch?.MatchDate.Date == DateTime.Now.Date)
                 {
-                    if (IsEM2024Match(prediction.PredictedMatch, em2024_matches))
+                    if (IsEM2024Match(prediction.PredictedMatch))
                     {
                         em2024_matches.Add(prediction.PredictedMatch as FootballMatch);
                     }
@@ -574,6 +633,7 @@ public class Program
                     predictions_to_do_count,
                     football_predictions_on_day.Count
                 );
+
                 if (match_number == -1)
                     return; // Zurück zur Hauptschleife, wenn die Vorhersage abgebrochen wurde
 
@@ -591,6 +651,18 @@ public class Program
                     }
                     Console.WriteLine();
 
+                    if (match.MatchDate < DateTime.Now)
+                    {
+                        Console.WriteLine(
+                            "\n\nYou cannot predict this match anymore, because it has already started or taken place."
+                        );
+                        Console.Write("Press any key to continue...");
+                        Console.ReadKey();
+                        continue; // Zurück zur Schleife, um erneut eine Vorhersage auszuwählen
+                    }
+
+                    Console.WriteLine();
+
                     byte PredictionHome = GetPrediction($"{match.HomeTeam}");
                     if (PredictionHome == 255)
                     {
@@ -603,7 +675,8 @@ public class Program
                     }
 
                     member.ConvertPredictionsDone(match, PredictionHome, PredictionAway);
-                    Console.WriteLine("Prediction added successfully!");
+                    Console.WriteLine("\nPrediction added successfully!");
+                    Thread.Sleep(1000);
                 }
                 else
                 {
@@ -614,17 +687,18 @@ public class Program
 
                     if (prediction != null && match != null)
                     {
-                        if (member.GetArchivedPredictions().Contains(prediction))
+                        if (prediction?.PredictedMatch?.MatchDate < DateTime.Now)
                         {
                             Console.WriteLine(
-                                "Your Prediction cannot be changed, because the match has already started or taken place."
+                                "\n\nYour Prediction cannot be changed, because the match has already started or taken place."
                             );
-                            Console.WriteLine("Press any key to continue...");
+                            Console.Write("Press any key to continue...");
                             Console.ReadKey();
                             continue; // Zurück zur Schleife, um erneut eine Vorhersage auszuwählen
                         }
                         else
                         {
+                            Console.WriteLine();
                             Console.WriteLine();
                             byte NewPredictionHome = GetPrediction(match.HomeTeam);
                             if (NewPredictionHome == 255)
@@ -642,7 +716,8 @@ public class Program
                                 NewPredictionAway,
                                 prediction
                             );
-                            Console.WriteLine("Prediction was successfully changed");
+                            Console.WriteLine("\nPrediction was successfully changed");
+                            Thread.Sleep(1000);
                         }
                     }
                 }
@@ -651,9 +726,9 @@ public class Program
     }
 
     // Hilfsmethode zur Überprüfung, ob es sich um ein EM 2024 Spiel handelt
-    private static bool IsEM2024Match(Match match, List<FootballMatch> matches)
+    private static bool IsEM2024Match(Match match)
     {
-        return match.schedule_type == ScheduleTypes.EM_2024; // Anpassung je nach Feldname oder Logik
+        return match.ScheduleType == ScheduleTypes.EM_2024; // Anpassung je nach Feldname oder Logik
     }
 
     // Hilfsmethode zur Ausgabe der Vorhersagen
@@ -671,7 +746,7 @@ public class Program
             {
                 FootballMatch? match = matches[i];
                 FootballPrediction? prediction = football_predictions_on_day.FirstOrDefault(p =>
-                    p.PredictedMatch.MatchID == match?.MatchID
+                    p?.PredictedMatch?.MatchID == match?.MatchID
                 );
 
                 if (prediction != null && match != null)
@@ -696,15 +771,15 @@ public class Program
     private static void FillPredictionsForMatches(
         List<FootballMatch?> matches,
         List<FootballPrediction> football_predictions_on_day,
-        Member<Match, Prediction> member
+        Member<Match?, Prediction?> member
     )
     {
         foreach (var match in matches)
         {
             FootballPrediction? prediction =
                 member
-                    .GetPredictionsDone()
-                    .FirstOrDefault(p => p.PredictedMatch.MatchID == match?.MatchID)
+                    ?.GetPredictionsDone()
+                    ?.FirstOrDefault(p => p?.PredictedMatch?.MatchID == match?.MatchID)
                 as FootballPrediction;
             if (prediction != null)
             {
@@ -715,8 +790,8 @@ public class Program
         {
             FootballPrediction? prediction =
                 member
-                    .GetArchivedPredictions()
-                    .FirstOrDefault(p => p.PredictedMatch.MatchID == match?.MatchID)
+                    ?.GetArchivedPredictions()
+                    .FirstOrDefault(p => p?.PredictedMatch?.MatchID == match?.MatchID)
                 as FootballPrediction;
             if (prediction != null)
             {
@@ -793,10 +868,10 @@ public class Program
     private static byte GetPrediction(string? team)
     {
         byte prediction;
-        string predictionstr = string.Empty;
         while (true)
         {
-            Console.Write($"\nEnter Prediction for {team} or press [esc] to cancel: ");
+            string predictionstr = string.Empty;
+            Console.Write($"Enter Prediction for {team} or press [esc] to cancel: ");
 
             while (true)
             {
@@ -856,6 +931,199 @@ public class Program
         return prediction;
     }
 
+    private static void ManageSchedules(
+        PredictionGame prediction_game,
+        List<Schedule<Match?>> schedules
+    )
+    {
+        Console.Clear();
+
+        var member = prediction_game.Members.Find(m => m.MemberID == member_id);
+
+        List<ScheduleTypes> MemberScheduleTypes = new List<ScheduleTypes>();
+        List<Schedule<Match?>?>? ParticipatingSchedules = member?.GetParticipatingSchedules();
+
+        if (ParticipatingSchedules != null)
+        {
+            foreach (var schedule in ParticipatingSchedules)
+            {
+                if (schedule != null)
+                {
+                    MemberScheduleTypes.Add(schedule.ScheduleID);
+                }
+            }
+        }
+
+        Console.WriteLine(
+            $"Hey, {member?.GetForename()}. Here you can manage the schedules you want to predict..."
+        );
+        Console.WriteLine("All schedules included in SPS: \n");
+
+        if (prediction_game.ScheduleTypesList != null)
+        {
+            for (int i = 0; i < prediction_game.ScheduleTypesList.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}: {prediction_game.ScheduleTypesList[i]}");
+            }
+        }
+
+        if (member?.GetScores().Count == 0)
+        {
+            Console.WriteLine("\nYou are currently not participating in any schedule.");
+        }
+        else
+        {
+            Console.WriteLine(
+                "\nAnd these are the schedules you are currently participating in: \n"
+            );
+
+            for (int i = 0; i < MemberScheduleTypes.Count; i++)
+            {
+                    Console.WriteLine($"\t{MemberScheduleTypes[i]}");
+            }
+        }
+
+        if (prediction_game.ScheduleTypesList != null)
+        {
+            int schedule_number = GetScheduleNumberFromUser(
+                prediction_game.ScheduleTypesList.Count
+            );
+            if (schedule_number == -1)
+            {
+                return;
+            }
+            if (schedule_number <= prediction_game.ScheduleTypesList.Count)
+            {
+                while (true)
+                {
+                    Console.Write("\nDo you want to add [1] or remove [2] this schedule? ");
+                    var input = Console.ReadLine();
+                    if (input == "1")
+                    {
+                        if (
+                            !MemberScheduleTypes.Contains(
+                                prediction_game.ScheduleTypesList[schedule_number - 1]
+                            )
+                        )
+                        {
+                            member?.AddParticipatingSchedule(
+                                schedules[schedule_number - 1],
+                                prediction_game.ScheduleTypesList[schedule_number - 1]
+                            );
+                            Console.WriteLine("\nSchedule was added successfully.");
+                            Console.WriteLine("Press any key to return to the main menu...");
+                            Console.ReadKey();
+                            return;
+                        }
+                        else
+                        {
+                            Console.WriteLine(
+                                "\nYou already participate in predicting this schedule."
+                            );
+                            Console.WriteLine("Press any key to return to the main menu...");
+                            Console.ReadKey();
+                            return;
+                        }
+                    }
+                    else if (input == "2")
+                    {
+                        if (
+                            MemberScheduleTypes.Contains(
+                                prediction_game.ScheduleTypesList[schedule_number - 1]
+                            )
+                        )
+                        {
+                            member?.RemoveParticipatingSchedule(
+                                prediction_game.ScheduleTypesList[schedule_number - 1]
+                            );
+                            Console.WriteLine("\nSchedule was removed successfully.");
+                            Console.WriteLine("Press any key to return to the main menu...");
+                            Console.ReadKey();
+                            return;
+                        }
+                        else
+                        {
+                            Console.WriteLine(
+                                "\nYou are not participating in this schedule, so it cannot not be removed."
+                            );
+                            Console.WriteLine("Press any key to return to the main menu...");
+                            Console.ReadKey();
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine(
+                            "\nInvalid input, please enter 1 for adding the schedule or 2 for removing."
+                        );
+                        Console.WriteLine("Press any key to return to choose again.");
+                        Console.ReadKey();
+                        continue;
+                    }
+                }
+            }
+        }
+    }
+
+    // Methode zur Abfrage der Spielnummer vom Benutzer
+    private static int GetScheduleNumberFromUser(int possible_schedules_count)
+    {
+        int schedule_number;
+        while (true)
+        {
+            Console.WriteLine("\nEnter the number of the schedule you want to add or remove.");
+            Console.Write("If you want to cancel, press [esc]: ");
+            var keyInfo = Console.ReadKey(true); // Read a key without displaying it
+
+            if (keyInfo.Key == ConsoleKey.Escape)
+            {
+                schedule_number = -1;
+                break; // Abbruch der aktuellen Vorhersage, aber in der Schleife bleiben
+            }
+
+            if (char.IsDigit(keyInfo.KeyChar))
+            {
+                Console.Write(keyInfo.KeyChar);
+                string input = keyInfo.KeyChar.ToString();
+
+                // Read additional digits if any
+                while (true)
+                {
+                    keyInfo = Console.ReadKey(true);
+                    if (char.IsDigit(keyInfo.KeyChar))
+                    {
+                        Console.Write(keyInfo.KeyChar);
+                        input += keyInfo.KeyChar;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                if (
+                    int.TryParse(input, out schedule_number)
+                    && schedule_number > 0
+                    && schedule_number <= possible_schedules_count
+                )
+                {
+                    break; // Valid match number entered, exit loop
+                }
+                else
+                {
+                    Console.WriteLine(
+                        "\nInvalid input. Please enter a valid schedule number or press [esc] to cancel."
+                    );
+                }
+            }
+            else
+            {
+                Console.WriteLine("\nInvalid input. Please enter a valid schedule number.");
+            }
+        }
+        return schedule_number;
+    }
+
     private static void SaveAndExit(
         PredictionGame prediction_game,
         string memberFilePath,
@@ -889,5 +1157,71 @@ public class Program
             Thread.Sleep(1000);
             Environment.Exit(0); // Ensure the application exits
         }
+    }
+
+    private static (string input, bool isEscape) ReadInputWithEscape(bool allowEmpty = false)
+    {
+        string input = string.Empty;
+        while (true)
+        {
+            var keyInfo = Console.ReadKey(true);
+
+            if (keyInfo.Key == ConsoleKey.Escape)
+            {
+                return (string.Empty, true); // Escape pressed, return empty string and set flag
+            }
+
+            if (keyInfo.Key == ConsoleKey.Enter)
+            {
+                Console.WriteLine();
+                if (allowEmpty || !string.IsNullOrEmpty(input))
+                {
+                    return (input, false); // Return input with no escape flag
+                }
+            }
+
+            if (keyInfo.Key == ConsoleKey.Backspace && input.Length > 0)
+            {
+                input = input.Substring(0, input.Length - 1);
+                Console.Write("\b \b"); // Erase the last character in the console
+            }
+            else if (!char.IsControl(keyInfo.KeyChar))
+            {
+                input += keyInfo.KeyChar;
+                Console.Write(keyInfo.KeyChar);
+            }
+        }
+    }
+
+    private static string ReadPasswordWithEscape()
+    {
+        string password = string.Empty;
+        while (true)
+        {
+            var keyInfo = Console.ReadKey(true);
+
+            if (keyInfo.Key == ConsoleKey.Escape)
+            {
+                return string.Empty; // Escape pressed, return an empty string
+            }
+
+            if (keyInfo.Key == ConsoleKey.Enter)
+            {
+                Console.WriteLine();
+                break; // End input
+            }
+
+            if (keyInfo.Key == ConsoleKey.Backspace && password.Length > 0)
+            {
+                password = password.Substring(0, password.Length - 1);
+                Console.Write("\b \b"); // Erase the last character in the console
+            }
+            else if (!char.IsControl(keyInfo.KeyChar))
+            {
+                password += keyInfo.KeyChar;
+                Console.Write("*"); // Mask the password characters
+            }
+        }
+        return password;
     }
 }
