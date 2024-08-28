@@ -6,11 +6,13 @@ using System.Xml.XPath;
 public class Score
 {
     public ScheduleTypes ScoreID { get; }
+    public SportsTypes SportType { get; }
     public uint AmountOfPoints { get; protected set; }
 
-    public Score(ScheduleTypes predicted_schedule)
+    public Score(ScheduleTypes predicted_schedule, SportsTypes sport_type)
     {
         ScoreID = predicted_schedule;
+        SportType = sport_type;
         AmountOfPoints = 0;
     }
 
@@ -25,50 +27,54 @@ public class Score
         AmountOfPoints += points;
     }
 
-    public uint CalculateFootballScore(FootballPrediction prediction)
+    public uint CalculateFootballScore(FootballPrediction? prediction)
     {
         uint ScoreForPrediction = 0; // wenn nichts der unten genannten Ereignisse eintrifft gibt es für die Prediction keine Punkte
-        if (
-            prediction.PredictionHome > prediction.PredictionAway
-            && prediction.PredictedMatch.Team1Won()
-        )
+        if (prediction != null && prediction?.PredictedMatch != null)
         {
-            ScoreForPrediction += 5; // wenn der Sieg der Heimmannschaft richtig getippt wurde, gibt es 5 Punkte
             if (
-                prediction.PredictionHome - prediction.PredictionAway
-                == prediction.PredictedMatch.ResultTeam1 - prediction.PredictedMatch.ResultTeam2
+                prediction?.PredictionHome > prediction?.PredictionAway
+                && prediction.PredictedMatch.Team1Won()
             )
             {
-                ScoreForPrediction += 3; // bei richtig getippter Tordifferenz gibt es 3 extra Punkte
+                ScoreForPrediction += 5; // wenn der Sieg der Heimmannschaft richtig getippt wurde, gibt es 5 Punkte
+                if (
+                    prediction.PredictionHome - prediction.PredictionAway
+                    == prediction.PredictedMatch.ResultTeam1 - prediction.PredictedMatch.ResultTeam2
+                )
+                {
+                    ScoreForPrediction += 3; // bei richtig getippter Tordifferenz gibt es 3 extra Punkte
+                }
             }
-        }
-        else if (
-            prediction.PredictionHome < prediction.PredictionAway
-            && prediction.PredictedMatch.Team2Won()
-        )
-        {
-            ScoreForPrediction += 5; // wenn der Sieg der Auswärtsmannschaft richtig getippt wurde, gibt es 5 Punkte
-            if (
-                prediction.PredictionAway - prediction.PredictionHome
-                == prediction.PredictedMatch.ResultTeam2 - prediction.PredictedMatch.ResultTeam1
+            else if (
+                prediction?.PredictionHome < prediction?.PredictionAway
+                && prediction.PredictedMatch.Team2Won()
             )
             {
-                ScoreForPrediction += 3; // bei richtig getippter Tordifferenz gibt es 3 extra Punkte
+                ScoreForPrediction += 5; // wenn der Sieg der Auswärtsmannschaft richtig getippt wurde, gibt es 5 Punkte
+                if (
+                    prediction.PredictionAway - prediction.PredictionHome
+                    == prediction.PredictedMatch.ResultTeam2 - prediction.PredictedMatch.ResultTeam1
+                )
+                {
+                    ScoreForPrediction += 3; // bei richtig getippter Tordifferenz gibt es 3 extra Punkte
+                }
             }
-        }
-        if (
-            prediction.PredictionHome == prediction.PredictionAway
-            && prediction.PredictedMatch.Tie()
-        )
-        {
-            ScoreForPrediction += 5; // wenn ein Unentschieden richtig getippt wurde, gibt es 5 Punkte für die
-        }
-        if (
-            prediction.PredictedMatch.ResultTeam1 == prediction.PredictionHome
-            && prediction.PredictedMatch.ResultTeam2 == prediction.PredictionAway
-        )
-        {
-            ScoreForPrediction += 10; // wenn Ergebnis exakt richtig getippt wurde, gibt es 10 extra Punkte (nur, wenn es kein )
+            if (
+                prediction?.PredictionHome == prediction?.PredictionAway
+                && prediction != null
+                && prediction.PredictedMatch.Tie()
+            )
+            {
+                ScoreForPrediction += 5; // wenn ein Unentschieden richtig getippt wurde, gibt es 5 Punkte für die
+            }
+            if (
+                prediction?.PredictedMatch?.ResultTeam1 == prediction?.PredictionHome
+                && prediction?.PredictedMatch?.ResultTeam2 == prediction?.PredictionAway
+            )
+            {
+                ScoreForPrediction += 10; // wenn Ergebnis exakt richtig getippt wurde, gibt es 10 extra Punkte (nur, wenn es kein )
+            }
         }
         return ScoreForPrediction;
     }

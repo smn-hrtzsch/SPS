@@ -14,7 +14,7 @@ public class PredictionGame
 
     private EmailService email_service { get; set; }
 
-    public List<Member<Match, Prediction>> Members { get; set; }
+    public List<Member<Match?, Prediction?>> Members { get; set; }
 
     public List<ScheduleTypes> ScheduleTypesList { get; }
 
@@ -24,14 +24,14 @@ public class PredictionGame
     {
         email_service = emailService;
         PredictionGameID = (uint)GetHashCode();
-        Members = new List<Member<Match, Prediction>>();
+        Members = new List<Member<Match?, Prediction?>>();
         ScheduleTypesList = GetAllScheduleTypes();
     }
 
     private List<ScheduleTypes> GetAllScheduleTypes() =>
         Enum.GetValues(typeof(ScheduleTypes)).Cast<ScheduleTypes>().ToList();
 
-    /// \brief Get a unique Hashcode -> PredictionGameIDCounter necassary for generation
+    /// \brief Get a unique Hashcode -> PredictionGameIDCounter necessary for generation
     public override int GetHashCode()
     {
         PredictionGameIDCounter++;
@@ -40,7 +40,7 @@ public class PredictionGame
 
     /// \brief Registers a new member to the prediction game.
 
-    public void Register(Member<Match, Prediction> member)
+    public void Register(Member<Match?, Prediction?> member)
     {
         Members.Add(member);
     }
@@ -101,10 +101,10 @@ public class PredictionGame
 
                 foreach (var match in member.GetPredictionsToDo())
                 {
-                    if (schedule == ScheduleTypes.EM_2024)
+                    if (schedule == ScheduleTypes.EM_2024 && match != null)
                     {
                         matchesList +=
-                            $"<li style='font-size: 16px; color: #444; margin: 5px 0;'>{(match as FootballMatch).HomeTeam} vs  {(match as FootballMatch).AwayTeam} am {(match as FootballMatch).MatchDate.ToString("dd.MM.yyyy HH:mm")}</li>";
+                            $"<li style='font-size: 16px; color: #444; margin: 5px 0;'>{((FootballMatch)match).HomeTeam} vs  {((FootballMatch)match).AwayTeam} am {((FootballMatch)match).MatchDate.ToString("dd.MM.yyyy HH:mm")}</li>";
                     }
                 }
                 // foreach (var score in member.GetScores())

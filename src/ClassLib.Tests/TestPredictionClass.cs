@@ -47,7 +47,7 @@ public class TestPredictionClass
         Assert.False(
             Prediction.ValidatePredictionDate(
                 prediction2.PredictionDate,
-                prediction2.PredictedMatch.MatchDate
+                prediction2?.PredictedMatch?.MatchDate
             )
         );
     }

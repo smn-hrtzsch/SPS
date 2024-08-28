@@ -4,7 +4,7 @@ namespace ClassLib.Tests;
 
 public class TestCsvFileIO
 {
-    private static IMatchFactory<FootballMatch> footballMatchFactory = new FootballMatchFactory();
+    private static IMatchFactory<FootballMatch?> footballMatchFactory = new FootballMatchFactory();
 
     [Fact]
     public static void TestGetMatchDataFromCsvFile()
@@ -41,7 +41,7 @@ public class TestCsvFileIO
     public static void TestGetScheduleFromCsvFile()
     {
         CSVReader<FootballMatch, FootballPrediction>.SetMatchFactory(footballMatchFactory);
-        List<FootballMatch> schedule = CSVReader<
+        List<FootballMatch?> schedule = CSVReader<
             FootballMatch,
             FootballPrediction
         >.GetScheduleFromCsvFile("../../../../../csv-files/EM_2024.csv", SportsTypes.Football);
@@ -49,10 +49,13 @@ public class TestCsvFileIO
         Assert.True(schedule.Count == 51);
         foreach (var match in schedule)
         {
-            Assert.True(
-                match.MatchID == (uint)match.GetHashCode(),
-                $"Expected ID: {match.MatchID}, Actual ID: {match.GetHashCode()}"
-            );
+            if (match != null)
+            {
+                Assert.True(
+                    match.MatchID == (uint)match.GetHashCode(),
+                    $"Expected ID: {match.MatchID}, Actual ID: {match.GetHashCode()}"
+                );
+            }
         }
     }
 
@@ -60,14 +63,17 @@ public class TestCsvFileIO
     public static void TestUpdateSchedule()
     {
         CSVReader<FootballMatch, FootballPrediction>.SetMatchFactory(footballMatchFactory);
-        Schedule<FootballMatch> schedule = new Schedule<FootballMatch>(
+        Schedule<FootballMatch?> schedule = new Schedule<FootballMatch?>(
             "../../../../../csv-files/EM_2024.csv",
             SportsTypes.Football,
             ScheduleTypes.EM_2024
         );
         string testFilePath = "../../../../../csv-files/EM_2024_updated.csv";
 
-        CSVWriter<FootballMatch, Prediction>.UpdateSchedule(testFilePath, schedule.Matches);
+        if (schedule != null && schedule.Matches != null)
+        {
+            CSVWriter<FootballMatch, Prediction>.UpdateSchedule(testFilePath, schedule.Matches);
+        }
 
         Assert.True(File.Exists(testFilePath), "CSV file was not created.");
         var lines = File.ReadAllLines(testFilePath);
@@ -76,8 +82,8 @@ public class TestCsvFileIO
             "MatchID;Date;Home Team;Away Team;Result Home Team;Result Away Team;Result Home Team Penalties;Result Away Team Penalties",
             lines[0]
         );
-        Assert.Equal(schedule.Matches[0].ToString(), lines[1]);
-        Assert.Equal(schedule.Matches[1].ToString(), lines[2]);
+        Assert.Equal(schedule?.Matches?[0]?.ToString(), lines[1]);
+        Assert.Equal(schedule?.Matches?[1]?.ToString(), lines[2]);
 
         File.Delete(testFilePath);
     }
@@ -146,7 +152,7 @@ public class TestCsvFileIO
         );
 
         CSVReader<FootballMatch, FootballPrediction>.SetMatchFactory(footballMatchFactory);
-        Schedule<Match> schedule = new Schedule<Match>(
+        Schedule<Match?> schedule = new Schedule<Match?>(
             "../../../../../csv-files/EM_2024.csv",
             SportsTypes.Football,
             ScheduleTypes.EM_2024
@@ -185,7 +191,7 @@ public class TestCsvFileIO
         );
 
         CSVReader<FootballMatch, FootballPrediction>.SetMatchFactory(footballMatchFactory);
-        Schedule<Match> schedule = new Schedule<Match>(
+        Schedule<Match?> schedule = new Schedule<Match?>(
             "../../../EM_2024Test.csv",
             SportsTypes.Football,
             ScheduleTypes.EM_2024
@@ -200,16 +206,20 @@ public class TestCsvFileIO
         Assert.Equal(2, test_prediction_game.Members[0].GetPredictionsToDo().Count);
         Assert.Equal(2, test_prediction_game.Members[1].GetPredictionsToDo().Count);
 
-        List<Match> predictionsToDoMember1 = test_prediction_game.Members[0].GetPredictionsToDo();
-        List<Match> predictionsToDoMember2 = test_prediction_game.Members[1].GetPredictionsToDo();
+        List<Match?>? predictionsToDoMember1 = test_prediction_game?.Members?[
+            0
+        ]?.GetPredictionsToDo();
+        List<Match?>? predictionsToDoMember2 = test_prediction_game?.Members?[
+            1
+        ]?.GetPredictionsToDo();
 
-        test_prediction_game.Members[0].ConvertPredictionsDone(predictionsToDoMember1[0], 1, 2);
-        test_prediction_game.Members[0].ConvertPredictionsDone(predictionsToDoMember1[1], 2, 3);
-        test_prediction_game.Members[1].ConvertPredictionsDone(predictionsToDoMember2[0], 3, 0);
-        test_prediction_game.Members[1].ConvertPredictionsDone(predictionsToDoMember2[1], 4, 2);
+        test_prediction_game?.Members[0].ConvertPredictionsDone(predictionsToDoMember1?[0], 1, 2);
+        test_prediction_game?.Members[0].ConvertPredictionsDone(predictionsToDoMember1?[1], 2, 3);
+        test_prediction_game?.Members[1].ConvertPredictionsDone(predictionsToDoMember2?[0], 3, 0);
+        test_prediction_game?.Members[1].ConvertPredictionsDone(predictionsToDoMember2?[1], 4, 2);
 
-        test_prediction_game.Members[0].CalculateScores();
-        test_prediction_game.Members[1].CalculateScores();
+        test_prediction_game?.Members[0].CalculateScores();
+        test_prediction_game?.Members[1].CalculateScores();
 
         string testFilePath = "../../../MemberPredictionsTest.csv";
 
@@ -222,26 +232,26 @@ public class TestCsvFileIO
 
         // Überprüfen der Kopfzeile
         Assert.Equal(
-            $"Predicted Match;{test_prediction_game.Members[0].MemberID};{test_prediction_game.Members[1].MemberID};CalculateScore() already DONE;MatchData;PredictionDate",
+            $"Predicted Match;{test_prediction_game?.Members[0].MemberID};{test_prediction_game?.Members[1].MemberID};CalculateScore() already DONE;MatchData;PredictionDate",
             lines[0]
         );
 
-        FootballPrediction prediction1 = (FootballPrediction)
-            test_prediction_game.Members[0].GetArchivedPredictions()[0];
-        FootballPrediction prediction2 = (FootballPrediction)
-            test_prediction_game.Members[0].GetArchivedPredictions()[1];
-        FootballPrediction prediction3 = (FootballPrediction)
-            test_prediction_game.Members[1].GetArchivedPredictions()[0];
-        FootballPrediction prediction4 = (FootballPrediction)
-            test_prediction_game.Members[1].GetArchivedPredictions()[1];
+        FootballPrediction? prediction1 =
+            test_prediction_game?.Members[0].GetArchivedPredictions()[0] as FootballPrediction;
+        FootballPrediction? prediction2 =
+            test_prediction_game?.Members[0].GetArchivedPredictions()[1] as FootballPrediction;
+        FootballPrediction? prediction3 =
+            test_prediction_game?.Members[1].GetArchivedPredictions()[0] as FootballPrediction;
+        FootballPrediction? prediction4 =
+            test_prediction_game?.Members[1].GetArchivedPredictions()[1] as FootballPrediction;
 
         // Beispielwerte überprüfen (Hier musst du sicherstellen, dass die Vorhersagen vorhanden sind)
         Assert.Equal(
-            $"{prediction1.HomeTeam} - {prediction1.AwayTeam};{prediction1.PredictionHome}:{prediction1.PredictionAway};{prediction3.PredictionHome}:{prediction3.PredictionAway};1;{prediction1.PredictedMatch.ToString()};{prediction1.PredictionDate}",
+            $"{prediction1?.HomeTeam} - {prediction1?.AwayTeam};{prediction1?.PredictionHome}:{prediction1?.PredictionAway};{prediction3?.PredictionHome}:{prediction3?.PredictionAway};1;{prediction1?.PredictedMatch?.ToString()};{prediction1?.PredictionDate}",
             lines[1]
         ); // Beispielwerte, passe sie an deine Daten an
         Assert.Equal(
-            $"{prediction2.HomeTeam} - {prediction2.AwayTeam};{prediction2.PredictionHome}:{prediction2.PredictionAway};{prediction4.PredictionHome}:{prediction4.PredictionAway};1;{prediction2.PredictedMatch.ToString()};{prediction2.PredictionDate}",
+            $"{prediction2?.HomeTeam} - {prediction2?.AwayTeam};{prediction2?.PredictionHome}:{prediction2?.PredictionAway};{prediction4?.PredictionHome}:{prediction4?.PredictionAway};1;{prediction2?.PredictedMatch?.ToString()};{prediction2?.PredictionDate}",
             lines[2]
         ); // Beispielwerte, passe sie an deine Daten an
     }

@@ -1,18 +1,18 @@
 public class PredictionGameTest
 {
-    private static IMatchFactory<FootballMatch> footballMatchFactory = new FootballMatchFactory();
+    private static IMatchFactory<FootballMatch?> footballMatchFactory = new FootballMatchFactory();
 
     [Fact]
     public void SendDailyEmailTest()
     {
-        CSVReader<FootballMatch, FootballPrediction>.SetMatchFactory(footballMatchFactory);
+        CSVReader<FootballMatch?, FootballPrediction?>.SetMatchFactory(footballMatchFactory);
 
         EmailService HeutigeMail = new EmailService();
         List<ScheduleTypes> scheduleTypes = new List<ScheduleTypes>();
         scheduleTypes.Add(ScheduleTypes.EM_2024);
         PredictionGame predictionGame = new PredictionGame(HeutigeMail);
 
-        Schedule<Match> schedule = new Schedule<Match>(
+        Schedule<Match?> schedule = new Schedule<Match?>(
             "../../../EM_2024Test.csv",
             SportsTypes.Football,
             ScheduleTypes.EM_2024

@@ -18,19 +18,26 @@ public abstract class Match
 
     public SportsTypes SportsType { get; protected set; }
 
-    public ScheduleTypes schedule_type { get; set; }
+    public ScheduleTypes ScheduleType { get; set; }
 
-    public string[] MatchArray { get; protected set; }
+    public string[]? MatchArray { get; protected set; }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(
-            MatchDate,
-            ResultTeam1,
-            ResultTeam2,
-            string.Join(",", MatchArray),
-            SportsType
-        );
+        if (MatchArray != null)
+        {
+            return HashCode.Combine(
+                MatchDate,
+                ResultTeam1,
+                ResultTeam2,
+                string.Join(",", MatchArray),
+                SportsType
+            );
+        }
+        else
+        {
+            return HashCode.Combine(MatchDate, ResultTeam1, ResultTeam2, SportsType);
+        }
     }
 
     public bool Team1Won()

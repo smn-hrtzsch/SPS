@@ -1,27 +1,27 @@
 using System.Reflection.Metadata.Ecma335;
 using Microsoft.VisualStudio.TestPlatform.CrossPlatEngine;
 
-public class TestMember : Member<Match, Prediction>
+public class TestMember : Member<Match?, Prediction?>
 {
     public TestMember(string forename, string surname, string emailaddress, string password)
         : base(forename, surname, emailaddress, password) { }
 
-    public List<Schedule<Match>> ParticipatingSchedulesTest
+    public List<Schedule<Match?>?> ParticipatingSchedulesTest
     {
         get { return ParticipatingSchedules; }
     }
 
-    public List<Match> PredictionsToDoTest
+    public List<Match?> PredictionsToDoTest
     {
         get { return PredictionsToDo; }
     }
 
-    public List<Prediction> PredictionsDoneTest
+    public List<Prediction?> PredictionsDoneTest
     {
         get { return PredictionsDone; }
     }
 
-    public List<Prediction> ArchivedPredictiontest
+    public List<Prediction?> ArchivedPredictiontest
     {
         get { return ArchivedPredictions; }
     }
@@ -34,8 +34,8 @@ public class TestMember : Member<Match, Prediction>
 
 public class TestScore : Score
 {
-    public TestScore(ScheduleTypes predicted_schedule)
-        : base(predicted_schedule) { }
+    public TestScore(ScheduleTypes predicted_schedule, SportsTypes sport_type)
+        : base(predicted_schedule, sport_type) { }
 
     public uint AmountOfPointsTest
     {
@@ -45,7 +45,7 @@ public class TestScore : Score
 
 public class MemberTest
 {
-    private static IMatchFactory<FootballMatch> footballMatchFactory = new FootballMatchFactory();
+    private static IMatchFactory<FootballMatch?> footballMatchFactory = new FootballMatchFactory();
 
     [Fact]
     public void TestMemberCtor()
@@ -69,7 +69,7 @@ public class MemberTest
 
         TestMember TestMember = new TestMember(vorname, nachname, email, password);
         CSVReader<FootballMatch, FootballPrediction>.SetMatchFactory(footballMatchFactory);
-        Schedule<Match> schedule = new Schedule<Match>(
+        Schedule<Match?> schedule = new Schedule<Match?>(
             "../../../EM_2024Test.csv",
             SportsTypes.Football,
             ScheduleTypes.EM_2024
@@ -90,7 +90,7 @@ public class MemberTest
 
         TestMember TestMember = new TestMember(vorname, nachname, email, password);
         CSVReader<FootballMatch, FootballPrediction>.SetMatchFactory(footballMatchFactory);
-        Schedule<Match> schedule = new Schedule<Match>(
+        Schedule<Match?> schedule = new Schedule<Match?>(
             "../../../EM_2024Test.csv",
             SportsTypes.Football,
             ScheduleTypes.EM_2024
@@ -111,7 +111,7 @@ public class MemberTest
 
         TestMember TestMember = new TestMember(vorname, nachname, email, password);
         CSVReader<FootballMatch, FootballPrediction>.SetMatchFactory(footballMatchFactory);
-        Schedule<Match> schedule = new Schedule<Match>(
+        Schedule<Match?> schedule = new Schedule<Match?>(
             "../../../EM_2024Test.csv",
             SportsTypes.Football,
             ScheduleTypes.EM_2024
@@ -176,8 +176,8 @@ public class MemberTest
         );
         TestMember.PredictionsDoneTest.Add(prediction1);
 
-        FootballPrediction prediction2 = (FootballPrediction)
-            TestMember.SearchPredictionDone(prediction1.PredictionID);
+        FootballPrediction? prediction2 =
+            TestMember.SearchPredictionDone(prediction1.PredictionID) as FootballPrediction;
         Assert.True(prediction1 == prediction2);
     }
 
@@ -221,15 +221,19 @@ public class MemberTest
         TestMember.PredictionsDoneTest.Add(prediction1);
         TestMember.PredictionsDoneTest.Add(prediction2);
 
-        TestScore score = new TestScore(ScheduleTypes.EM_2024);
+        TestScore score = new TestScore(ScheduleTypes.EM_2024, SportsTypes.Football);
         TestMember.ScoresTest.Add(score);
 
         TestMember.CalculateScores();
-        TestScore test_score = (TestScore)
-            TestMember.ScoresTest.Find(s => s.ScoreID == ScheduleTypes.EM_2024);
+        TestScore? test_score =
+            TestMember.ScoresTest.Find(s => s.ScoreID == ScheduleTypes.EM_2024) as TestScore;
 
         uint expected_amount_of_points = 18;
-        uint actual_amount_of_points = test_score.AmountOfPointsTest;
+        uint actual_amount_of_points = 0;
+        if (test_score != null)
+        {
+            actual_amount_of_points = test_score.AmountOfPointsTest;
+        }
 
         Assert.True(
             expected_amount_of_points == actual_amount_of_points,

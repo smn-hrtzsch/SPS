@@ -15,17 +15,20 @@ public class FootballMatch : Match
     public FootballMatch(string PathToMatchDataCsvFile, int line_number, SportsTypes sport_type)
     {
         InitializeMatch(PathToMatchDataCsvFile, line_number, sport_type);
-        HomeTeam = MatchArray[1];
-        AwayTeam = MatchArray[2];
-        try
+        HomeTeam = MatchArray?[1];
+        AwayTeam = MatchArray?[2];
+        if (MatchArray != null)
         {
-            ResultHomeTeamPenalties = byte.Parse(MatchArray[5]);
-            ResultAwayTeamPenalties = byte.Parse(MatchArray[6]);
-        }
-        catch (FormatException)
-        {
-            ResultHomeTeamPenalties = null;
-            ResultAwayTeamPenalties = null;
+            try
+            {
+                ResultHomeTeamPenalties = byte.Parse(MatchArray[5]);
+                ResultAwayTeamPenalties = byte.Parse(MatchArray[6]);
+            }
+            catch (FormatException)
+            {
+                ResultHomeTeamPenalties = null;
+                ResultAwayTeamPenalties = null;
+            }
         }
     }
 
@@ -68,6 +71,7 @@ public class FootballMatch : Match
         string rt2 = $"{ResultTeam2}";
         string rhtp = $"{ResultHomeTeamPenalties}";
         string ratp = $"{ResultAwayTeamPenalties}";
-        return $"{md},{ht},{at},{rt1},{rt2},{rhtp},{ratp}";
+        string st = $"{ScheduleType}";
+        return $"{md},{ht},{at},{rt1},{rt2},{rhtp},{ratp},{ScheduleType}";
     }
 }

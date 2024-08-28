@@ -5,14 +5,16 @@ using System.Collections.Generic;
 /// \details It contains a list of all the matches which take place during the tournament.
 /// \details Added to that it also contains a list of all the matches on the specific day of the tournament.
 public class Schedule<M>
-    where M : Match
+    where M : Match?
 {
     public ScheduleTypes ScheduleID { get; }
-    public List<M>? Matches { get; }
+    public SportsTypes SportType { get; }
+    public List<M?>? Matches { get; }
 
     public Schedule(string PathToCsvFile, SportsTypes sport_type, ScheduleTypes schedule_type)
     {
         ScheduleID = schedule_type;
+        SportType = sport_type;
         switch (sport_type)
         {
             case SportsTypes.Football:
@@ -26,9 +28,9 @@ public class Schedule<M>
         }
     }
 
-    private List<M> ConvertToGenericList(List<FootballMatch> footballMatches)
+    private List<M?>? ConvertToGenericList(List<FootballMatch?> footballMatches)
     {
-        List<M> genericMatches = new List<M>();
+        List<M?> genericMatches = new List<M?>();
         foreach (var match in footballMatches)
         {
             genericMatches.Add(match as M);
@@ -36,7 +38,7 @@ public class Schedule<M>
         return genericMatches;
     }
 
-    public List<FootballMatch> GetFootballScheduleFromCsvFile(
+    public List<FootballMatch?> GetFootballScheduleFromCsvFile(
         string PathToCsvFile,
         SportsTypes sport_type
     )
@@ -49,14 +51,21 @@ public class Schedule<M>
 
     public List<M> GetMatchesOnDay()
     {
-        List<M> MatchesOnDay = new List<M>();
-        foreach (M match in Matches)
+        List<M>? MatchesOnDay = new List<M>();
+        if (Matches != null)
         {
-            if (DateTime.Today == match.MatchDate.Date)
+            foreach (M? match in Matches)
             {
-                MatchesOnDay.Add(match);
+                if (DateTime.Today == match?.MatchDate.Date)
+                {
+                    MatchesOnDay.Add(match);
+                }
             }
+            return MatchesOnDay;
         }
-        return MatchesOnDay;
+        else
+        {
+            return MatchesOnDay;
+        }
     }
 }

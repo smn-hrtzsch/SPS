@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 
 public interface IMemberData<M, P>
-    where M : Match
-    where P : Prediction
+    where M : Match?
+    where P : Prediction?
 {
     public string? GetForename();
     public string? GetSurname();
     public string GetEmailAddress();
     public string GetPassword();
-    public List<Schedule<M>> GetParticipatingSchedules();
-    public List<M> GetPredictionsToDo();
-    public List<P> GetPredictionsDone();
-    public void SetPredictionsDone(List<P> done_predictions);
+    public List<Schedule<M?>?>? GetParticipatingSchedules();
+    public List<M?> GetPredictionsToDo();
+    public List<P?> GetPredictionsDone();
+    public void SetPredictionsDone(List<P?> done_predictions);
     public List<P> GetArchivedPredictions();
     public void SetArchivedPredictions(List<P> archived_predictions);
     public List<Score> GetScores();
@@ -24,8 +25,8 @@ public interface IMemberData<M, P>
 
 ///\brief Represents a member participating in the Sport Prediction System (SPS).
 public class Member<M, P> : IMemberData<M, P>
-    where P : Prediction
-    where M : Match
+    where P : Prediction?
+    where M : Match?
 {
     ///\brief Gets the unique ID of the member.
     public uint MemberID { get; }
@@ -35,13 +36,13 @@ public class Member<M, P> : IMemberData<M, P>
     protected string Password { get; }
 
     /// \brief List of Schedules the member chose to participate predicting.
-    protected List<Schedule<M>> ParticipatingSchedules { get; }
+    protected List<Schedule<M?>?> ParticipatingSchedules { get; }
 
     /// \brief List of Matches, which need to be predicted on the specific day.
-    protected List<M> PredictionsToDo;
+    protected List<M?> PredictionsToDo;
 
     /// \brief List, which contains all Predictions where the match is already predicted, but a score was not calculated yet.
-    protected List<P> PredictionsDone;
+    protected List<P?> PredictionsDone;
 
     /// \brief List, which contains all Predictions where no score must be calculated anymore
     protected List<P> ArchivedPredictions;
@@ -60,15 +61,15 @@ public class Member<M, P> : IMemberData<M, P>
 
     public string GetPassword() => Password;
 
-    public List<Schedule<M>> GetParticipatingSchedules() => ParticipatingSchedules;
+    public List<Schedule<M?>?>? GetParticipatingSchedules() => ParticipatingSchedules;
 
     /// \brief Retrieves a copy of the list of matches that need to be predicted.
-    public List<M> GetPredictionsToDo() => new List<M>(PredictionsToDo);
+    public List<M?> GetPredictionsToDo() => new List<M?>(PredictionsToDo);
 
     /// \brief Retrieves a copy of the list of the predicitons already done, but not yet archived.
-    public List<P> GetPredictionsDone() => PredictionsDone;
+    public List<P?> GetPredictionsDone() => PredictionsDone;
 
-    public void SetPredictionsDone(List<P> done_predictions) => PredictionsDone = done_predictions;
+    public void SetPredictionsDone(List<P?> done_predictions) => PredictionsDone = done_predictions;
 
     /// \brief Retrieves a copy of the list of archived predictions.
     public List<P> GetArchivedPredictions() => new List<P>(ArchivedPredictions);
@@ -89,9 +90,9 @@ public class Member<M, P> : IMemberData<M, P>
         this.EmailAddress = emailaddress;
         this.Password = password;
         this.MemberID = (uint)GetHashCode();
-        this.ParticipatingSchedules = new List<Schedule<M>>();
-        this.PredictionsToDo = new List<M>();
-        this.PredictionsDone = new List<P>();
+        this.ParticipatingSchedules = new List<Schedule<M?>?>();
+        this.PredictionsToDo = new List<M?>();
+        this.PredictionsDone = new List<P?>();
         this.ArchivedPredictions = new List<P>();
         this.Scores = new List<Score>();
     }
@@ -109,9 +110,9 @@ public class Member<M, P> : IMemberData<M, P>
         Surname = surname;
         EmailAddress = emailaddress;
         Password = password;
-        ParticipatingSchedules = new List<Schedule<M>>();
-        PredictionsToDo = new List<M>();
-        PredictionsDone = new List<P>();
+        ParticipatingSchedules = new List<Schedule<M?>?>();
+        PredictionsToDo = new List<M?>();
+        PredictionsDone = new List<P?>();
         ArchivedPredictions = new List<P>();
         Scores = new List<Score>();
     }
@@ -122,13 +123,16 @@ public class Member<M, P> : IMemberData<M, P>
     }
 
     /// \brief Adds a schedule to the member's list of participating schedules.
-    public void AddParticipatingSchedule(Schedule<M> schedule, ScheduleTypes schedule_type)
+    public void AddParticipatingSchedule(Schedule<M?> schedule, ScheduleTypes schedule_type)
     {
-        ParticipatingSchedules.Add(schedule);
+        if (!ParticipatingSchedules.Contains(schedule))
+        {
+            ParticipatingSchedules?.Add(schedule);
+        }
         Score? score = Scores.Find(s => s.ScoreID == schedule_type);
         if (score == null)
         {
-            score = new Score(schedule_type);
+            score = new Score(schedule_type, schedule.SportType);
             Scores.Add(score);
         }
     }
@@ -136,10 +140,10 @@ public class Member<M, P> : IMemberData<M, P>
     /// \brief Removes a schedule from the member's list of participating schedules.
     public void RemoveParticipatingSchedule(ScheduleTypes schedule_type)
     {
-        Schedule<M>? scheduleToRemove = null;
+        Schedule<M?>? scheduleToRemove = null;
         foreach (var schedule in ParticipatingSchedules)
         {
-            if (schedule.ScheduleID == schedule_type)
+            if (schedule?.ScheduleID == schedule_type)
             {
                 scheduleToRemove = schedule;
                 break;
@@ -162,30 +166,33 @@ public class Member<M, P> : IMemberData<M, P>
     public void AddPredictionToDo()
     {
         PredictionsToDo.Clear();
-        foreach (Schedule<M> schedule in ParticipatingSchedules)
+        foreach (Schedule<M?>? schedule in ParticipatingSchedules)
         {
-            List<M> MatchesOnDay = schedule.GetMatchesOnDay();
+            List<M?>? MatchesOnDay = schedule?.GetMatchesOnDay();
 
             List<M?> AlreadyPredictedMatches = new List<M?>();
 
             foreach (var prediction in PredictionsDone)
             {
-                AlreadyPredictedMatches.Add(prediction.PredictedMatch as M);
+                AlreadyPredictedMatches.Add(prediction?.PredictedMatch as M);
                 // Console.WriteLine($"In PredictionsDone gefunden: {prediction.PredictedMatch.MatchID} {prediction.PredictedMatch}");
             }
             foreach (var prediction in ArchivedPredictions)
             {
-                AlreadyPredictedMatches.Add(prediction.PredictedMatch as M);
+                AlreadyPredictedMatches.Add(prediction?.PredictedMatch as M);
                 // Console.WriteLine($"In ArchivedPredictions gefunden: {prediction.PredictedMatch.MatchID} {prediction.PredictedMatch}");
             }
             //Console.WriteLine($"Anzahl der bereits getippten Spiele: {AlreadyPredictedMatches.Count}");
 
-            foreach (M match in MatchesOnDay)
+            if (MatchesOnDay != null)
             {
-                if (!AlreadyPredictedMatches.Contains(match))
+                foreach (M? match in MatchesOnDay)
                 {
-                    //Console.WriteLine($"Zu PredictionsToDo hinzugefügt: {match.MatchID} {match}");
-                    PredictionsToDo.Add(match);
+                    if (!AlreadyPredictedMatches.Contains(match))
+                    {
+                        //Console.WriteLine($"Zu PredictionsToDo hinzugefügt: {match.MatchID} {match}");
+                        PredictionsToDo.Add(match);
+                    }
                 }
             }
         }
@@ -197,7 +204,7 @@ public class Member<M, P> : IMemberData<M, P>
         M? matchToRemove = null;
         foreach (var match in PredictionsToDo)
         {
-            if (match.MatchID == MatchID)
+            if (match?.MatchID == MatchID)
             {
                 matchToRemove = match;
                 break;
@@ -229,7 +236,7 @@ public class Member<M, P> : IMemberData<M, P>
             switch (predicted_match.SportsType) //switch case for ctor calls
             {
                 case SportsTypes.Football:
-                    FootballPrediction predictionDone = new FootballPrediction(
+                    FootballPrediction? predictionDone = new FootballPrediction(
                         MemberID,
                         predicted_match as FootballMatch,
                         DateTime.Now,
@@ -251,12 +258,12 @@ public class Member<M, P> : IMemberData<M, P>
 
     /// \brief Searches for a specific prediction in the member's list.
     /// \return The prediction if found, otherwise null.
-    public Prediction SearchPredictionDone(uint PredictionID)
+    public Prediction? SearchPredictionDone(uint PredictionID)
     {
         Prediction? searchedprediction = null;
         foreach (var prediction in PredictionsDone)
         {
-            if (prediction.PredictionID == PredictionID)
+            if (prediction?.PredictionID == PredictionID)
             {
                 searchedprediction = prediction;
             }
@@ -276,7 +283,7 @@ public class Member<M, P> : IMemberData<M, P>
         P? predictionToRemove = null;
         foreach (var prediction in PredictionsDone)
         {
-            if (prediction.PredictionID == PredictionID)
+            if (prediction?.PredictionID == PredictionID)
             {
                 predictionToRemove = prediction;
                 break;
@@ -300,38 +307,54 @@ public class Member<M, P> : IMemberData<M, P>
             switch (score.ScoreID)
             {
                 case ScheduleTypes.EM_2024:
-                    List<P> predictionsToRemove = new List<P>();
-                    foreach (P prediction in PredictionsDone)
-                    {
-                        if (prediction.PredictedMatch.MatchDate <= DateTime.Now)
-                        {
-                            if (
-                                prediction.PredictedMatch.SportsType == SportsTypes.Football
-                                && prediction.PredictedMatch.ResultTeam1 != null
-                                && prediction.PredictedMatch.ResultTeam2 != null
-                            )
-                            {
-                                uint ScoreForPrediction = score.CalculateFootballScore(
-                                    prediction as FootballPrediction
-                                );
-                                score.IncrementAmountOfPoints(ScoreForPrediction);
-                                predictionsToRemove.Add(prediction);
-                            }
-                            else
-                            {
-                                break;
-                            }
-                        }
-                    }
-                    foreach (P prediction in predictionsToRemove)
-                    {
-                        PredictionsDone.Remove(prediction);
-                        ArchivedPredictions.Add(prediction);
-                    }
+                    CalculatScoreForSpecificSport(score);
+                    break;
+                case ScheduleTypes.La_Liga_24_25:
+                    CalculatScoreForSpecificSport(score);
                     break;
                 default:
                     break;
             }
+        }
+    }
+
+    private void CalculatScoreForSpecificSport(Score score)
+    {
+        List<P> predictionsToRemove = new List<P>();
+        uint ScoreForPrediction = 0;
+        foreach (var prediction in PredictionsDone)
+        {
+            if (
+                prediction?.PredictedMatch?.MatchDate <= DateTime.Now
+                && score.ScoreID == prediction.PredictedMatch.ScheduleType
+            )
+            {
+                if (
+                    prediction.PredictedMatch.ResultTeam1 != null
+                    && prediction.PredictedMatch.ResultTeam2 != null
+                )
+                {
+                    switch (prediction.PredictedMatch.SportsType)
+                    {
+                        case SportsTypes.Football:
+                            ScoreForPrediction = score.CalculateFootballScore(
+                                prediction as FootballPrediction
+                            );
+                            break;
+                    }
+                    score.IncrementAmountOfPoints(ScoreForPrediction);
+                    predictionsToRemove.Add(prediction);
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+        foreach (P prediction in predictionsToRemove)
+        {
+            PredictionsDone.Remove(prediction);
+            ArchivedPredictions.Add(prediction);
         }
     }
 
@@ -345,7 +368,7 @@ public class Member<M, P> : IMemberData<M, P>
         return $"{mi};{fn};{sn};{ea};{pw}";
     }
 
-    public Score SearchScore(ScheduleTypes schedule_type)
+    public Score? SearchScore(ScheduleTypes schedule_type)
     {
         Score? searchedScore = null;
 

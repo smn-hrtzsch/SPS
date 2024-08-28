@@ -1,14 +1,14 @@
 using System;
 
 public interface IMatchFactory<M>
-    where M : Match
+    where M : Match?
 {
-    M CreateMatch(string PathToMatchDataCsvFile, int line_number, SportsTypes sport_type);
+    M? CreateMatch(string PathToMatchDataCsvFile, int line_number, SportsTypes sport_type);
 }
 
-public class FootballMatchFactory : IMatchFactory<FootballMatch>
+public class FootballMatchFactory : IMatchFactory<FootballMatch?>
 {
-    public FootballMatch CreateMatch(
+    public FootballMatch? CreateMatch(
         string PathToMatchDataCsvFile,
         int line_number,
         SportsTypes sport_type

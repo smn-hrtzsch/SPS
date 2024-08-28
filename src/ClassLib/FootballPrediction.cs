@@ -9,7 +9,7 @@ public class FootballPrediction : Prediction
 
     public FootballPrediction(
         uint member_id,
-        FootballMatch football_match,
+        FootballMatch? football_match,
         DateTime predictionDate,
         byte prediction_home,
         byte prediction_away
@@ -18,8 +18,8 @@ public class FootballPrediction : Prediction
     {
         PredictionHome = prediction_home;
         PredictionAway = prediction_away;
-        HomeTeam = football_match.HomeTeam;
-        AwayTeam = football_match.AwayTeam;
+        HomeTeam = football_match?.HomeTeam;
+        AwayTeam = football_match?.AwayTeam;
     }
 
     public FootballPrediction(
@@ -41,19 +41,28 @@ public class FootballPrediction : Prediction
     public static void ChangePrediction(
         byte? NewPredictionHome,
         byte? NewPredictionAway,
-        FootballPrediction prediction
+        FootballPrediction? prediction
     )
     {
-        prediction.PredictionDate = DateTime.Now;
-        if (ValidatePredictionDate(prediction.PredictionDate, prediction.PredictedMatch.MatchDate))
+        if (prediction != null)
         {
-            if (NewPredictionHome != null)
+            prediction.PredictionDate = DateTime.Now;
+            if (
+                ValidatePredictionDate(
+                    prediction.PredictionDate,
+                    prediction?.PredictedMatch?.MatchDate
+                )
+                && prediction != null
+            )
             {
-                prediction.PredictionHome = (byte)NewPredictionHome;
-            }
-            if (NewPredictionAway != null)
-            {
-                prediction.PredictionAway = (byte)NewPredictionAway;
+                if (NewPredictionHome != null)
+                {
+                    prediction.PredictionHome = (byte)NewPredictionHome;
+                }
+                if (NewPredictionAway != null)
+                {
+                    prediction.PredictionAway = (byte)NewPredictionAway;
+                }
             }
         }
     }
