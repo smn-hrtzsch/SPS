@@ -6,12 +6,12 @@ using System.Linq;
 using System.Xml.Xsl;
 
 public class CSVReader<M, P>
-    where M : Match
-    where P : Prediction
+    where M : Match?
+    where P : Prediction?
 {
-    private static IMatchFactory<M> MatchFactory;
+    private static IMatchFactory<M?>? MatchFactory;
 
-    public static void SetMatchFactory(IMatchFactory<M> match_factory)
+    public static void SetMatchFactory(IMatchFactory<M?>? match_factory)
     {
         MatchFactory = match_factory;
     }
@@ -36,20 +36,20 @@ public class CSVReader<M, P>
         }
     }
 
-    public static List<M> GetScheduleFromCsvFile(string PathToCsvFile, SportsTypes sport_type)
+    public static List<M?> GetScheduleFromCsvFile(string PathToCsvFile, SportsTypes sport_type)
     {
         if (MatchFactory == null)
         {
             throw new InvalidOperationException("Match factory is not set.");
         }
-        List<M> schedule = new List<M>();
+        List<M?> schedule = new List<M?>();
         var all_lines = File.ReadLines(PathToCsvFile).ToList();
         for (int line_number = 1; line_number < all_lines.Count; line_number++)
         {
             switch (sport_type)
             {
                 case SportsTypes.Football:
-                    M match = MatchFactory.CreateMatch(PathToCsvFile, line_number, sport_type);
+                    M? match = MatchFactory.CreateMatch(PathToCsvFile, line_number, sport_type);
                     schedule.Add(match);
                     break;
                 // could be extended by serveral sport types
@@ -58,7 +58,10 @@ public class CSVReader<M, P>
         return schedule;
     }
 
-    public static List<Member<M, P>> GetMemberDataFromCsvFile(string PathToCsvFile)
+    public static List<Member<M, P>> GetMemberDataFromCsvFile(
+        string PathToCsvFile,
+        List<Schedule<M?>?>? schedules
+    )
     {
         List<Member<M, P>> members = new List<Member<M, P>>();
 
@@ -68,18 +71,67 @@ public class CSVReader<M, P>
         {
             string? needed_line = all_lines[line_number];
             string[] member_data = needed_line.Split(";");
+
             uint member_id = uint.Parse(member_data[0]);
-            members.Add(
-                new Member<M, P>(
-                    member_id,
-                    member_data[1],
-                    member_data[2],
-                    member_data[3],
-                    member_data[4]
-                )
-            );
+            string forename = member_data[1];
+            string surname = member_data[2];
+            string emailAddress = member_data[3];
+            string password = member_data[4];
+
+            // Create a new Member object
+            var member = new Member<M, P>(member_id, forename, surname, emailAddress, password);
+
+            // Initialize the participating schedules for the member
+            if (member_data.Length > 5)
+            {
+                string schedulesString = member_data[5];
+
+                if (!string.IsNullOrWhiteSpace(schedulesString))
+                {
+                    var scheduleTypes = schedulesString
+                        .Split(',')
+                        .Select(s => s.Trim()) // Trim whitespace from each entry
+                        .Where(s => Enum.TryParse(s, out ScheduleTypes _)) // Filter out invalid enums
+                        .Select(s => Enum.Parse<ScheduleTypes>(s)) // Safely parse the valid enums
+                        .ToList();
+
+                    // Add a Schedule object for each ScheduleType
+                    foreach (var scheduleType in scheduleTypes)
+                    {
+                        // Create or retrieve the Schedule object as needed
+                        Schedule<M?>? schedule = GetScheduleByType(schedules, scheduleType);
+                        if (schedule != null)
+                        {
+                            member.AddParticipatingSchedule(schedule, scheduleType);
+                        }
+                    }
+                }
+            }
+
+            members.Add(member);
         }
+
         return members;
+    }
+
+    // Helper method to retrieve the Schedule object based on ScheduleType
+    private static Schedule<M?>? GetScheduleByType(
+        List<Schedule<M?>?>? schedules,
+        ScheduleTypes scheduleType
+    )
+    {
+        Schedule<M?>? schedule = null;
+        if (schedules != null)
+        {
+            foreach (var searchedSchedule in schedules)
+            {
+                if (searchedSchedule?.ScheduleID == scheduleType)
+                {
+                    schedule = searchedSchedule;
+                }
+            }
+        }
+        return schedule;
     }
 
     public static void GetScoresFromCsvFile(string PathToCsvFile, PredictionGame prediction_game)
@@ -145,7 +197,7 @@ public class CSVReader<M, P>
     public static void GetFootballPredictionsFromCsvFile(
         string PathToCsvFile,
         PredictionGame prediction_game,
-        List<Schedule<Match>> schedules
+        List<Schedule<Match?>?> schedules
     )
     {
         var all_lines = File.ReadLines(PathToCsvFile).ToList();
@@ -156,15 +208,15 @@ public class CSVReader<M, P>
         int member_count = prediction_game.Members.Count; // 3 weitere Spalten: Predicted Match, MatchData, PredictionDate
 
         // Dictionary für jeden Member, um ihre jeweiligen Predictions zu speichern
-        Dictionary<uint, List<Prediction>> done_predictions_map =
-            new Dictionary<uint, List<Prediction>>();
-        Dictionary<uint, List<Prediction>> archived_predictions_map =
-            new Dictionary<uint, List<Prediction>>();
+        Dictionary<uint, List<Prediction?>> done_predictions_map =
+            new Dictionary<uint, List<Prediction?>>();
+        Dictionary<uint, List<Prediction?>> archived_predictions_map =
+            new Dictionary<uint, List<Prediction?>>();
 
         foreach (var member in prediction_game.Members)
         {
-            done_predictions_map[member.MemberID] = new List<Prediction>();
-            archived_predictions_map[member.MemberID] = new List<Prediction>();
+            done_predictions_map[member.MemberID] = new List<Prediction?>();
+            archived_predictions_map[member.MemberID] = new List<Prediction?>();
         }
 
         for (int line_number = 1; line_number < all_lines.Count; line_number++)
@@ -176,16 +228,21 @@ public class CSVReader<M, P>
 
             foreach (var schedule in schedules)
             {
-                foreach (var match in schedule.Matches)
+                if (schedule?.Matches != null)
                 {
-                    all_football_matches.Add(match as FootballMatch);
+                    foreach (var match in schedule.Matches)
+                    {
+                        all_football_matches.Add(match as FootballMatch);
+                    }
                 }
             }
 
             // Finde das entsprechende Match in der Schedule Liste
             FootballMatch? football_match = all_football_matches.FirstOrDefault(m =>
-                m.ToString() == prediction_data[member_count + 1]
+                m?.ToString() == prediction_data[member_count + 1]
             );
+
+            Console.WriteLine(football_match);
 
             if (football_match == null)
             {
