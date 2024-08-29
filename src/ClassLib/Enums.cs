@@ -15,6 +15,7 @@ public enum ScheduleTypes
 {
     EM_2024,
     La_Liga_24_25,
+    None,
 }
 
 public enum MatchTypes
