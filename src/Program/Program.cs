@@ -936,149 +936,155 @@ public class Program
         List<Schedule<Match?>> schedules
     )
     {
-        Console.Clear();
-
-        var member = prediction_game.Members.Find(m => m.MemberID == member_id);
-
-        List<ScheduleTypes> MemberScheduleTypes = new List<ScheduleTypes>();
-        List<Schedule<Match?>?>? ParticipatingSchedules = member?.GetParticipatingSchedules();
-
-        if (ParticipatingSchedules != null)
+        while (true)
         {
-            foreach (var schedule in ParticipatingSchedules)
+            var member = prediction_game?.Members.Find(m => m.MemberID == member_id);
+
+            List<ScheduleTypes?> MemberScheduleTypes = new List<ScheduleTypes?>();
+            List<Schedule<Match?>?>? ParticipatingSchedules = member?.GetParticipatingSchedules();
+
+            if (ParticipatingSchedules != null)
             {
-                if (schedule != null)
+                foreach (var schedule in ParticipatingSchedules)
                 {
-                    MemberScheduleTypes.Add(schedule.ScheduleID);
+                    if (schedule != null)
+                    {
+                        MemberScheduleTypes.Add(schedule.ScheduleID);
+                    }
                 }
             }
-        }
 
-        Console.WriteLine(
-            $"Hey, {member?.GetForename()}. Here you can manage the schedules you want to predict..."
-        );
-        Console.WriteLine("All schedules included in SPS: \n");
-
-        if (prediction_game.ScheduleTypesList != null)
-        {
-            for (int i = 0; i < prediction_game.ScheduleTypesList.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}: {prediction_game.ScheduleTypesList[i]}");
-            }
-        }
-
-        if (member?.GetScores().Count == 0)
-        {
-            Console.WriteLine("\nYou are currently not participating in any schedule.");
-        }
-        else
-        {
+            Console.Clear();
             Console.WriteLine(
-                "\nAnd these are the schedules you are currently participating in: \n"
+                $"Hey, {member?.GetForename()}. Here you can manage the schedules you want to predict..."
             );
+            Console.WriteLine("All schedules included in SPS: \n");
 
-            for (int i = 0; i < MemberScheduleTypes.Count; i++)
+            if (prediction_game?.ScheduleTypesList != null)
             {
-                Console.WriteLine($"\t{MemberScheduleTypes[i]}");
+                for (int i = 0; i < prediction_game.ScheduleTypesList.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}: {prediction_game.ScheduleTypesList[i]}");
+                }
             }
-        }
 
-        if (prediction_game.ScheduleTypesList != null)
-        {
-            int schedule_number = GetScheduleNumberFromUser(
-                prediction_game.ScheduleTypesList.Count
-            );
+            if (MemberScheduleTypes.Count == 0)
+            {
+                Console.WriteLine("\nYou are currently not participating in any schedule.");
+            }
+            else
+            {
+                Console.WriteLine(
+                    "\nAnd these are the schedules you are currently participating in: \n"
+                );
+
+                foreach (var scheduleType in MemberScheduleTypes)
+                {
+                    Console.WriteLine($"\t{scheduleType}");
+                }
+            }
+
+            int schedule_number = 0;
+
+            if (prediction_game != null)
+            {
+                schedule_number = GetScheduleNumberFromUser(
+                    prediction_game?.ScheduleTypesList?.Count
+                );
+            }
+
             if (schedule_number == -1)
             {
-                return;
+                // User pressed Escape to cancel
+                break;
             }
-            if (schedule_number <= prediction_game.ScheduleTypesList.Count)
+
+            ScheduleTypes selectedScheduleType = ScheduleTypes.None;
+
+            if (prediction_game != null)
             {
-                while (true)
+                selectedScheduleType = prediction_game.ScheduleTypesList[schedule_number - 1];
+            }
+
+            while (true)
+            {
+                Console.Write(
+                    "\n\nDo you want to add [1] or remove [2] this schedule? (Press [esc] to cancel): "
+                );
+                var input = Console.ReadKey(true);
+
+                if (input.Key == ConsoleKey.Escape)
                 {
-                    Console.Write("\nDo you want to add [1] or remove [2] this schedule? ");
-                    var input = Console.ReadLine();
-                    if (input == "1")
+                    // Break inner loop to return to schedule selection
+                    break;
+                }
+
+                if (input.KeyChar == '1')
+                {
+                    Console.Write("1");
+                    if (!MemberScheduleTypes.Contains(selectedScheduleType))
                     {
-                        if (
-                            !MemberScheduleTypes.Contains(
-                                prediction_game.ScheduleTypesList[schedule_number - 1]
-                            )
-                        )
-                        {
-                            member?.AddParticipatingSchedule(
-                                schedules[schedule_number - 1],
-                                prediction_game.ScheduleTypesList[schedule_number - 1]
-                            );
-                            Console.WriteLine("\nSchedule was added successfully.");
-                            Console.WriteLine("Press any key to return to the main menu...");
-                            Console.ReadKey();
-                            return;
-                        }
-                        else
-                        {
-                            Console.WriteLine(
-                                "\nYou already participate in predicting this schedule."
-                            );
-                            Console.WriteLine("Press any key to return to the main menu...");
-                            Console.ReadKey();
-                            return;
-                        }
+                        member?.AddParticipatingSchedule(
+                            schedules[schedule_number - 1],
+                            selectedScheduleType
+                        );
+                        Console.WriteLine("\nSchedule was added successfully.");
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
+                        break; // Break to select another schedule
                     }
-                    else if (input == "2")
+                    else
                     {
-                        if (
-                            MemberScheduleTypes.Contains(
-                                prediction_game.ScheduleTypesList[schedule_number - 1]
-                            )
-                        )
-                        {
-                            member?.RemoveParticipatingSchedule(
-                                prediction_game.ScheduleTypesList[schedule_number - 1]
-                            );
-                            Console.WriteLine("\nSchedule was removed successfully.");
-                            Console.WriteLine("Press any key to return to the main menu...");
-                            Console.ReadKey();
-                            return;
-                        }
-                        else
-                        {
-                            Console.WriteLine(
-                                "\nYou are not participating in this schedule, so it cannot not be removed."
-                            );
-                            Console.WriteLine("Press any key to return to the main menu...");
-                            Console.ReadKey();
-                            return;
-                        }
+                        Console.WriteLine("\nYou already participate in predicting this schedule.");
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
+                        break; // Break to select another schedule
+                    }
+                }
+                else if (input.KeyChar == '2')
+                {
+                    Console.Write("2");
+                    if (MemberScheduleTypes.Contains(selectedScheduleType))
+                    {
+                        member?.RemoveParticipatingSchedule(selectedScheduleType);
+                        Console.WriteLine("\nSchedule was removed successfully.");
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
+                        break; // Break to select another schedule
                     }
                     else
                     {
                         Console.WriteLine(
-                            "\nInvalid input, please enter 1 for adding the schedule or 2 for removing."
+                            "\n\nYou are not participating in this schedule, so it cannot be removed."
                         );
-                        Console.WriteLine("Press any key to return to choose again.");
+                        Console.WriteLine("Press any key to continue...");
                         Console.ReadKey();
-                        continue;
+                        break; // Break to select another schedule
                     }
+                }
+                else
+                {
+                    Console.WriteLine(
+                        "\nInvalid input, please enter 1 for adding the schedule or 2 for removing."
+                    );
                 }
             }
         }
     }
 
-    // Methode zur Abfrage der Spielnummer vom Benutzer
-    private static int GetScheduleNumberFromUser(int possible_schedules_count)
+    private static int GetScheduleNumberFromUser(int? possible_schedules_count)
     {
         int schedule_number;
         while (true)
         {
             Console.WriteLine("\nEnter the number of the schedule you want to add or remove.");
             Console.Write("If you want to cancel, press [esc]: ");
-            var keyInfo = Console.ReadKey(true); // Read a key without displaying it
+            var keyInfo = Console.ReadKey(true);
 
             if (keyInfo.Key == ConsoleKey.Escape)
             {
                 schedule_number = -1;
-                break; // Abbruch der aktuellen Vorhersage, aber in der Schleife bleiben
+                break;
             }
 
             if (char.IsDigit(keyInfo.KeyChar))
@@ -1086,7 +1092,6 @@ public class Program
                 Console.Write(keyInfo.KeyChar);
                 string input = keyInfo.KeyChar.ToString();
 
-                // Read additional digits if any
                 while (true)
                 {
                     keyInfo = Console.ReadKey(true);
@@ -1107,7 +1112,7 @@ public class Program
                     && schedule_number <= possible_schedules_count
                 )
                 {
-                    break; // Valid match number entered, exit loop
+                    break;
                 }
                 else
                 {
@@ -1133,7 +1138,7 @@ public class Program
     {
         Console.Clear();
         Console.WriteLine("Are you sure you want to save and exit?");
-        Console.WriteLine("Press any key to confirm, 'Esc' to cancel.");
+        Console.WriteLine("Press any key to confirm or [esc] to cancel.");
 
         ConsoleKeyInfo keyInfo = Console.ReadKey(true);
         if (keyInfo.Key == ConsoleKey.Escape)
