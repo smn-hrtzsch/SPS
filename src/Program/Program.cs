@@ -89,293 +89,342 @@ public class Program
             throw new InvalidOperationException("There is no file to read the schedule from.");
         }
 
-        // Begin login loop / Main menu loop
-        while (!login)
+        // Main loop to handle user login and session management
+        while (true)
         {
-            // Show login screen
-            Console.Clear();
-            Console.WriteLine("================================");
-            Console.WriteLine("          Login Screen          ");
-            Console.WriteLine("================================");
-            Console.WriteLine("");
-            Console.WriteLine("[1] Login");
-            Console.WriteLine("[2] Register");
-            Console.WriteLine("");
-            Console.Write("Please choose [1] or [2]: ");
-            string? input = Console.ReadLine();
+            login = false;
+            member_id = null;
 
-            if (input == "1")
+            // Begin login loop
+            while (!login)
             {
-                if (prediction_game.Members.Count == 0)
-                {
-                    Console.WriteLine(
-                        "No user is registered yet, please register before trying to log in."
-                    );
-                    Console.WriteLine("Please press any key to return to the login screen.");
-                    Console.ReadKey();
-                }
-                else
-                {
-                    while (true)
-                    {
-                        // Ask user for email
-                        Console.Write("\nEnter your [Email] or press [esc] to return: ");
-                        string email = string.Empty;
+                // Show login screen
+                Console.Clear();
+                Console.WriteLine("================================");
+                Console.WriteLine("          Login Screen          ");
+                Console.WriteLine("================================");
+                Console.WriteLine("");
+                Console.WriteLine("[1] Login");
+                Console.WriteLine("[2] Register");
+                Console.WriteLine("[3] Exit");
+                Console.WriteLine("");
+                Console.Write("Please choose [1], [2], or [3]: ");
+                string? input = Console.ReadLine();
 
+                if (input == "1")
+                {
+                    if (prediction_game.Members.Count == 0)
+                    {
+                        Console.WriteLine(
+                            "No user is registered yet, please register before trying to log in."
+                        );
+                        Console.WriteLine("Please press any key to return to the login screen.");
+                        Console.ReadKey();
+                    }
+                    else
+                    {
                         while (true)
                         {
-                            var predictionInput = Console.ReadKey(true);
+                            // Ask user for email
+                            Console.Write("\nEnter your [Email] or press [esc] to return: ");
+                            string email = string.Empty;
 
-                            if (predictionInput.Key == ConsoleKey.Escape)
+                            while (true)
                             {
-                                email = string.Empty;
-                                break; // Return to the start screen
-                            }
+                                var predictionInput = Console.ReadKey(true);
 
-                            if (predictionInput.Key == ConsoleKey.Enter)
-                            {
-                                Console.WriteLine();
-                                break; // End input
-                            }
-
-                            if (predictionInput.Key == ConsoleKey.Backspace && email.Length > 0)
-                            {
-                                email = email.Substring(0, email.Length - 1);
-                                Console.Write("\b \b"); // Erase the last character in the console
-                            }
-                            else if (!char.IsControl(predictionInput.KeyChar))
-                            {
-                                email += predictionInput.KeyChar;
-                                Console.Write(predictionInput.KeyChar);
-                            }
-                        }
-
-                        if (string.IsNullOrEmpty(email))
-                        {
-                            break;
-                        }
-
-                        bool emailFound = false;
-
-                        foreach (var member in prediction_game.Members)
-                        {
-                            if (member.GetEmailAddress() == email)
-                            {
-                                emailFound = true;
-                                string password = string.Empty;
-                                Console.Write(
-                                    "Now enter your [password] or press [esc] to return: "
-                                );
-
-                                while (true)
+                                if (predictionInput.Key == ConsoleKey.Escape)
                                 {
-                                    var passwordInput = Console.ReadKey(true);
-
-                                    if (passwordInput.Key == ConsoleKey.Escape)
-                                    {
-                                        password = string.Empty;
-                                        email = string.Empty;
-                                        break; // Return to the start screen
-                                    }
-
-                                    if (passwordInput.Key == ConsoleKey.Enter)
-                                    {
-                                        Console.WriteLine();
-                                        break; // End input
-                                    }
-
-                                    if (
-                                        passwordInput.Key == ConsoleKey.Backspace
-                                        && password.Length > 0
-                                    )
-                                    {
-                                        password = password.Substring(0, password.Length - 1);
-                                        Console.Write("\b \b"); // Erase the last character in the console
-                                    }
-                                    else if (!char.IsControl(passwordInput.KeyChar))
-                                    {
-                                        password += passwordInput.KeyChar;
-                                        Console.Write("*"); // Mask the password characters
-                                    }
+                                    email = string.Empty;
+                                    break; // Return to the start screen
                                 }
 
-                                if (string.IsNullOrEmpty(password))
+                                if (predictionInput.Key == ConsoleKey.Enter)
                                 {
-                                    break;
+                                    Console.WriteLine();
+                                    break; // End input
                                 }
 
-                                if (member.GetPassword() == password)
+                                if (predictionInput.Key == ConsoleKey.Backspace && email.Length > 0)
                                 {
-                                    login = true;
-                                    member_id = member.MemberID;
-                                    Console.WriteLine("\nLogin successful!");
-                                    Thread.Sleep(1000);
-                                    break;
+                                    email = email.Substring(0, email.Length - 1);
+                                    Console.Write("\b \b"); // Erase the last character in the console
                                 }
-                                else
+                                else if (!char.IsControl(predictionInput.KeyChar))
                                 {
-                                    Console.WriteLine("\nIncorrect password. Please try again.");
-                                    Console.WriteLine(
-                                        "If you want to stop logging in, press [esc]..."
+                                    email += predictionInput.KeyChar;
+                                    Console.Write(predictionInput.KeyChar);
+                                }
+                            }
+
+                            if (string.IsNullOrEmpty(email))
+                            {
+                                break;
+                            }
+
+                            bool emailFound = false;
+
+                            foreach (var member in prediction_game.Members)
+                            {
+                                if (member.GetEmailAddress() == email)
+                                {
+                                    emailFound = true;
+                                    string password = string.Empty;
+                                    Console.Write(
+                                        "Now enter your [password] or press [esc] to return: "
                                     );
+
+                                    while (true)
+                                    {
+                                        var passwordInput = Console.ReadKey(true);
+
+                                        if (passwordInput.Key == ConsoleKey.Escape)
+                                        {
+                                            password = string.Empty;
+                                            email = string.Empty;
+                                            break; // Return to the start screen
+                                        }
+
+                                        if (passwordInput.Key == ConsoleKey.Enter)
+                                        {
+                                            Console.WriteLine();
+                                            break; // End input
+                                        }
+
+                                        if (
+                                            passwordInput.Key == ConsoleKey.Backspace
+                                            && password.Length > 0
+                                        )
+                                        {
+                                            password = password.Substring(0, password.Length - 1);
+                                            Console.Write("\b \b"); // Erase the last character in the console
+                                        }
+                                        else if (!char.IsControl(passwordInput.KeyChar))
+                                        {
+                                            password += passwordInput.KeyChar;
+                                            Console.Write("*"); // Mask the password characters
+                                        }
+                                    }
+
+                                    if (string.IsNullOrEmpty(password))
+                                    {
+                                        break;
+                                    }
+
+                                    if (member.GetPassword() == password)
+                                    {
+                                        login = true;
+                                        member_id = member.MemberID;
+                                        Console.Write("\nLogin successful!");
+                                        Thread.Sleep(1000);
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine(
+                                            "\nIncorrect password. Please try again."
+                                        );
+                                        Console.WriteLine(
+                                            "If you want to stop logging in, press [esc]..."
+                                        );
+                                    }
                                 }
                             }
-                        }
 
-                        if (emailFound && login)
-                        {
-                            break;
-                        }
-                        else if (!emailFound)
-                        {
-                            Console.WriteLine("\nEmail not found. Please try again.");
-                        }
+                            if (emailFound && login)
+                            {
+                                break;
+                            }
+                            else if (!emailFound)
+                            {
+                                Console.WriteLine("\nEmail not found. Please try again.");
+                            }
 
-                        if (emailFound && !login)
-                        {
-                            continue; // Continue to the next password attempt
+                            if (emailFound && !login)
+                            {
+                                continue; // Continue to the next password attempt
+                            }
                         }
                     }
                 }
-            }
-            else if (input == "2")
-            {
-                bool emailFound = false;
-                Console.Write("\nEnter your email address or press [esc] to return: ");
-                var newEmailResult = ReadInputWithEscape();
-                string newEmail = newEmailResult.input;
-                if (string.IsNullOrEmpty(newEmail))
+                else if (input == "2")
                 {
-                    continue; // Return to the start screen
-                }
-
-                foreach (var member in prediction_game.Members)
-                {
-                    if (member.GetEmailAddress() == newEmail)
+                    bool emailFound = false;
+                    Console.Write("\nEnter your email address or press [esc] to return: ");
+                    var newEmailResult = ReadInputWithEscape();
+                    string newEmail = newEmailResult.input;
+                    if (string.IsNullOrEmpty(newEmail))
                     {
-                        emailFound = true;
-                        Console.WriteLine("\nEntered Email is already existing, try to login.");
-                        Console.WriteLine("Press any key to return to the login screen...");
-                        Console.ReadKey();
-                        break;
+                        continue; // Return to the start screen
                     }
-                }
 
-                if (!emailFound)
-                {
-                    Console.Write("\nEnter your forename or press [esc] to return: ");
-                    var forenameResult = ReadInputWithEscape(true); // Allow empty input for forename
-                    if (forenameResult.isEscape)
+                    foreach (var member in prediction_game.Members)
                     {
-                        continue; // If escape is pressed, return to the start screen
-                    }
-                    string newForename = forenameResult.input;
-
-                    Console.Write("\nEnter your surname or press [esc] to return: ");
-                    var surnameResult = ReadInputWithEscape(true); // Allow empty input for surname
-                    if (surnameResult.isEscape)
-                    {
-                        continue; // If escape is pressed, return to the start screen
-                    }
-                    string newSurname = surnameResult.input;
-
-                    while (true)
-                    {
-                        string newPassword = string.Empty;
-                        Console.Write("\nEnter a password or press [esc] to return: ");
-                        newPassword = ReadPasswordWithEscape();
-                        if (string.IsNullOrEmpty(newPassword))
+                        if (member.GetEmailAddress() == newEmail)
                         {
-                            continue; // Return to the start screen
-                        }
-
-                        string verifiedPassword = string.Empty;
-                        Console.Write("Verify your password or press [esc] to return: ");
-                        verifiedPassword = ReadPasswordWithEscape();
-                        if (string.IsNullOrEmpty(verifiedPassword))
-                        {
-                            continue; // Return to the start screen
-                        }
-
-                        if (newPassword == verifiedPassword)
-                        {
-                            prediction_game.Members.Add(
-                                new Member<Match?, Prediction?>(
-                                    newForename,
-                                    newSurname,
-                                    newEmail,
-                                    newPassword
-                                )
-                            );
-                            Console.WriteLine("\nRegistration successful!");
-                            Console.WriteLine(
-                                "Press any key to return to the login screen, you can now login with your provided data."
-                            );
+                            emailFound = true;
+                            Console.WriteLine("\nEntered Email is already existing, try to login.");
+                            Console.WriteLine("Press any key to return to the login screen...");
                             Console.ReadKey();
                             break;
                         }
-                        else
+                    }
+
+                    if (!emailFound)
+                    {
+                        Console.Write("\nEnter your forename or press [esc] to return: ");
+                        var forenameResult = ReadInputWithEscape(true); // Allow empty input for forename
+                        if (forenameResult.isEscape)
                         {
-                            Console.WriteLine("Passwords don't match, please try again...");
+                            continue; // If escape is pressed, return to the start screen
+                        }
+                        string newForename = forenameResult.input;
+
+                        Console.Write("\nEnter your surname or press [esc] to return: ");
+                        var surnameResult = ReadInputWithEscape(true); // Allow empty input for surname
+                        if (surnameResult.isEscape)
+                        {
+                            continue; // If escape is pressed, return to the start screen
+                        }
+                        string newSurname = surnameResult.input;
+
+                        while (true)
+                        {
+                            string newPassword = string.Empty;
+                            Console.Write("\nEnter a password or press [esc] to return: ");
+                            newPassword = ReadPasswordWithEscape();
+                            if (string.IsNullOrEmpty(newPassword))
+                            {
+                                continue; // Return to the start screen
+                            }
+
+                            string verifiedPassword = string.Empty;
+                            Console.Write("Verify your password or press [esc] to return: ");
+                            verifiedPassword = ReadPasswordWithEscape();
+                            if (string.IsNullOrEmpty(verifiedPassword))
+                            {
+                                continue; // Return to the start screen
+                            }
+
+                            if (newPassword == verifiedPassword)
+                            {
+                                prediction_game.Members.Add(
+                                    new Member<Match?, Prediction?>(
+                                        newForename,
+                                        newSurname,
+                                        newEmail,
+                                        newPassword
+                                    )
+                                );
+                                Console.WriteLine("\nRegistration successful!");
+                                Console.Write(
+                                    "\nPress any key to return to the login screen, you can now login with your provided data."
+                                );
+                                Console.ReadKey();
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Passwords don't match, please try again...");
+                            }
                         }
                     }
                 }
-            }
-            else
-            {
-                Console.WriteLine("\nThat did not work. Please try again.\n");
-                Thread.Sleep(1000);
-            }
-        }
-
-        while (true)
-        {
-            Console.Clear();
-            Console.WriteLine("================================");
-            Console.WriteLine("              SPS              ");
-            Console.WriteLine("================================");
-            Console.WriteLine("[1] Display Members");
-            Console.WriteLine("[2] Display Scores");
-            Console.WriteLine("[3] Add Prediction");
-            Console.WriteLine("[4] Manage Schedules");
-            Console.WriteLine("[5] Save and Exit");
-            Console.Write("Select an option (1-5): ");
-            string? choice = Console.ReadLine();
-
-            switch (choice)
-            {
-                case "1":
-                    DisplayMembers(prediction_game);
-                    break;
-                case "2":
-                    DisplayScores(prediction_game);
-                    break;
-                case "3":
-                    AddPrediction(prediction_game);
-                    break;
-                case "4":
-                    ManageSchedules(
-                        prediction_game,
-                        new List<Schedule<Match?>> { em_2024, laliga_24_25 }
-                    );
-                    break;
-                case "5":
+                else if (input == "3")
+                {
+                    // Ask the user if they want to save and exit
                     SaveAndExit(
                         prediction_game,
                         PathToMemberDataFile,
                         PathToPredictionDataFile,
                         PathToScoreDataFile
                     );
-                    break;
-                default:
-                    Console.WriteLine("Invalid option. Please try again.");
-                    Console.WriteLine("Press any key to return to the main menu...");
-                    Console.ReadKey();
-                    break;
+                    // Check if user chose to cancel exiting
+                    continue;
+                }
+                else
+                {
+                    Console.Write("\nThat did not work. Please try again.");
+                    Thread.Sleep(1000);
+                }
+            }
+
+            // User-specific functionality
+            while (login)
+            {
+                Console.Clear();
+                Console.WriteLine("================================");
+                Console.WriteLine("              SPS              ");
+                Console.WriteLine("================================");
+                Console.WriteLine("\n[1] Display Members");
+                Console.WriteLine("[2] Display Scores");
+                Console.WriteLine("[3] Add Prediction");
+                Console.WriteLine("[4] Manage Schedules");
+                Console.WriteLine("[5] Logout");
+                Console.WriteLine("[6] Save and Exit");
+                Console.Write("\nSelect an option (1-6): ");
+                string? choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        DisplayMembers(prediction_game);
+                        break;
+                    case "2":
+                        DisplayScores(prediction_game);
+                        break;
+                    case "3":
+                        AddPrediction(prediction_game);
+                        break;
+                    case "4":
+                        ManageSchedules(
+                            prediction_game,
+                            new List<Schedule<Match?>> { em_2024, laliga_24_25 }
+                        );
+                        break;
+                    case "5":
+                        // Logout and return to login screen
+                        Console.Write(
+                            "\nAre you sure you want to logout? Press [esc] to cancel, any other key to confirm..."
+                        );
+                        ConsoleKeyInfo logoutKey = Console.ReadKey(true);
+                        if (logoutKey.Key == ConsoleKey.Escape)
+                        {
+                            // User canceled logout
+                            Console.Write(
+                                "\nLogout cancelled. Press any key to return to the user menu..."
+                            );
+                            Console.ReadKey();
+                        }
+                        else
+                        {
+                            login = false;
+                            Console.Write(
+                                "\nYou have been logged out. Press any key to return to the login screen..."
+                            );
+                            Console.ReadKey();
+                        }
+                        break;
+                    case "6":
+                        SaveAndExit(
+                            prediction_game,
+                            PathToMemberDataFile,
+                            PathToPredictionDataFile,
+                            PathToScoreDataFile
+                        );
+                        // If exit was not canceled, we would not reach here
+                        break;
+                    default:
+                        Console.WriteLine("\nInvalid option. Please try again.");
+                        Console.Write("\nPress any key to return to the main menu...");
+                        Console.ReadKey();
+                        break;
+                }
             }
         }
     }
 
+    // All other methods remain the same, as defined earlier
     private static List<Prediction> GetPredictionsFromSpecificDate(
         DateTime date,
         Member<Match, Prediction> member
@@ -415,7 +464,7 @@ public class Program
         }
 
         Console.WriteLine(new string('-', 55));
-        Console.WriteLine("Press any key to return to the main menu...");
+        Console.Write("\nPress any key to return to the main menu...");
         Console.ReadKey();
     }
 
@@ -511,7 +560,7 @@ public class Program
 
         // Output the final separator line
         Console.WriteLine(new string('-', header.Length));
-        Console.WriteLine("Press any key to return to the main menu...");
+        Console.Write("\nPress any key to return to the main menu...");
         Console.ReadKey();
     }
 
@@ -577,9 +626,9 @@ public class Program
             if (predictions_to_do_count == 0 && football_predictions_on_day_count == 0)
             {
                 Console.WriteLine(
-                    $"Hello {member.GetForename()}, there are no matches left to predict today!"
+                    $"Hello {member.GetForename()}, there are no matches left to predict today!\n"
                 );
-                Console.WriteLine("\nPress any key to return to the main menu...");
+                Console.Write("\nPress any key to return to the main menu...");
                 Console.ReadKey();
                 return;
             }
@@ -656,7 +705,7 @@ public class Program
                         Console.WriteLine(
                             "\n\nYou cannot predict this match anymore, because it has already started or taken place."
                         );
-                        Console.Write("Press any key to continue...");
+                        Console.Write("\nPress any key to continue...");
                         Console.ReadKey();
                         continue; // Zurück zur Schleife, um erneut eine Vorhersage auszuwählen
                     }
@@ -692,7 +741,7 @@ public class Program
                             Console.WriteLine(
                                 "\n\nYour Prediction cannot be changed, because the match has already started or taken place."
                             );
-                            Console.Write("Press any key to continue...");
+                            Console.Write("\nPress any key to continue...");
                             Console.ReadKey();
                             continue; // Zurück zur Schleife, um erneut eine Vorhersage auszuwählen
                         }
@@ -741,7 +790,14 @@ public class Program
     {
         if (matches.Count > 0)
         {
-            Console.WriteLine($"\n{header}\n");
+            if (prediction_start_number == 0)
+            {
+                Console.WriteLine($"{header}\n");
+            }
+            else
+            {
+                Console.WriteLine($"\n{header}\n");
+            }
             for (int i = 0; i < matches.Count; i++)
             {
                 FootballMatch? match = matches[i];
@@ -812,7 +868,7 @@ public class Program
             Console.WriteLine(
                 "\nEnter the number of the match you want to predict or change your already predicted matches."
             );
-            Console.Write("If you want to cancel the prediction, press [esc]: ");
+            Console.Write("If you want to return to the main menu, press [esc]: ");
             var keyInfo = Console.ReadKey(true); // Read a key without displaying it
 
             if (keyInfo.Key == ConsoleKey.Escape)
@@ -907,8 +963,8 @@ public class Program
                     Console.WriteLine(
                         $"You entered a high score for {team} ({prediction}).\nAre you sure you want to continue?"
                     );
-                    Console.WriteLine(
-                        "Press any key to continue or [esc] to set a new prediction..."
+                    Console.Write(
+                        "\nPress any key to continue or [esc] to set a new prediction..."
                     );
                     var key = Console.ReadKey(true);
                     if (key.Key != ConsoleKey.Escape)
@@ -1028,15 +1084,15 @@ public class Program
                             schedules[schedule_number - 1],
                             selectedScheduleType
                         );
-                        Console.WriteLine("\nSchedule was added successfully.");
-                        Console.WriteLine("Press any key to continue...");
+                        Console.WriteLine("\n\nSchedule was added successfully.");
+                        Console.Write("\nPress any key to continue...");
                         Console.ReadKey();
                         break; // Break to select another schedule
                     }
                     else
                     {
                         Console.WriteLine("\nYou already participate in predicting this schedule.");
-                        Console.WriteLine("Press any key to continue...");
+                        Console.Write("\nPress any key to continue...");
                         Console.ReadKey();
                         break; // Break to select another schedule
                     }
@@ -1048,7 +1104,7 @@ public class Program
                     {
                         member?.RemoveParticipatingSchedule(selectedScheduleType);
                         Console.WriteLine("\nSchedule was removed successfully.");
-                        Console.WriteLine("Press any key to continue...");
+                        Console.Write("\nPress any key to continue...");
                         Console.ReadKey();
                         break; // Break to select another schedule
                     }
@@ -1057,7 +1113,7 @@ public class Program
                         Console.WriteLine(
                             "\n\nYou are not participating in this schedule, so it cannot be removed."
                         );
-                        Console.WriteLine("Press any key to continue...");
+                        Console.Write("\nPress any key to continue...");
                         Console.ReadKey();
                         break; // Break to select another schedule
                     }
@@ -1078,7 +1134,7 @@ public class Program
         while (true)
         {
             Console.WriteLine("\nEnter the number of the schedule you want to add or remove.");
-            Console.Write("If you want to cancel, press [esc]: ");
+            Console.Write("If you want to return to the main menu, press [esc]: ");
             var keyInfo = Console.ReadKey(true);
 
             if (keyInfo.Key == ConsoleKey.Escape)
@@ -1138,13 +1194,13 @@ public class Program
     {
         Console.Clear();
         Console.WriteLine("Are you sure you want to save and exit?");
-        Console.WriteLine("Press any key to confirm or [esc] to cancel.");
+        Console.Write("\nPress any key to confirm or [esc] to cancel.");
 
         ConsoleKeyInfo keyInfo = Console.ReadKey(true);
         if (keyInfo.Key == ConsoleKey.Escape)
         {
             // Cancel the exit process and return to the main menu
-            Console.WriteLine("Exit cancelled. Press any key to return to the main menu...");
+            Console.Write("\nExit cancelled. Press any key to return to the main menu...");
             Console.ReadKey(); // Wait for user to acknowledge
             return; // Return to the main menu
         }
@@ -1158,7 +1214,7 @@ public class Program
             );
             CSVWriter<Match, Prediction>.TrackScoreData(scoreFilePath, prediction_game);
 
-            Console.WriteLine("Data saved successfully. Exiting...");
+            Console.Write("\nData saved successfully. Exiting...");
             Thread.Sleep(1000);
             Environment.Exit(0); // Ensure the application exits
         }
