@@ -26,7 +26,7 @@ public class PredictionGame
         PredictionGameID = (uint)GetHashCode();
         Members = new List<Member<Match?, Prediction?>>();
         ScheduleTypesList = GetAllScheduleTypes();
-        ScheduleTypesList.Remove(ScheduleTypes.None);
+        ScheduleTypesList.Remove(ScheduleTypes.None); // remove None from ScheduleTypesList
     }
 
     private List<ScheduleTypes> GetAllScheduleTypes() =>
