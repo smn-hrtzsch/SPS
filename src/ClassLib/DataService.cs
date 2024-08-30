@@ -10,8 +10,14 @@ public class DataService
     private readonly string _pathToScoreDataFile;
     private readonly string _pathToEM_2024File;
     private readonly string _pathToLaLiga_24_25File;
-    
-    public DataService(string pathToMemberDataFile, string pathToPredictionDataFile, string pathToScoreDataFile, string pathToEM_2024File, string pathToLaLiga_24_25File)
+
+    public DataService(
+        string pathToMemberDataFile,
+        string pathToPredictionDataFile,
+        string pathToScoreDataFile,
+        string pathToEM_2024File,
+        string pathToLaLiga_24_25File
+    )
     {
         _pathToMemberDataFile = pathToMemberDataFile;
         _pathToPredictionDataFile = pathToPredictionDataFile;
@@ -20,7 +26,11 @@ public class DataService
         _pathToLaLiga_24_25File = pathToLaLiga_24_25File;
     }
 
-    public List<Schedule<Match?>?> GetSchedules(string pathToEM_2024File, string pathToLaLiga_24_25_File) {
+    public List<Schedule<Match?>?> GetSchedules(
+        string pathToEM_2024File,
+        string pathToLaLiga_24_25_File
+    )
+    {
         Schedule<Match?> em_2024;
         Schedule<Match?> laliga_24_25;
         List<Schedule<Match?>?> schedules = new List<Schedule<Match?>?>();
@@ -56,13 +66,16 @@ public class DataService
                 }
             }
         }
-        
+
         return schedules;
     }
 
     public List<Member<Match?, Prediction?>> LoadMembers()
     {
-        List<Schedule<Match?>?> schedules = GetSchedules(_pathToEM_2024File, _pathToLaLiga_24_25File);
+        List<Schedule<Match?>?> schedules = GetSchedules(
+            _pathToEM_2024File,
+            _pathToLaLiga_24_25File
+        );
         if (File.Exists(_pathToMemberDataFile))
         {
             return CSVReader<Match?, Prediction?>.GetMemberDataFromCsvFile(
@@ -76,14 +89,17 @@ public class DataService
 
     public void LoadPredictions(PredictionGame predictionGame)
     {
-        List<Schedule<Match?>?> schedules = GetSchedules(_pathToEM_2024File, _pathToLaLiga_24_25File);
+        List<Schedule<Match?>?> schedules = GetSchedules(
+            _pathToEM_2024File,
+            _pathToLaLiga_24_25File
+        );
         if (File.Exists(_pathToPredictionDataFile))
         {
             CSVReader<Match, Prediction>.GetFootballPredictionsFromCsvFile(
                 _pathToPredictionDataFile,
                 predictionGame,
-                schedules            
-                );
+                schedules
+            );
         }
     }
 
@@ -91,18 +107,17 @@ public class DataService
     {
         if (File.Exists(_pathToScoreDataFile))
         {
-            CSVReader<Match, Prediction>.GetScoresFromCsvFile(
-                _pathToScoreDataFile,
-                predictionGame
-            );
+            CSVReader<Match, Prediction>.GetScoresFromCsvFile(_pathToScoreDataFile, predictionGame);
         }
     }
 
     public void SaveData(PredictionGame prediction_game)
     {
         CSVWriter<Match, Prediction>.WriteMemberData(_pathToMemberDataFile, prediction_game);
-        CSVWriter<Match, Prediction>.TrackFootballPredictionData(_pathToPredictionDataFile, prediction_game);
+        CSVWriter<Match, Prediction>.TrackFootballPredictionData(
+            _pathToPredictionDataFile,
+            prediction_game
+        );
         CSVWriter<Match, Prediction>.TrackScoreData(_pathToScoreDataFile, prediction_game);
     }
-
 }
