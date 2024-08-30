@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLib.Tests", "ClassLib.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Program", "Program\Program.csproj", "{B328B5DB-E1CD-4724-83DD-6C3373863DF7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MauiApp", "MauiApp\MauiApp.csproj", "{BA31A392-3E0C-4BCB-9AFA-543CBE82656B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{B328B5DB-E1CD-4724-83DD-6C3373863DF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B328B5DB-E1CD-4724-83DD-6C3373863DF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B328B5DB-E1CD-4724-83DD-6C3373863DF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA31A392-3E0C-4BCB-9AFA-543CBE82656B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA31A392-3E0C-4BCB-9AFA-543CBE82656B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA31A392-3E0C-4BCB-9AFA-543CBE82656B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA31A392-3E0C-4BCB-9AFA-543CBE82656B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

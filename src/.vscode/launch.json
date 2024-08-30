@@ -1,0 +1,41 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Launch MauiApp MacCatalyst",
+        "type": "coreclr",
+        "request": "launch",
+        "preLaunchTask": "build",
+        "program": "${workspaceFolder}/MauiApp/bin/Debug/net8.0-maccatalyst/maccatalyst-arm64/MauiApp.dll",
+        "args": [],
+        "cwd": "${workspaceFolder}/MauiApp",
+        "stopAtEntry": false,
+        "console": "internalConsole",
+        "internalConsoleOptions": "openOnSessionStart",
+        "env": {
+          "ASPNETCORE_ENVIRONMENT": "Development"
+        },
+        "sourceFileMap": {
+          "/Views": "${workspaceFolder}/Views"
+        }
+      },
+      {
+        "name": "Launch MauiApp Android",
+        "type": "coreclr",
+        "request": "launch",
+        "preLaunchTask": "build",
+        "program": "${workspaceFolder}/MauiApp/bin/Debug/net8.0-android/MauiApp.dll",
+        "args": [],
+        "cwd": "${workspaceFolder}/MauiApp",
+        "stopAtEntry": false,
+        "console": "internalConsole",
+        "internalConsoleOptions": "openOnSessionStart",
+        "env": {
+          "ASPNETCORE_ENVIRONMENT": "Development"
+        },
+        "sourceFileMap": {
+          "/Views": "${workspaceFolder}/Views"
+        }
+      }
+    ]
+  }
