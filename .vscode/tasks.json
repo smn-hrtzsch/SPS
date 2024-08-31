@@ -7,7 +7,7 @@
         "type": "process",
         "args": [
           "build",
-          "${workspaceFolder}/Aufgabe1/Aufgabe1.csproj"
+          "${workspaceFolder}/src/MauiApp/MauiApp.csproj"
         ],
         "problemMatcher": "$msCompile"
       }

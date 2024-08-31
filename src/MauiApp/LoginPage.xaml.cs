@@ -2,12 +2,9 @@ namespace MauiApplication;
 
 public partial class LoginPage : ContentPage
 {
-    private PredictionGame _predictionGame;
-
     public LoginPage()
     {
         InitializeComponent();
-        _predictionGame = new PredictionGame(new EmailService()); // Assuming you have a default constructor for EmailService
     }
 
     private void OnLoginButtonClicked(object sender, EventArgs e)

@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Aufgabe1": {
+    "MauiApp": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,
@@ -9,7 +9,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Aufgabe1 (MacCatalyst)": {
+    "MauiApp (MacCatalyst)": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,
@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Aufgabe1 (Android)": {
+    "MauiApp (Android)": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,

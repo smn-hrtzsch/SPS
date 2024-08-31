@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 public class DataService
 {
@@ -31,6 +32,9 @@ public class DataService
         string pathToLaLiga_24_25_File
     )
     {
+        IMatchFactory<FootballMatch?> football_match_factory = new FootballMatchFactory();
+        CSVReader<FootballMatch, FootballPrediction>.SetMatchFactory(football_match_factory);
+
         Schedule<Match?> em_2024;
         Schedule<Match?> laliga_24_25;
         List<Schedule<Match?>?> schedules = new List<Schedule<Match?>?>();
@@ -66,12 +70,19 @@ public class DataService
                 }
             }
         }
+        else
+        {
+            throw new InvalidDataException("Schedule Files not Found!");
+        }
 
         return schedules;
     }
 
     public List<Member<Match?, Prediction?>> LoadMembers()
     {
+        IMatchFactory<FootballMatch?> football_match_factory = new FootballMatchFactory();
+        CSVReader<FootballMatch, FootballPrediction>.SetMatchFactory(football_match_factory);
+
         List<Schedule<Match?>?> schedules = GetSchedules(
             _pathToEM_2024File,
             _pathToLaLiga_24_25File
@@ -83,12 +94,17 @@ public class DataService
                 schedules
             );
         }
-
-        return new List<Member<Match?, Prediction?>>();
+        else
+        {
+            throw new InvalidDataException("Member File not found!");
+        }
     }
 
     public void LoadPredictions(PredictionGame predictionGame)
     {
+        IMatchFactory<FootballMatch?> football_match_factory = new FootballMatchFactory();
+        CSVReader<FootballMatch, FootballPrediction>.SetMatchFactory(football_match_factory);
+
         List<Schedule<Match?>?> schedules = GetSchedules(
             _pathToEM_2024File,
             _pathToLaLiga_24_25File
@@ -101,13 +117,24 @@ public class DataService
                 schedules
             );
         }
+        else
+        {
+            throw new InvalidDataException("Prediction File not found!");
+        }
     }
 
     public void LoadScores(PredictionGame predictionGame)
     {
+        IMatchFactory<FootballMatch?> football_match_factory = new FootballMatchFactory();
+        CSVReader<FootballMatch, FootballPrediction>.SetMatchFactory(football_match_factory);
+
         if (File.Exists(_pathToScoreDataFile))
         {
             CSVReader<Match, Prediction>.GetScoresFromCsvFile(_pathToScoreDataFile, predictionGame);
+        }
+        else
+        {
+            throw new InvalidDataException("Score File not found!");
         }
     }
 

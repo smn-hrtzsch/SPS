@@ -21,7 +21,7 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>MauiApp</ApplicationTitle>
+		<ApplicationTitle>Sport Prediction System</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.mauiApplication</ApplicationId>
@@ -54,6 +54,13 @@
 
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+
+		<!-- Embedded csv files to load and save data -->
+		<EmbeddedResource Include="../../csv-files/MemberData.csv" LogicalName="MauiApplication.MemberData.csv" />
+		<EmbeddedResource Include="../../csv-files/PredictionData.csv" LogicalName="MauiApplication.PredictionData.csv" />
+		<EmbeddedResource Include="../../csv-files/ScoreData.csv" LogicalName="MauiApplication.ScoreData.csv" />
+		<EmbeddedResource Include="../../csv-files/EM_2024.csv" LogicalName="MauiApplication.EM_2024.csv" />
+		<EmbeddedResource Include="../../csv-files/LaLiga_24_25.csv" LogicalName="MauiApplication.LaLiga_24_25.csv" />
 	</ItemGroup>
 
 	<ItemGroup>
